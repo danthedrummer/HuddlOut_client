@@ -51,29 +51,37 @@
         android:layout_alignParentEnd="true"
         android:backgroundTint="?attr/colorAccent" />
 
-    <ProgressBar
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/progressBar" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/progressBar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="43dp"
-        android:id="@+id/resultView" />
-
     <Button
         android:text="Back to Login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/backToLogin"
-        android:layout_below="@+id/resultView"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp" />
+        android:layout_marginBottom="21dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/resultView"
+        android:text="...results..."
+        android:layout_below="@+id/buttonLightGreen"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="...awaiting auth success..."
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/backToLogin"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/authSuccessView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/authView"
+        android:text="...getting auth token..."
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
