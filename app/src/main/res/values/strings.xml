@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">HuddleOut</string>
+    <string name="loginScreen">Login Screen</string>
+    <string name="usernameText">Username</string>
+    <string name="passwordText">Password</string>
+    <string name="loginButtonText">Log In!</string>
+
 </resources>
