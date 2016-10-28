@@ -59,4 +59,12 @@
         android:layout_centerHorizontal="true"
         android:id="@+id/progressBar" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/progressBar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="43dp"
+        android:id="@+id/resultView" />
+
 </RelativeLayout>
