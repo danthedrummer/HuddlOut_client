@@ -67,4 +67,12 @@
         android:layout_marginTop="43dp"
         android:id="@+id/resultView" />
 
+    <Button
+        android:text="Back to Login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/backToLogin"
+        android:layout_alignTop="@+id/resultView"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

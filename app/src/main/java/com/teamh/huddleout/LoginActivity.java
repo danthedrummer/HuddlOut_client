@@ -4,7 +4,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 import android.view.View;
-import android.content.Intent;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -18,7 +17,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(
                 new Button.OnClickListener(){
                     public void onClick(View v){
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        ActivitySwap.swapToNextActivity(LoginActivity.this, MainActivity.class);
                     }
                 }
         );

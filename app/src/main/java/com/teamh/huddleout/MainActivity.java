@@ -103,6 +103,20 @@ public class MainActivity extends Activity {
         });
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
+
+
+        //Proof of concept for traversing back tot he login screen
+        Button loginButton = (Button)findViewById(R.id.backToLogin);
+
+        loginButton.setOnClickListener(
+                new Button.OnClickListener(){
+                    public void onClick(View v){
+                        ActivitySwap.swapToNextActivity(MainActivity.this, LoginActivity.class);
+                    }
+                }
+        );
+
+
     }
 
     //Changes the theme (Prototype - Needs actual StyleManager.java class!)
