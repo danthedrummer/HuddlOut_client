@@ -50,7 +50,7 @@ public class GroupMenu extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        ActivitySwap.swapToNextActivity(GroupMenu.this, MainMenu.class);
+                        ActivitySwap.swapToNextActivity(GroupMenu.this, MainMenuActivity.class);
                         finish();
                     }
                 }

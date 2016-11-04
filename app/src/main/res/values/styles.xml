@@ -8,22 +8,31 @@
         <item name="colorAccent">@color/accent_deep_purple</item>
     </style>
 
-    <style name="PurpleTheme" parent="DeepPurpleTheme" >
+    <style name="PurpleTheme" parent="DeepPurpleTheme">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/accent_purple</item>
     </style>
 
-    <style name="LightGreenTheme" parent="DeepPurpleTheme" >
+    <style name="LightGreenTheme" parent="DeepPurpleTheme">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/accent_light_green</item>
     </style>
 
-    <style name="LimeTheme" parent="DeepPurpleTheme" >
+    <style name="LimeTheme" parent="DeepPurpleTheme">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/accent_lime</item>
     </style>
+
+    <style name="DeepPurpleTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="DeepPurpleTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="DeepPurpleTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

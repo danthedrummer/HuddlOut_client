@@ -17,7 +17,7 @@ public class LoginActivity extends Activity {
         loginButton.setOnClickListener(
                 new Button.OnClickListener(){
                     public void onClick(View v){
-                        ActivitySwap.swapToNextActivity(LoginActivity.this, MainMenu.class);
+                        ActivitySwap.swapToNextActivity(LoginActivity.this, MainMenuActivity.class);
                     }
                 }
         );
