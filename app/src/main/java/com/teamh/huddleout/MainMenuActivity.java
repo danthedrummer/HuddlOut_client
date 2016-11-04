@@ -72,8 +72,13 @@ public class MainMenuActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            System.out.println("settings");
+            return true;
+        }
+
+        if (id == R.id.action_logout) {
+            System.out.println("logout");
             return true;
         }
 
@@ -110,7 +115,12 @@ public class MainMenuActivity extends AppCompatActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main_menu, container, false);
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            if(getArguments().getInt(ARG_SECTION_NUMBER) == 3) {
+                textView.setText("TEEEEEEEEEEEEEEEEEEST!");
+            }
+            else {
+                textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            }
             return rootView;
         }
     }
