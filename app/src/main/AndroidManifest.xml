@@ -11,7 +11,6 @@
         android:supportsRtl="true"
         android:theme="@style/DeepPurpleTheme">
 
-        <!-- Main Screen -->
         <!-- Launch Screen -->
         <activity android:name=".LaunchActivity">
             <intent-filter>
@@ -23,7 +22,8 @@
         <!-- Login Screen -->
         <activity
             android:name=".LoginActivity"
-            android:label="@string/loginScreen" />
+            android:label="@string/loginScreen"
+            android:screenOrientation="portrait" />
         <!--
      ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -32,11 +32,18 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".GroupMenu" />
         <activity
             android:name=".MainMenuActivity"
             android:label="@string/title_activity_main_menu"
-            android:theme="@style/DeepPurpleTheme.NoActionBar"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/DeepPurpleTheme.NoActionBar" />
+        <activity android:name=".SettingsActivity" />
+        <activity
+            android:name=".GroupMenuActivity"
+            android:label="@string/title_activity_group_menu"
+            android:theme="@style/DeepPurpleTheme.NoActionBar" />
+        <activity android:name=".MembersActivity" />
+        <activity android:name=".RegisterActivity"></activity>
     </application>
 
 </manifest>

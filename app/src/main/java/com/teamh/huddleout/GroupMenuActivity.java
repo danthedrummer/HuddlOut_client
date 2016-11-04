@@ -1,6 +1,8 @@
 package com.teamh.huddleout;
 
 import android.support.design.widget.TabLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -15,7 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class MainMenuActivity extends AppCompatActivity {
+public class GroupMenuActivity extends AppCompatActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -35,10 +37,9 @@ public class MainMenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_menu);
+        setContentView(R.layout.activity_group_menu);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Main Menu");
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -50,14 +51,13 @@ public class MainMenuActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main_menu, menu);
+        getMenuInflater().inflate(R.menu.menu_group_menu, menu);
         return true;
     }
 
@@ -69,7 +69,12 @@ public class MainMenuActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            ActivitySwap.swapToNextActivity(MainMenuActivity.this, SettingsActivity.class);
+            ActivitySwap.swapToNextActivity(GroupMenuActivity.this, SettingsActivity.class);
+            return true;
+        }
+
+        if (id == R.id.action_members) {
+            ActivitySwap.swapToNextActivity(GroupMenuActivity.this, MembersActivity.class);
             return true;
         }
 
@@ -78,35 +83,28 @@ public class MainMenuActivity extends AppCompatActivity {
             System.out.println("logout");
             return true;
         }
-
-        //TODO: This is a debug command! Remove once group navigation is implemented!
-        if (id == R.id.action_debug_groups) {
-            ActivitySwap.swapToNextActivity(MainMenuActivity.this, GroupMenuActivity.class);
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class MainMenuFragment extends Fragment {
+    public static class GroupFragment extends Fragment {
         /**
          * The fragment argument representing the section number for this
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
 
-        public MainMenuFragment() {
+        public GroupFragment() {
         }
 
         /**
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static MainMenuFragment newInstance(int sectionNumber) {
-            MainMenuFragment fragment = new MainMenuFragment();
+        public static GroupFragment newInstance(int sectionNumber) {
+            GroupFragment fragment = new GroupFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
@@ -116,20 +114,20 @@ public class MainMenuActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+
             View rootView;
             switch (getArguments().getInt(ARG_SECTION_NUMBER)) {
                 case 1:
-                    rootView = inflater.inflate(R.layout.fragment_group_list, container, false);
+                    rootView = inflater.inflate(R.layout.fragment_chat, container, false);
                     break;
                 case 2:
-                    rootView = inflater.inflate(R.layout.fragment_friend_list, container, false);
+                    rootView = inflater.inflate(R.layout.fragment_map, container, false);
                     break;
                 case 3:
-                    rootView = inflater.inflate(R.layout.fragment_profile, container, false);
+                    rootView = inflater.inflate(R.layout.fragment_voting, container, false);
                     break;
                 default:
-                    rootView = inflater.inflate(R.layout.fragment_group_list, container, false);
-                    break;
+                    rootView = inflater.inflate(R.layout.fragment_chat, container, false);
             }
             return rootView;
         }
@@ -148,8 +146,8 @@ public class MainMenuActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
-            // Return a MainMenuFragment (defined as a static inner class below).
-            return MainMenuFragment.newInstance(position + 1);
+            // Return a GroupFragment (defined as a static inner class below).
+            return GroupFragment.newInstance(position + 1);
         }
 
         @Override
@@ -162,11 +160,11 @@ public class MainMenuActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "GROUPS";
+                    return "CHAT";
                 case 1:
-                    return "FRIENDS";
+                    return "MAP";
                 case 2:
-                    return "PROFILE";
+                    return "VOTING";
             }
             return null;
         }

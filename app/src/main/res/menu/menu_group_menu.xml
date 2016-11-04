@@ -1,20 +1,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.teamh.huddleout.MainMenuActivity">
+    tools:context="com.teamh.huddleout.GroupMenuActivity">
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
     <item
+        android:id="@+id/action_members"
+        android:orderInCategory="200"
+        android:title="@string/action_members"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_logout"
         android:orderInCategory="1000"
         android:title="@string/action_logout"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_debug_groups"
-        android:orderInCategory="10000"
-        android:title="[DEBUG] Groups"
         app:showAsAction="never" />
 </menu>

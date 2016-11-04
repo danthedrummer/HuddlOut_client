@@ -64,4 +64,12 @@
         android:layout_below="@+id/editText4"
         android:layout_centerHorizontal="true" />
 
+    <Button
+        android:text="Register!"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/registerButton"
+        android:layout_below="@+id/loginButton"
+        android:layout_alignStart="@+id/loginButton" />
+
 </RelativeLayout>
