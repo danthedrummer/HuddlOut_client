@@ -16,4 +16,7 @@
     <string name="action_logout">Logout</string>
     <string name="action_rules">Rules</string>
     <string name="action_members">Members</string>
+    <string name="cancel">Cancel</string>
+    <string name="create_group_message">Create Group</string>
+    <string name="create_group_title">Create Group???</string>
 </resources>
