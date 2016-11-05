@@ -10,11 +10,80 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.teamh.huddleout.SettingsActivity">
 
-    <TextView
-        android:text="SETTINGS MENU!"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/textView2" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="@string/userProfileString"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/profileText"
+                android:layout_centerHorizontal="true"/>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/userPrivacySpinner"
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/profileText"/>
+
+            <TextView
+                android:text="@string/themeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/themeText"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/userPrivacySpinner"
+                android:layout_marginTop="40dp"/>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/themeText"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:id="@+id/themeSpinner"/>
+
+            <Switch
+                android:text="@string/nightModeSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/nightmodeSwitch"
+                android:layout_below="@+id/themeSpinner"/>
+
+            <TextView
+                android:text="@string/notificationString"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/notificationText"
+                android:layout_below="@+id/nightmodeSwitch"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="40dp"/>
+
+            <Switch
+                android:text="@string/showNotificationsSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/showNotificationsSwitch"
+                android:layout_below="@+id/notificationText"/>
+
+            <Switch
+                android:text="@string/playNotificationsSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/notificationsSoundSwitch"
+                android:layout_below="@+id/showNotificationsSwitch"/>
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+
+
 </RelativeLayout>

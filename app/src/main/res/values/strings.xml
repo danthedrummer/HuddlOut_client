@@ -7,6 +7,7 @@
     <string name="loginButtonText">Log In!</string>
     <!-- Registration strings -->
     <string name="registerString">Don\'t have an account?</string>
+    <string name="registerScreenTitle">Registration</string>
     <string name="emailText">Email</string>
     <string name="firstNameText">First Name</string>
     <!-- Main strings -->
@@ -16,4 +17,11 @@
     <string name="action_logout">Logout</string>
     <string name="action_rules">Rules</string>
     <string name="action_members">Members</string>
+    <!-- Settings strings -->
+    <string name="themeText">Themes</string>
+    <string name="userProfileString">Profile</string>
+    <string name="notificationString">Notifications</string>
+    <string name="showNotificationsSwitch">Show Notifications</string>
+    <string name="playNotificationsSwitch">Play Sound</string>
+    <string name="nightModeSwitch">Night Mode</string>
 </resources>
