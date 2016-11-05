@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_members"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,11 +11,210 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.teamh.huddleout.MembersActivity">
 
-    <TextView
-        android:text="MEMBERS ACTIVITY!"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/textView6" />
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fadeScrollbars="false"
+        android:weightSum="1.0"
+        android:columnCount="2">
+
+        <RelativeLayout
+            android:id="@+id/memberTile1"
+            android:layout_margin="5dp"
+            android:layout_columnWeight="1"
+            android:layout_height="100dp"
+            android:layout_width="0dp"
+            android:layout_gravity="fill_horizontal">
+
+            <ImageButton
+                app:srcCompat="@android:color/holo_green_light"
+                android:id="@+id/memberButton1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/holo_green_light"
+                android:padding="5dp"
+                android:elevation="0dp" />
+
+            <TextView
+                android:text="Aaron Meaney"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/memberNameView1"
+                android:layout_alignBottom="@+id/memberButton1"
+                android:layout_alignStart="@+id/memberButton1"
+                android:textColor="?android:attr/textColorPrimaryInverse"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:layout_alignEnd="@+id/memberButton1"
+                android:textAlignment="center" />
+
+            <TextView
+                android:text="AM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/memberInitialsView1"
+                android:layout_alignTop="@+id/memberButton1"
+                android:layout_alignStart="@+id/memberButton1"
+                android:layout_above="@+id/memberNameView1"
+                android:layout_alignEnd="@+id/memberButton1"
+                android:textAlignment="center"
+                android:textSize="36sp"
+                android:textColor="?android:attr/textColorPrimaryInverse"
+                android:textAllCaps="false"
+                android:gravity="center_vertical"
+                android:padding="5dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/memberTile2"
+            android:layout_margin="5dp"
+            android:layout_columnWeight="1"
+            android:layout_height="100dp"
+            android:layout_width="0dp"
+            android:layout_gravity="fill_horizontal">
+
+            <ImageButton
+                app:srcCompat="@android:color/holo_blue_light"
+                android:id="@+id/memberButton2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/holo_blue_light"
+                android:padding="5dp"
+                android:elevation="0dp" />
+
+            <TextView
+                android:text="Paul Reid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/memberNameView2"
+                android:layout_alignBottom="@+id/memberButton2"
+                android:layout_alignStart="@+id/memberButton2"
+                android:textColor="?android:attr/textColorPrimaryInverse"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:layout_alignEnd="@+id/memberButton2"
+                android:textAlignment="center" />
+
+            <TextView
+                android:text="PR"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/memberInitialsView1"
+                android:textAlignment="center"
+                android:textSize="36sp"
+                android:textColor="?android:attr/textColorPrimaryInverse"
+                android:textAllCaps="false"
+                android:gravity="center_vertical"
+                android:padding="5dp"
+                android:layout_above="@+id/memberNameView2"
+                android:layout_alignEnd="@+id/memberNameView2"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/memberTile3"
+            android:layout_margin="5dp"
+            android:layout_columnWeight="1"
+            android:layout_height="100dp"
+            android:layout_width="0dp"
+            android:layout_gravity="fill_horizontal">
+
+            <ImageButton
+                app:srcCompat="@android:color/holo_orange_light"
+                android:id="@+id/memberButton3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/holo_orange_light"
+                android:padding="5dp"
+                android:elevation="0dp" />
+
+            <TextView
+                android:text="Glenn Cullen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/memberNameView3"
+                android:layout_alignBottom="@+id/memberButton3"
+                android:layout_alignStart="@+id/memberButton3"
+                android:textColor="?android:attr/textColorPrimaryInverse"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:layout_alignEnd="@+id/memberButton3"
+                android:textAlignment="center" />
+
+            <TextView
+                android:text="GC"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/memberInitialsView1"
+                android:textAlignment="center"
+                android:textSize="36sp"
+                android:textColor="?android:attr/textColorPrimaryInverse"
+                android:textAllCaps="false"
+                android:gravity="center_vertical"
+                android:padding="5dp"
+                android:layout_above="@+id/memberNameView3"
+                android:layout_alignEnd="@+id/memberNameView3"
+                android:layout_alignParentTop="true"
+                android:layout_alignStart="@+id/memberNameView3" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/memberTile4"
+            android:layout_margin="5dp"
+            android:layout_columnWeight="1"
+            android:layout_height="100dp"
+            android:layout_width="0dp"
+            android:layout_gravity="fill_horizontal">
+
+            <ImageButton
+                app:srcCompat="@android:color/holo_red_light"
+                android:id="@+id/memberButton4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/holo_red_light"
+                android:padding="5dp"
+                android:elevation="0dp" />
+
+            <TextView
+                android:text="Dan Downey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/memberNameView4"
+                android:layout_alignBottom="@+id/memberButton4"
+                android:layout_alignStart="@+id/memberButton4"
+                android:textColor="?android:attr/textColorPrimaryInverse"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:layout_alignEnd="@+id/memberButton4"
+                android:textAlignment="center" />
+
+            <TextView
+                android:text="DD"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/memberInitialsView1"
+                android:textAlignment="center"
+                android:textSize="36sp"
+                android:textColor="?android:attr/textColorPrimaryInverse"
+                android:textAllCaps="false"
+                android:gravity="center_vertical"
+                android:padding="5dp"
+                android:layout_alignParentTop="true"
+                android:layout_above="@+id/memberNameView4"
+                android:layout_alignEnd="@+id/memberNameView4"
+                android:layout_alignStart="@+id/memberNameView4" />
+        </RelativeLayout>
+
+    </GridLayout>
+
+
 </RelativeLayout>

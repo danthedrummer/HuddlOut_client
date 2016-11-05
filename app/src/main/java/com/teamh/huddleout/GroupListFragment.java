@@ -1,8 +1,6 @@
 package com.teamh.huddleout;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.net.Uri;
@@ -12,10 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.GridLayout;
 import android.widget.ImageButton;
-
-import java.security.acl.Group;
 
 
 /**
@@ -70,7 +65,7 @@ public class GroupListFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_group_list, container, false);
 
-        ImageButton groupButton1 = (ImageButton)v.findViewById(R.id.groupButton1);
+        ImageButton groupButton1 = (ImageButton)v.findViewById(R.id.memberButton1);
         ImageButton groupButton2 = (ImageButton)v.findViewById(R.id.groupButton2);
         ImageButton groupButton3 = (ImageButton)v.findViewById(R.id.groupButton3);
         ImageButton newGroupButton = (ImageButton)v.findViewById(R.id.groupButton4);
