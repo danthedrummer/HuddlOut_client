@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
 import android.widget.ImageButton;
 
 import java.security.acl.Group;
@@ -67,9 +68,26 @@ public class GroupListFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_group_list, container, false);
 
-        ImageButton groupButton = (ImageButton)v.findViewById(R.id.groupButton1);
+        ImageButton groupButton1 = (ImageButton)v.findViewById(R.id.groupButton1);
+        ImageButton groupButton2 = (ImageButton)v.findViewById(R.id.groupButton2);
+        ImageButton groupButton3 = (ImageButton)v.findViewById(R.id.groupButton3);
+        ImageButton newGroupButton = (ImageButton)v.findViewById(R.id.groupButton4);
 
-        groupButton.setOnClickListener(new View.OnClickListener() {
+        groupButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivitySwap.swapToNextActivity(getActivity(), GroupMenuActivity.class);
+            }
+        });
+
+        groupButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivitySwap.swapToNextActivity(getActivity(), GroupMenuActivity.class);
+            }
+        });
+
+        groupButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ActivitySwap.swapToNextActivity(getActivity(), GroupMenuActivity.class);
