@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/registrationTitle"
         android:layout_alignStart="@+id/emailField"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         android:id="@+id/emailText" />
 
     <EditText
@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/emailField"
         android:layout_alignStart="@+id/firstNameField"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:id="@+id/firstNameText" />
 
     <EditText
@@ -61,7 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/firstNameField"
         android:layout_alignStart="@+id/usernameField"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:id="@+id/usernameText" />
 
     <EditText
@@ -79,7 +79,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/usernameField"
         android:layout_alignStart="@+id/passwordField"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:id="@+id/passwordText" />
 
     <EditText
@@ -98,7 +98,7 @@
         android:id="@+id/registrationSubmitButton"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/passwordField"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="20dp"/>
 
 
 </RelativeLayout>
