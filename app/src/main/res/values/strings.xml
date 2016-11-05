@@ -1,9 +1,15 @@
 <resources>
+    <!-- Login strings -->
     <string name="app_name">HuddleOut</string>
     <string name="loginScreen">Login Screen</string>
     <string name="usernameText">Username</string>
     <string name="passwordText">Password</string>
     <string name="loginButtonText">Log In!</string>
+    <!-- Registration strings -->
+    <string name="registerString">Don\'t have an account?</string>
+    <string name="emailText">Email</string>
+    <string name="firstNameText">First Name</string>
+    <!-- Main strings -->
     <string name="title_activity_main_menu">MainMenuActivity</string>
     <string name="title_activity_group_menu">Group Menu</string>
     <string name="action_settings">Settings</string>

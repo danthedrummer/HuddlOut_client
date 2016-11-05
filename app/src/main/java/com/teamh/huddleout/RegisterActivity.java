@@ -12,7 +12,7 @@ public class RegisterActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        Button registerButton = (Button)findViewById(R.id.registerButton);
+        Button registerButton = (Button)findViewById(R.id.registrationSubmitButton);
 
         registerButton.setOnClickListener(
                 new Button.OnClickListener(){
