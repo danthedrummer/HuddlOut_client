@@ -78,6 +78,11 @@ public class GroupMenuActivity extends AppCompatActivity {
             return true;
         }
 
+        if (id == R.id.action_rules) {
+            ActivitySwap.swapToNextActivity(GroupMenuActivity.this, RulesActivity.class);
+            return true;
+        }
+
         //TODO: Add logout functionality
         if (id == R.id.action_logout) {
             System.out.println("logout");

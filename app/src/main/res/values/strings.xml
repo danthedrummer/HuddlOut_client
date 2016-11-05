@@ -8,5 +8,6 @@
     <string name="title_activity_group_menu">Group Menu</string>
     <string name="action_settings">Settings</string>
     <string name="action_logout">Logout</string>
+    <string name="action_rules">Rules</string>
     <string name="action_members">Members</string>
 </resources>

@@ -13,6 +13,11 @@
         android:title="@string/action_members"
         app:showAsAction="never" />
     <item
+        android:id="@+id/action_rules"
+        android:orderInCategory="300"
+        android:title="@string/action_rules"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_logout"
         android:orderInCategory="1000"
         android:title="@string/action_logout"

@@ -17,7 +17,6 @@ public class RegisterActivity extends Activity {
         registerButton.setOnClickListener(
                 new Button.OnClickListener(){
                     public void onClick(View v){
-                        System.out.println("bepis");
                         ActivitySwap.swapToNextActivity(RegisterActivity.this, MainMenuActivity.class);
                     }
                 }
