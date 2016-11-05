@@ -24,4 +24,8 @@
     <string name="showNotificationsSwitch">Show Notifications</string>
     <string name="playNotificationsSwitch">Play Sound</string>
     <string name="nightModeSwitch">Night Mode</string>
+    <!-- Groups strings -->
+    <string name="cancel">Cancel</string>
+    <string name="create_group_message">Create Group</string>
+    <string name="create_group_title">Create Group???</string>
 </resources>

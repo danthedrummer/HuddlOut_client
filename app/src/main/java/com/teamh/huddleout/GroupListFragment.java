@@ -1,12 +1,17 @@
 package com.teamh.huddleout;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
 
@@ -40,9 +45,6 @@ public class GroupListFragment extends Fragment {
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment GroupListFragment.
      */
     // TODO: Rename and change types and number of parameters
@@ -91,6 +93,34 @@ public class GroupListFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ActivitySwap.swapToNextActivity(getActivity(), GroupMenuActivity.class);
+            }
+        });
+
+        newGroupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+
+                alert.setTitle("Create New Group");
+                alert.setMessage("Enter group name:");
+
+                // Set an EditText view to get user input
+                final EditText input = new EditText(getContext());
+                alert.setView(input);
+
+                alert.setPositiveButton("Create", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        System.out.println(input.getText());
+                    }
+                });
+
+                alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        // Canceled.
+                    }
+                });
+
+                alert.show();
             }
         });
 
