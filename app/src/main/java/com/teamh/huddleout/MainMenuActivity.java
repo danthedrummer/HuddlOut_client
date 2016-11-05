@@ -1,6 +1,9 @@
 package com.teamh.huddleout;
 
+import android.net.Uri;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -15,15 +18,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class MainMenuActivity extends AppCompatActivity {
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
+
+public class MainMenuActivity extends AppCompatActivity implements GroupListFragment.OnFragmentInteractionListener, FriendListFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener {
 
     /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
+     * The {@link PagerAdapter} that will provide
      * fragments for each of the sections. We use a
      * {@link FragmentPagerAdapter} derivative, which will keep every
      * loaded fragment in memory. If this becomes too memory intensive, it
      * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
+     * {@link FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -31,6 +39,11 @@ public class MainMenuActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +64,9 @@ public class MainMenuActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
 
@@ -89,50 +105,39 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     /**
-     * A placeholder fragment containing a simple view.
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
-    public static class MainMenuFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("MainMenu Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
 
-        public MainMenuFragment() {
-        }
+    @Override
+    public void onStart() {
+        super.onStart();
 
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static MainMenuFragment newInstance(int sectionNumber) {
-            MainMenuFragment fragment = new MainMenuFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+    }
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView;
-            switch (getArguments().getInt(ARG_SECTION_NUMBER)) {
-                case 1:
-                    rootView = inflater.inflate(R.layout.fragment_group_list, container, false);
-                    break;
-                case 2:
-                    rootView = inflater.inflate(R.layout.fragment_friend_list, container, false);
-                    break;
-                case 3:
-                    rootView = inflater.inflate(R.layout.fragment_profile, container, false);
-                    break;
-                default:
-                    rootView = inflater.inflate(R.layout.fragment_group_list, container, false);
-                    break;
-            }
-            return rootView;
-        }
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(client, getIndexApiAction());
+        client.disconnect();
     }
 
     /**
@@ -147,9 +152,18 @@ public class MainMenuActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a MainMenuFragment (defined as a static inner class below).
-            return MainMenuFragment.newInstance(position + 1);
+
+            Fragment f = GroupListFragment.newInstance();
+
+            switch (position) {
+                case 0:
+                    return GroupListFragment.newInstance();
+                case 1:
+                    return FriendListFragment.newInstance();
+                case 2:
+                    return ProfileFragment.newInstance();
+            }
+            return f;
         }
 
         @Override
@@ -170,5 +184,9 @@ public class MainMenuActivity extends AppCompatActivity {
             }
             return null;
         }
+    }
+
+    public void onFragmentInteraction(Uri uri) {
+        //you can leave it empty
     }
 }

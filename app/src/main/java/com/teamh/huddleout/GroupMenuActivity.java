@@ -1,5 +1,6 @@
 package com.teamh.huddleout;
 
+import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -17,7 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class GroupMenuActivity extends AppCompatActivity {
+public class GroupMenuActivity extends AppCompatActivity implements ChatFragment.OnFragmentInteractionListener, MapFragment.OnFragmentInteractionListener, VotingFragment.OnFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -92,53 +93,6 @@ public class GroupMenuActivity extends AppCompatActivity {
     }
 
     /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class GroupFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public GroupFragment() {
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static GroupFragment newInstance(int sectionNumber) {
-            GroupFragment fragment = new GroupFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-
-            View rootView;
-            switch (getArguments().getInt(ARG_SECTION_NUMBER)) {
-                case 1:
-                    rootView = inflater.inflate(R.layout.fragment_chat, container, false);
-                    break;
-                case 2:
-                    rootView = inflater.inflate(R.layout.fragment_map, container, false);
-                    break;
-                case 3:
-                    rootView = inflater.inflate(R.layout.fragment_voting, container, false);
-                    break;
-                default:
-                    rootView = inflater.inflate(R.layout.fragment_chat, container, false);
-            }
-            return rootView;
-        }
-    }
-
-    /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
@@ -150,9 +104,17 @@ public class GroupMenuActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a GroupFragment (defined as a static inner class below).
-            return GroupFragment.newInstance(position + 1);
+            Fragment f = GroupListFragment.newInstance();
+
+            switch (position) {
+                case 0:
+                    return ChatFragment.newInstance();
+                case 1:
+                    return MapFragment.newInstance();
+                case 2:
+                    return VotingFragment.newInstance();
+            }
+            return f;
         }
 
         @Override
@@ -173,5 +135,9 @@ public class GroupMenuActivity extends AppCompatActivity {
             }
             return null;
         }
+    }
+
+    public void onFragmentInteraction(Uri uri) {
+        //you can leave it empty
     }
 }

@@ -1,13 +1,62 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.teamh.huddleout.GroupListFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="GROUP LIST" />
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/groupTile1">
+
+            <ImageButton
+                app:srcCompat="?attr/colorAccent"
+                android:id="@+id/groupButton1"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="?attr/colorAccent"
+                android:padding="5dp"
+                android:layout_margin="5dp"
+                android:elevation="0dp" />
+
+            <TextView
+                android:text="6 Members"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/groupMemberView1"
+                android:layout_alignBottom="@+id/groupButton1"
+                android:layout_alignStart="@+id/groupButton1"
+                android:textColor="?android:attr/textColorPrimaryInverse"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:layout_alignEnd="@+id/groupButton1"
+                android:textAlignment="center" />
+
+            <TextView
+                android:text="Team Hayes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/groupTitleView1"
+                android:layout_alignTop="@+id/groupButton1"
+                android:layout_alignStart="@+id/groupButton1"
+                android:layout_above="@+id/groupMemberView1"
+                android:layout_alignEnd="@+id/groupButton1"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:textColor="?android:attr/textColorPrimaryInverse"
+                android:textAllCaps="false"
+                android:gravity="center_vertical" />
+        </RelativeLayout>
+
+    </GridLayout>
 
 </FrameLayout>
