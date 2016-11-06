@@ -56,6 +56,8 @@ public class VotingFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
     }
 
     @Override
@@ -63,6 +65,8 @@ public class VotingFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_voting, container, false);
+
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

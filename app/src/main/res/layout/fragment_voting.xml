@@ -4,10 +4,80 @@
     android:layout_height="match_parent"
     tools:context="com.teamh.huddleout.VotingFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="VOTING FRAGMENT!!!" />
+    <!-- Group voting layout -->
 
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/voteOwner"
+                android:text="@string/voteOwner"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:text="@string/voteDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/voteOwner"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:id="@+id/voteDescriptionBox"
+                />
+
+
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/voteDescriptionBox"
+                android:layout_marginStart="30dp"
+                android:id="@+id/votingOptionsGroup">
+
+                <RadioButton
+                    android:text="@string/voteOption1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/voteOptionButton1"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="20dp"/>
+
+                <RadioButton
+                    android:text="@string/voteOption2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/voteOptionButton2"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="20dp"/>
+
+                <RadioButton
+                    android:text="@string/voteOption3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/voteOptionButton3"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="20dp"/>
+
+                <RadioButton
+                    android:text="@string/voteOption4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/voteOptionButton4"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="20dp"/>
+
+            </RadioGroup>
+
+        </RelativeLayout>
+    </ScrollView>
 </FrameLayout>

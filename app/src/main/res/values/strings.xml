@@ -28,4 +28,14 @@
     <string name="cancel">Cancel</string>
     <string name="create_group_message">Create Group</string>
     <string name="create_group_title">Create Group???</string>
+    <!-- Vote strings -->
+    <string name="voteOwner">Dan</string>
+    <string name="voteDescription">
+        The music in this place sucks. I\m thinking Fibber\'s or Gypsy Rose.
+        What do you guys think?
+    </string>
+    <string name="voteOption1">Fibber\'s</string>
+    <string name="voteOption2">Gypsy Rose</string>
+    <string name="voteOption3">Sweeney\'s</string>
+    <string name="voteOption4">O\'Reilly\'s</string>
 </resources>
