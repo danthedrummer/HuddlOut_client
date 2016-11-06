@@ -1,13 +1,123 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.teamh.huddleout.ChatFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="CHAT FRAGMENT!!!" />
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/chatBoxLayout"
+            android:id="@+id/chatLayoutParent">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/chatScrollView">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/chatLayout">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/chatBubble"
+                        android:layout_margin="5dp">
+
+                        <TextView
+                            android:text="What's up?"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/msgTextView"
+                            android:textAlignment="textStart"
+                            android:textColor="?android:attr/textColorPrimaryInverse"
+                            android:background="?attr/colorAccent"
+                            android:padding="5dp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/chatBubble"
+                        android:layout_margin="5dp">
+
+                        <TextView
+                            android:text="The Sky.\nHAHAHAHAHAHA!"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/msgTextView"
+                            android:textAlignment="textStart"
+                            android:textColor="?android:attr/textColorPrimaryInverse"
+                            android:background="@android:color/holo_green_dark"
+                            android:padding="5dp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/chatBubble"
+                        android:layout_margin="5dp">
+
+                        <TextView
+                            android:text="xDDDDDD"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/msgTextView"
+                            android:textAlignment="textStart"
+                            android:textColor="?android:attr/textColorPrimaryInverse"
+                            android:background="?attr/colorAccent"
+                            android:padding="5dp" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+            </ScrollView>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:background="?attr/colorPrimary"
+            android:id="@+id/chatBoxLayout"
+            android:elevation="4dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:ems="10"
+                android:id="@+id/messageTextInput"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@+id/sendButton"
+                android:singleLine="true"
+                android:paddingLeft="10dp"
+                android:textSize="18sp"
+                android:textColor="?android:attr/textColorPrimaryInverse"
+                android:hint="Message..."
+                style="@style/Base.TextAppearance.AppCompat.Inverse"
+                android:selectAllOnFocus="true" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/send_message"
+                android:id="@+id/sendButton"
+                android:layout_alignParentEnd="true"
+                android:elevation="6dp"
+                android:backgroundTint="?android:attr/colorAccent" />
+        </RelativeLayout>
+    </RelativeLayout>
 
 </FrameLayout>
