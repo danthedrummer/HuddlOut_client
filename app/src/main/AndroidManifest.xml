@@ -44,7 +44,8 @@
             android:theme="@style/DeepPurpleTheme.NoActionBar" />
         <activity android:name=".MembersActivity" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".RulesActivity"></activity>
+        <activity android:name=".RulesActivity" />
+        <activity android:name=".OtherProfileActivity"></activity>
     </application>
 
 </manifest>
