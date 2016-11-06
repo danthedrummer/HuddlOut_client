@@ -5,9 +5,110 @@
     tools:context="com.teamh.huddleout.ProfileFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="PROFILE FRAGMENT" />
+        android:layout_height="match_parent">
+
+        <TextView
+            android:text="Name:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/nameTextView"
+            android:layout_alignBaseline="@+id/nameTextEdit"
+            android:layout_alignBottom="@+id/nameTextEdit"
+            android:layout_alignStart="@+id/ageTextView" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text="Name"
+            android:ems="10"
+            android:id="@+id/nameTextEdit"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/ageTextEdit" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text="Age"
+            android:ems="10"
+            android:id="@+id/ageTextEdit"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="37dp"
+            android:layout_below="@+id/nameTextEdit"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:text="Phone Number:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/phoneTextEdit"
+            android:layout_alignStart="@+id/emailTextView"
+            android:id="@+id/phoneTextView" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text="Preferences"
+            android:ems="10"
+            android:id="@+id/preferencesTextEdit"
+            android:layout_alignBaseline="@+id/preferencesTextView"
+            android:layout_alignBottom="@+id/preferencesTextView"
+            android:layout_alignStart="@+id/phoneTextEdit" />
+
+        <TextView
+            android:text="Email:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/emailTextView"
+            android:layout_alignBaseline="@+id/emailTextEdit"
+            android:layout_alignBottom="@+id/emailTextEdit"
+            android:layout_alignEnd="@+id/nameTextView" />
+
+        <TextView
+            android:text="Age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ageTextView"
+            android:layout_marginStart="25dp"
+            android:layout_alignBaseline="@+id/ageTextEdit"
+            android:layout_alignBottom="@+id/ageTextEdit"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:layout_marginTop="23dp"
+            android:id="@+id/emailTextEdit"
+            android:text="Email@example.com"
+            android:layout_below="@+id/ageTextEdit"
+            android:layout_alignStart="@+id/ageTextEdit" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:ems="10"
+            android:layout_marginTop="20dp"
+            android:id="@+id/phoneTextEdit"
+            android:layout_below="@+id/emailTextEdit"
+            android:layout_alignStart="@+id/emailTextEdit" />
+
+        <TextView
+            android:text="Preferences:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="61dp"
+            android:id="@+id/preferencesTextView"
+            android:layout_below="@+id/phoneTextView"
+            android:layout_alignStart="@+id/phoneTextView" />
+    </RelativeLayout>
 
 </FrameLayout>
