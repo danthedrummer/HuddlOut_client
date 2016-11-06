@@ -11,10 +11,56 @@
     tools:context="com.teamh.huddleout.RulesActivity">
 
     <TextView
-        android:text="Rules Activity"
+        android:text="Voting:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/textView7" />
+        android:id="@+id/votingTitleView"
+        android:textStyle="normal|bold" />
+
+    <TextView
+        android:text="Majority Wins"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/votingTitleView"
+        android:layout_toEndOf="@+id/votingTitleView"
+        android:id="@+id/votingDataView"
+        android:layout_marginLeft="5dp" />
+
+    <TextView
+        android:text="Privacy:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/votingTitleView"
+        android:layout_alignParentStart="true"
+        android:id="@+id/privacyTitleView"
+        android:layout_marginTop="10dp"
+        android:textStyle="normal|bold" />
+
+    <TextView
+        android:text="Friend Invites Only"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/privacyTitleView"
+        android:layout_toEndOf="@+id/privacyTitleView"
+        android:id="@+id/privacyDataView"
+        android:layout_marginLeft="5dp" />
+
+    <TextView
+        android:text="Other Rules:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/otherRulesTitleView"
+        android:layout_below="@+id/privacyTitleView"
+        android:layout_alignParentStart="true"
+        android:textStyle="normal|bold"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:text="•Drink with your bad hand\n•No swearing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/otherRulesTitleView"
+        android:layout_alignParentStart="true"
+        android:id="@+id/textView7"
+        android:layout_marginTop="5dp" />
 </RelativeLayout>
