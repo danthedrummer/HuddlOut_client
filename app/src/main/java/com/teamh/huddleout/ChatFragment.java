@@ -116,7 +116,7 @@ public class ChatFragment extends Fragment {
         LinearLayout.LayoutParams relativeParams = new LinearLayout.LayoutParams(
                 new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT));
+                        LinearLayout.LayoutParams.MATCH_PARENT));
         relativeParams.setMargins(5, 5, 5, 5);
         rl.setLayoutParams(relativeParams);
         rl.requestLayout();
