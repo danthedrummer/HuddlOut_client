@@ -6,6 +6,8 @@ import android.util.Log;
 
 import com.android.volley.toolbox.*;
 
+import java.util.concurrent.CountDownLatch;
+
 /**
  * Created by x14729249 on 08/11/2016.
  */
@@ -21,7 +23,7 @@ public class HuddlOutAPI {
 
     private static final String TAG = "DevMsg";
 
-    private boolean authorised;
+    private boolean authorised, authInProgress;
 
     static String token;
     private String url;
@@ -31,13 +33,10 @@ public class HuddlOutAPI {
     private Context context;
     private Network network;
 
-//    Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024);
-//    Network network = new BasicNetwork(new HurlStack());
-//    RequestQueue reQueue = new RequestQueue(cache, network);
-
     public HuddlOutAPI(Context context){
         token = null;
         authorised = false;
+        authInProgress = false;
         url = "https://huddlout-server-reccy.c9users.io:8081/";
 
         this.context = context;
@@ -50,6 +49,16 @@ public class HuddlOutAPI {
 
     // Login
     public void login(String username, String password){
+
+         RequestQueue.RequestFinishedListener finishedListener = new RequestQueue.RequestFinishedListener() {
+            @Override
+            public void onRequestFinished(Request request) {
+                authoriseUser();
+                reQueue.removeRequestFinishedListener(this);
+            }
+        };
+        reQueue.addRequestFinishedListener(finishedListener);
+
         Log.i(TAG, "login start");
         String params = url + "api/auth/login?username=" + username + "&password=" + password;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
@@ -58,9 +67,9 @@ public class HuddlOutAPI {
             public void onResponse(String response){
                 if(!response.equalsIgnoreCase("invalid password")){
                     token = response;
+//                    authoriseUser();
                 }
                 Log.i(TAG, "login response: " + response);
-                Log.i(TAG, String.valueOf(reQueue.getSequenceNumber()));
             }
         }, new Response.ErrorListener(){
             @Override
@@ -72,9 +81,20 @@ public class HuddlOutAPI {
     }
 
 
-    public boolean authoriseUser(){
+    public void authoriseUser(){
+        authInProgress = true;
+        RequestQueue.RequestFinishedListener finishedListener = new RequestQueue.RequestFinishedListener() {
+            @Override
+            public void onRequestFinished(Request request) {
+                authInProgress = false;
+                reQueue.removeRequestFinishedListener(this);
+            }
+        };
+        reQueue.addRequestFinishedListener(finishedListener);
+
         Log.i(TAG, String.valueOf(reQueue.getSequenceNumber()));
         Log.i(TAG, "token to auth: " + token);
+
         String params = url + "api/auth/checkAuth?token=" + token;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>(){
@@ -95,8 +115,14 @@ public class HuddlOutAPI {
             }
         });
         reQueue.add(stringRequest);
-        Log.i(TAG, "return auth: " + authorised);
-        return authorised;
     }
 
+
+    public boolean getAuthInProgress(){
+        return authInProgress;
+    }
+
+    public boolean getAuth(){
+        return authorised;
+    }
 }

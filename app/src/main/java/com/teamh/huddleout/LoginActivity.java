@@ -27,12 +27,17 @@ public class LoginActivity extends Activity {
         loginButton.setOnClickListener(
                 new Button.OnClickListener(){
                     public void onClick(View v){
-                        hAPI.login(((EditText) findViewById(R.id.usernameField)).getText().toString(), ((EditText) findViewById(R.id.passwordField)).getText().toString());
-                        if(hAPI.authoriseUser()){
-                            ActivitySwap.swapToNextActivity(LoginActivity.this, MainMenuActivity.class);
-                        }else{
-                            Log.i(TAG, "invalid login details");
+                        if(!hAPI.getAuth()){
+                            hAPI.login(((EditText) findViewById(R.id.usernameField)).getText().toString(), ((EditText) findViewById(R.id.passwordField)).getText().toString());
                         }
+
+                        while(hAPI.getAuthInProgress()){
+                            if(hAPI.getAuth()){
+                                ActivitySwap.swapToNextActivity(LoginActivity.this, MainMenuActivity.class);
+                            }
+                        }
+
+
                     }
                 }
         );
