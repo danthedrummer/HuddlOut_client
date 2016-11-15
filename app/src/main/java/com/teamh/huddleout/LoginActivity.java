@@ -23,8 +23,8 @@ public class LoginActivity extends Activity {
 
         Button loginButton = (Button)findViewById(R.id.loginButton);
         Button registerButton = (Button)findViewById(R.id.registerButton);
-        EditText username = (EditText)findViewById(R.id.usernameField);
-        EditText password = (EditText)findViewById(R.id.passwordField);
+        final EditText username = (EditText)findViewById(R.id.usernameField);
+        final EditText password = (EditText)findViewById(R.id.passwordField);
         final TextView messageTxt = (TextView)findViewById(R.id.messageTxt);
 
         final HuddlOutAPI hAPI = new HuddlOutAPI(this.getApplicationContext());
@@ -33,7 +33,7 @@ public class LoginActivity extends Activity {
                 new Button.OnClickListener(){
                     public void onClick(View v){
 
-                        final RequestQueue reQueue = hAPI.login(((EditText) findViewById(R.id.usernameField)).getText().toString(), ((EditText) findViewById(R.id.passwordField)).getText().toString());
+                        final RequestQueue reQueue = hAPI.login(username.getText().toString(), password.getText().toString());
                         RequestQueue.RequestFinishedListener finishedListener = new RequestQueue.RequestFinishedListener() {
                             @Override
                             public void onRequestFinished(Request request) {
