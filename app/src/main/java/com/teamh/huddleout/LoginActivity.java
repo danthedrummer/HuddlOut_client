@@ -7,6 +7,10 @@ import android.util.Log;
 import android.widget.Button;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 
 public class LoginActivity extends Activity {
 
@@ -21,23 +25,26 @@ public class LoginActivity extends Activity {
         Button registerButton = (Button)findViewById(R.id.registerButton);
         EditText username = (EditText)findViewById(R.id.usernameField);
         EditText password = (EditText)findViewById(R.id.passwordField);
+        final TextView messageTxt = (TextView)findViewById(R.id.messageTxt);
 
         final HuddlOutAPI hAPI = new HuddlOutAPI(this.getApplicationContext());
 
         loginButton.setOnClickListener(
                 new Button.OnClickListener(){
                     public void onClick(View v){
-                        if(!hAPI.getAuth()){
-                            hAPI.login(((EditText) findViewById(R.id.usernameField)).getText().toString(), ((EditText) findViewById(R.id.passwordField)).getText().toString());
-                        }
 
-                        while(hAPI.getAuthInProgress()){
+                        final RequestQueue reQueue = hAPI.login(((EditText) findViewById(R.id.usernameField)).getText().toString(), ((EditText) findViewById(R.id.passwordField)).getText().toString());
+                        RequestQueue.RequestFinishedListener finishedListener = new RequestQueue.RequestFinishedListener() {
+                            @Override
+                            public void onRequestFinished(Request request) {
                             if(hAPI.getAuth()){
                                 ActivitySwap.swapToNextActivity(LoginActivity.this, MainMenuActivity.class);
+                            }else{
+                                messageTxt.setText("INVALID DETAILS");
                             }
-                        }
-
-
+                            }
+                        };
+                        reQueue.addRequestFinishedListener(finishedListener);
                     }
                 }
         );

@@ -23,7 +23,7 @@ public class HuddlOutAPI {
 
     private static final String TAG = "DevMsg";
 
-    private boolean authorised, authInProgress;
+    private boolean authorised;
 
     static String token;
     private String url;
@@ -36,7 +36,6 @@ public class HuddlOutAPI {
     public HuddlOutAPI(Context context){
         token = null;
         authorised = false;
-        authInProgress = false;
         url = "https://huddlout-server-reccy.c9users.io:8081/";
 
         this.context = context;
@@ -48,26 +47,18 @@ public class HuddlOutAPI {
     }
 
     // Login
-    public void login(String username, String password){
-
-         RequestQueue.RequestFinishedListener finishedListener = new RequestQueue.RequestFinishedListener() {
-            @Override
-            public void onRequestFinished(Request request) {
-                authoriseUser();
-                reQueue.removeRequestFinishedListener(this);
-            }
-        };
-        reQueue.addRequestFinishedListener(finishedListener);
-
+    public RequestQueue login(String username, String password){
         Log.i(TAG, "login start");
         String params = url + "api/auth/login?username=" + username + "&password=" + password;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>(){
             @Override
             public void onResponse(String response){
-                if(!response.equalsIgnoreCase("invalid password")){
+                if(!response.contains("invalid")){
                     token = response;
-//                    authoriseUser();
+                    authorised = true;
+                }else{
+                    authorised = false;
                 }
                 Log.i(TAG, "login response: " + response);
             }
@@ -78,20 +69,11 @@ public class HuddlOutAPI {
             }
         });
         reQueue.add(stringRequest);
+        return reQueue;
     }
 
 
-    public void authoriseUser(){
-        authInProgress = true;
-        RequestQueue.RequestFinishedListener finishedListener = new RequestQueue.RequestFinishedListener() {
-            @Override
-            public void onRequestFinished(Request request) {
-                authInProgress = false;
-                reQueue.removeRequestFinishedListener(this);
-            }
-        };
-        reQueue.addRequestFinishedListener(finishedListener);
-
+    public RequestQueue authoriseUser(){
         Log.i(TAG, String.valueOf(reQueue.getSequenceNumber()));
         Log.i(TAG, "token to auth: " + token);
 
@@ -115,12 +97,9 @@ public class HuddlOutAPI {
             }
         });
         reQueue.add(stringRequest);
+        return reQueue;
     }
 
-
-    public boolean getAuthInProgress(){
-        return authInProgress;
-    }
 
     public boolean getAuth(){
         return authorised;
