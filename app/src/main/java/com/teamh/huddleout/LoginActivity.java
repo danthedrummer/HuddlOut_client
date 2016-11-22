@@ -40,7 +40,7 @@ public class LoginActivity extends Activity {
                             if(hAPI.getAuth()){
                                 ActivitySwap.swapToNextActivity(LoginActivity.this, MainMenuActivity.class);
                             }else{
-                                messageTxt.setText("INVALID DETAILS");
+                                messageTxt.setText(hAPI.getMessage());
                             }
                             }
                         };
