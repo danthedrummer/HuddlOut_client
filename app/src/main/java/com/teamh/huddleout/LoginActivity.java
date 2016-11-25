@@ -39,6 +39,7 @@ public class LoginActivity extends Activity {
                             public void onRequestFinished(Request request) {
                             if(hAPI.getAuth()){
                                 ActivitySwap.swapToNextActivity(LoginActivity.this, MainMenuActivity.class);
+                                finish();
                             }else{
                                 messageTxt.setText(hAPI.getMessage());
                             }
