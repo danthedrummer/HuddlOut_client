@@ -19,6 +19,7 @@ public class LaunchActivity extends Activity {
             @Override
             public void run(){
                 ActivitySwap.swapToNextActivity(LaunchActivity.this, LoginActivity.class);
+                finish();
             }
         }, 4000);
     }

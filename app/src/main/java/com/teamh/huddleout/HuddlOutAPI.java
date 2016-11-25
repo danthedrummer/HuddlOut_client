@@ -127,10 +127,8 @@ public class HuddlOutAPI {
                                 Log.i(TAG, "default");
                                 break;
 
-
                         }
                     }
-
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError err) {
