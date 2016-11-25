@@ -28,7 +28,7 @@ public class User {
     }
 
     public void createFriendsLis() {
-        
+
     }
 
 }
