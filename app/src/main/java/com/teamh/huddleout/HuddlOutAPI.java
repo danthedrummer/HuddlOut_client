@@ -50,7 +50,7 @@ public class HuddlOutAPI {
         reQueue.start();
     }
 
-    // Login
+    // AUTHORISATION
     public RequestQueue login(String username, String password){
         String params = url + "api/auth/login?username=" + username + "&password=" + password;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
@@ -75,18 +75,6 @@ public class HuddlOutAPI {
         return reQueue;
     }
 
-
-    // Register
-     /*
-        /api/auth/register
-
-        //Params: ?username, ?password
-        //Returns "invalid params" if invalid params
-        //Returns "occupied username" if username already taken
-        //Returns "invalid username" if invalid username
-        //Returns "invalid password" if password is invalid
-        //Returns "success" if registration successful
-      */
     public RequestQueue register (String username, String password) {
         String params = url + "api/auth/register?username=" + username + "&password=" + password;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
@@ -173,6 +161,8 @@ public class HuddlOutAPI {
         return reQueue;
     }
 
+
+    // GROUPS
     public RequestQueue createGroup(String groupName, String activity){
         String params = url + "api/group/create?token=" + token + "&name=" + groupName + "&activity=" + activity;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
@@ -212,6 +202,27 @@ public class HuddlOutAPI {
         return reQueue;
     }
 
+    public RequestQueue leaveGroup(int groupId){
+        String params = url + "api/group/leave?token=" + token + "&groupId=" + groupId;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
+                new Response.Listener<String>(){
+                    @Override
+                    public void onResponse(String response){
+                        //Returns "invalid params" if invalid params
+                        //Returns "not found" if group membership not found
+                        //Returns "invalid role" if user is group admin
+                        //Returns "success" if deletion successful
+                    }
+                }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError err){
+                Log.i(TAG, "Failed Check Invites" + err);
+            }
+        });
+        reQueue.add(stringRequest);
+        return reQueue;
+    }
+
     public RequestQueue getGroupMembers(int groupId){
         String params = url + "api/group/getMembers?token=" + token + "&groupId=" + groupId;
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
@@ -225,6 +236,26 @@ public class HuddlOutAPI {
             @Override
             public void onErrorResponse(VolleyError err){
                 Log.i(TAG, "Failed Get Members" + err);
+            }
+        });
+        reQueue.add(stringRequest);
+        return reQueue;
+    }
+
+    public RequestQueue getGroups(){
+        String params = url + "api/group/getGroups?token=" + token;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
+                new Response.Listener<String>(){
+                    @Override
+                    public void onResponse(String response){
+                        //Returns "invalid params" if invalid params
+                        //Returns "no groups" if user is not member of a group
+                        //Returns list of ids of groups if successful
+                    }
+                }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError err){
+                Log.i(TAG, "Failed Check Invites" + err);
             }
         });
         reQueue.add(stringRequest);
@@ -341,6 +372,9 @@ public class HuddlOutAPI {
         return reQueue;
     }
 
+
+
+    // USER
     public RequestQueue getProfile(int profileId){
         String params = url + "api/user/getProfile?token=" + token + "&profileId=" + profileId;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
@@ -361,6 +395,174 @@ public class HuddlOutAPI {
         return reQueue;
     }
 
+    public RequestQueue editProfile(String firstName, String lastName, String profilePicture, int age, String description, String privacy){
+        String params = url + "api/user/edit?token=" + token + "&firstName="
+                + firstName + "&lastName=" + lastName + "&profilePicture="
+                + profilePicture + "&age=" + age + "&description="
+                + description + "&privacy=" + privacy;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
+                new Response.Listener<String>(){
+                    @Override
+                    public void onResponse(String response){
+                        //Returns "invalid params" if invalid params
+                        //Returns "description invalid range" if the description value is too large
+                        //Returns "privacy invalid value" if privacy does not match either "PUBLIC" or "PRIVATE"
+                        //Returns "success" if edit is successful
+                    }
+                }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError err){
+                Log.i(TAG, "Failed Check Invites" + err);
+            }
+        });
+        reQueue.add(stringRequest);
+        return reQueue;
+    }
+
+    public RequestQueue getProfilePicture(){
+        String params = url + "api/user/getProfilePictures?token=" + token;
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
+                new Response.Listener<String>(){
+                    @Override
+                    public void onResponse(String response){
+                        //Returns "invalid params" if invalid params
+                        //Returns list (string) of profile pictures
+                    }
+                }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError err){
+                Log.i(TAG, "Failed Check Invites" + err);
+            }
+        });
+        reQueue.add(stringRequest);
+        return reQueue;
+    }
+
+    public RequestQueue downloadPicture(String imageName){
+        String params = url + "api/user/downloadPicture?token=" + token + "&imageName=" + imageName;
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
+                new Response.Listener<String>(){
+                    @Override
+                    public void onResponse(String response){
+                        //Returns "invalid params" if invalid params
+                        //Returns an error if the file cannot be found, or a backtracking has been attempted
+                        //Returns a profile picture file if file is found
+                    }
+                }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError err){
+                Log.i(TAG, "Failed Check Invites" + err);
+            }
+        });
+        reQueue.add(stringRequest);
+        return reQueue;
+    }
+
+
+
+    // FRIEND
+    public RequestQueue sendFriendRequest(String profileId){
+        String params = url + "api/user/sendFriendRequest?token=" + token + "&profileId=" + profileId;
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
+                new Response.Listener<String>(){
+                    @Override
+                    public void onResponse(String response){
+                        //Returns "invalid params" if invalid params
+                        //Returns "relationship already exists" if user_a already has a relationship with user_b
+                        //Returns "user not found" if user_b cannot be found
+                        //Returns "success" if friend request is successfully created
+                    }
+                }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError err){
+                Log.i(TAG, "Failed Check Invites" + err);
+            }
+        });
+        reQueue.add(stringRequest);
+        return reQueue;
+    }
+
+    public RequestQueue getFriendRequests(){
+        String params = url + "api/user/getFriendRequests?token=" + token;
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
+                new Response.Listener<String>(){
+                    @Override
+                    public void onResponse(String response){
+                        //Returns "invalid params" if invalid params
+                        //Returns "no requests found" if there are no friend requests
+                        //Returns list of friend requests
+                    }
+                }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError err){
+                Log.i(TAG, "Failed Check Invites" + err);
+            }
+        });
+        reQueue.add(stringRequest);
+        return reQueue;
+    }
+
+    public RequestQueue resolveFriendRequest(String profileId, String action){
+        String params = url + "api/user/resolveFriendRequest?token=" + token + "&profileId=" + profileId + "&action=" + action;
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
+                new Response.Listener<String>(){
+                    @Override
+                    public void onResponse(String response){
+                        //Returns "invalid params" if invalid params
+                        //Returns "cannot befriend yourself" if user tried to befriend themself
+                        //Returns "invite not found" if invite does not exist
+                        //Returns "success" if friend request action completes
+                    }
+                }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError err){
+                Log.i(TAG, "Failed Check Invites" + err);
+            }
+        });
+        reQueue.add(stringRequest);
+        return reQueue;
+    }
+
+    public RequestQueue getFriends(){
+        String params = url + "api/user/viewFriends?token=" + token;
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
+                new Response.Listener<String>(){
+                    @Override
+                    public void onResponse(String response){
+                        //Returns "invalid params" if invalid params
+                        //Returns "no friends" if user has no friends
+                        //Returns list of friend ids and relationshp types if user has friends
+                    }
+                }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError err){
+                Log.i(TAG, "Failed Check Invites" + err);
+            }
+        });
+        reQueue.add(stringRequest);
+        return reQueue;
+    }
+
+    public RequestQueue deleteFriend(String profileId){
+        String params = url + "api/user/deleteFriend?token=" + token + "&profileId" + profileId;
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
+                new Response.Listener<String>(){
+                    @Override
+                    public void onResponse(String response){
+
+                    }
+                }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError err){
+                Log.i(TAG, "Failed Check Invites" + err);
+            }
+        });
+        reQueue.add(stringRequest);
+        return reQueue;
+    }
+
+
+    // RETURN DATA
     public boolean getAuth(){
         return authorised;
     }
@@ -369,3 +571,20 @@ public class HuddlOutAPI {
         return message;
     }
 }
+
+
+        String params = url +
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
+                new Response.Listener<String>(){
+                    @Override
+                    public void onResponse(String response){
+
+                    }
+                }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError err){
+                Log.i(TAG, "Failed Check Invites" + err);
+            }
+        });
+        reQueue.add(stringRequest);
+        return reQueue;
