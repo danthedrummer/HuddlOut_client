@@ -573,18 +573,18 @@ public class HuddlOutAPI {
 }
 
 
-        String params = url +
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
-                new Response.Listener<String>(){
-                    @Override
-                    public void onResponse(String response){
-
-                    }
-                }, new Response.ErrorListener(){
-            @Override
-            public void onErrorResponse(VolleyError err){
-                Log.i(TAG, "Failed Check Invites" + err);
-            }
-        });
-        reQueue.add(stringRequest);
-        return reQueue;
+//        String params = url +
+//        StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
+//                new Response.Listener<String>(){
+//                    @Override
+//                    public void onResponse(String response){
+//
+//                    }
+//                }, new Response.ErrorListener(){
+//            @Override
+//            public void onErrorResponse(VolleyError err){
+//                Log.i(TAG, "Failed Check Invites" + err);
+//            }
+//        });
+//        reQueue.add(stringRequest);
+//        return reQueue;
