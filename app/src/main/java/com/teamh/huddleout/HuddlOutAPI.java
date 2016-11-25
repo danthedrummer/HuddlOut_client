@@ -6,6 +6,8 @@ import android.util.Log;
 
 import com.android.volley.toolbox.*;
 
+import org.json.JSONObject;
+
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -24,20 +26,20 @@ public class HuddlOutAPI {
 
     private static final String TAG = "DevMsg";
 
+    private String responseFromServer;
     private boolean authorised;
-
     private String message;
-
     static String token;
-
     private String url;
 
+    private static HuddlOutAPI hAPI;
     private RequestQueue reQueue;
     private Cache cache;
     private Context context;
     private Network network;
 
     public HuddlOutAPI(Context context){
+        responseFromServer = "";
         token = null;
         authorised = false;
         url = "https://huddlout-server-reccy.c9users.io:8081/";
@@ -48,6 +50,14 @@ public class HuddlOutAPI {
         network = new BasicNetwork(new HurlStack());
         reQueue = new RequestQueue(cache, network);
         reQueue.start();
+    }
+
+    // set up API as a singleton
+    public static synchronized  HuddlOutAPI getInstance(Context context){
+        if(hAPI == null){
+            hAPI = new HuddlOutAPI(context);
+        }
+        return hAPI;
     }
 
     // AUTHORISATION
@@ -373,7 +383,6 @@ public class HuddlOutAPI {
     }
 
 
-
     // USER
     public RequestQueue getProfile(int profileId){
         String params = url + "api/user/getProfile?token=" + token + "&profileId=" + profileId;
@@ -459,7 +468,6 @@ public class HuddlOutAPI {
     }
 
 
-
     // FRIEND
     public RequestQueue sendFriendRequest(String profileId){
         String params = url + "api/user/sendFriendRequest?token=" + token + "&profileId=" + profileId;
@@ -532,11 +540,18 @@ public class HuddlOutAPI {
                         //Returns "invalid params" if invalid params
                         //Returns "no friends" if user has no friends
                         //Returns list of friend ids and relationshp types if user has friends
+                        if(response.equalsIgnoreCase("invalid params") || response.equalsIgnoreCase("no friends")){
+                            message = response;
+                        }else{
+                             responseFromServer = response;
+                        }
                     }
                 }, new Response.ErrorListener(){
             @Override
             public void onErrorResponse(VolleyError err){
                 Log.i(TAG, "Failed Check Invites" + err);
+                message = "error";
+                responseFromServer = "error";
             }
         });
         reQueue.add(stringRequest);
@@ -568,7 +583,12 @@ public class HuddlOutAPI {
     }
 
     public String getMessage(){
+
         return message;
+    }
+
+    public String getResponse(){
+        return responseFromServer;
     }
 }
 

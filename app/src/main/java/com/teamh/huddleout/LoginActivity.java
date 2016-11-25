@@ -27,7 +27,7 @@ public class LoginActivity extends Activity {
         final EditText password = (EditText)findViewById(R.id.passwordField);
         final TextView messageTxt = (TextView)findViewById(R.id.messageTxt);
 
-        final HuddlOutAPI hAPI = new HuddlOutAPI(this.getApplicationContext());
+        final HuddlOutAPI hAPI = HuddlOutAPI.getInstance(this.getApplicationContext());
 
         loginButton.setOnClickListener(
                 new Button.OnClickListener(){

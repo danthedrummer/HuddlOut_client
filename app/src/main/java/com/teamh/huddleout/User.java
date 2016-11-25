@@ -1,5 +1,10 @@
 package com.teamh.huddleout;
 
+import com.android.volley.RequestQueue;
+
+import android.app.Activity;
+import android.content.Context;
+
 import java.util.ArrayList;
 
 /**
@@ -7,6 +12,9 @@ import java.util.ArrayList;
  */
 
 public class User {
+
+    final HuddlOutAPI hAPI;
+    private static User user;
 
     private int profileID;
 
@@ -19,8 +27,17 @@ public class User {
 
     ArrayList<User> friendsList = new ArrayList<>();
     
-    public User(int profileID) {
+    public User(int profileID, Context context) {
+        this.profileID = profileID;
+        hAPI = HuddlOutAPI.getInstance(context);
+    }
 
+
+    public static synchronized User getInstance(int profileId, Context context){
+        if(user == null){
+            user = new User(profileId, context);
+        }
+        return user;
     }
 
     public String getFullName() {
@@ -28,7 +45,7 @@ public class User {
     }
 
     public void createFriendsLis() {
-
+        RequestQueue reQueue = hAPI.getFriends();
     }
 
 }
