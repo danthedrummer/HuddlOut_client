@@ -1,4 +1,5 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,104 +12,79 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:text="Name:"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/nameTextView"
-            android:layout_alignBaseline="@+id/nameTextEdit"
-            android:layout_alignBottom="@+id/nameTextEdit"
-            android:layout_alignStart="@+id/ageTextView" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:text="Name"
-            android:ems="10"
-            android:id="@+id/nameTextEdit"
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            app:srcCompat="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color"
+            android:layout_marginStart="21dp"
+            android:layout_marginTop="23dp"
+            android:id="@+id/profileImageView"
             android:layout_alignParentTop="true"
-            android:layout_alignStart="@+id/ageTextEdit" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:text="Age"
-            android:ems="10"
-            android:id="@+id/ageTextEdit"
-            android:layout_marginTop="14dp"
-            android:layout_marginEnd="37dp"
-            android:layout_below="@+id/nameTextEdit"
-            android:layout_alignParentEnd="true" />
-
-        <TextView
-            android:text="Phone Number:"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/phoneTextEdit"
-            android:layout_alignStart="@+id/emailTextView"
-            android:id="@+id/phoneTextView" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:text="Preferences"
-            android:ems="10"
-            android:id="@+id/preferencesTextEdit"
-            android:layout_alignBaseline="@+id/preferencesTextView"
-            android:layout_alignBottom="@+id/preferencesTextView"
-            android:layout_alignStart="@+id/phoneTextEdit" />
-
-        <TextView
-            android:text="Email:"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/emailTextView"
-            android:layout_alignBaseline="@+id/emailTextEdit"
-            android:layout_alignBottom="@+id/emailTextEdit"
-            android:layout_alignEnd="@+id/nameTextView" />
-
-        <TextView
-            android:text="Age"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/ageTextView"
-            android:layout_marginStart="25dp"
-            android:layout_alignBaseline="@+id/ageTextEdit"
-            android:layout_alignBottom="@+id/ageTextEdit"
             android:layout_alignParentStart="true" />
 
-        <EditText
+        <Button
+            android:text="Context Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:ems="10"
-            android:layout_marginTop="23dp"
-            android:id="@+id/emailTextEdit"
-            android:text="Email@example.com"
-            android:layout_below="@+id/ageTextEdit"
-            android:layout_alignStart="@+id/ageTextEdit" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="phone"
-            android:ems="10"
-            android:layout_marginTop="20dp"
-            android:id="@+id/phoneTextEdit"
-            android:layout_below="@+id/emailTextEdit"
-            android:layout_alignStart="@+id/emailTextEdit" />
+            android:layout_alignBottom="@+id/profileImageView"
+            android:id="@+id/topContextButton"
+            android:layout_alignEnd="@+id/nameTextView"
+            android:layout_alignStart="@+id/nameTextView" />
 
         <TextView
-            android:text="Preferences:"
+            android:text="About Name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="61dp"
+            android:layout_below="@+id/profileImageView"
+            android:layout_alignStart="@+id/profileImageView"
+            android:layout_marginTop="17dp"
+            android:id="@+id/aboutTextView"
+            android:textSize="18sp"
+            android:textStyle="normal|bold" />
+
+        <TextView
+            android:text="Example Name"
+            android:layout_height="wrap_content"
+            android:id="@+id/nameTextView"
+            android:layout_width="200dp"
+            android:textSize="18sp"
+            android:gravity="center_horizontal"
+            android:layout_marginStart="21dp"
+            android:textStyle="normal|bold"
+            android:layout_alignTop="@+id/profileImageView"
+            android:layout_toEndOf="@+id/profileImageView" />
+
+        <TextView
+            android:text="Praesent fringilla, nibh vitae blandit elementum, dolor dui ornare turpis, sed suscipit nibh tellus nec metus. Cras vitae laoreet est. Etiam congue neque id pretium rhoncus. Etiam imperdiet sapien nisi. Suspendisse at ex vel dui consequat iaculis non id nisi. Fusce augue lacus, tempor quis sollicitudin quis"
+            android:layout_width="wrap_content"
+            android:layout_height="120dp"
+            android:layout_below="@+id/aboutTextView"
+            android:layout_alignStart="@+id/aboutTextView"
+            android:layout_marginTop="13dp"
+            android:id="@+id/aboutContentTextView"
+            android:layout_alignEnd="@+id/topContextButton" />
+
+        <TextView
+            android:text="Preferences Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/preferencesTextView"
-            android:layout_below="@+id/phoneTextView"
-            android:layout_alignStart="@+id/phoneTextView" />
+            android:layout_marginTop="14dp"
+            android:layout_below="@+id/aboutContentTextView"
+            android:layout_alignStart="@+id/aboutContentTextView"
+            android:textSize="18sp"
+            android:textStyle="normal|bold" />
+
+        <TextView
+            android:text="Aenean laoreet commodo sem. Praesent viverra neque arcu, in sollicitudin elit accumsan et. Nam aliquam id velit in tincidunt. Nullam elementum augue dui, in placerat nunc blandit at. Quisque nulla turpis, aliquet quis luctus nec, lacinia et turpis. Aliquam sed diam ullamcorper, dapibus ipsum ac"
+            android:layout_width="wrap_content"
+            android:layout_height="120dp"
+            android:layout_below="@+id/preferencesTextView"
+            android:layout_alignStart="@+id/preferencesTextView"
+            android:layout_marginTop="11dp"
+            android:id="@+id/preferencesContentTextView"
+            android:layout_alignEnd="@+id/aboutContentTextView" />
+
     </RelativeLayout>
 
 </FrameLayout>

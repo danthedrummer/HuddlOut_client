@@ -12,7 +12,7 @@ public class User {
 
     private String firstName;
     private String lastName;
-
+    private String profilePicture;
     private String token;
 
     ArrayList<Integer> groupIDs = new ArrayList<Integer>();
