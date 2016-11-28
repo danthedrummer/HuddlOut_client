@@ -33,14 +33,15 @@ public class User {
     private String privacy;
     private String token;
 
-//    ArrayList<Integer> groupIDs = new ArrayList<Integer>();
-
-//    ArrayList<User> friendsList = new ArrayList<>();
+    ArrayList<Integer> groupIDs;
+    ArrayList<Integer> friendsList;
     
     public User(int profileID, Context context) {
         this.profileID = profileID;
         hAPI = HuddlOutAPI.getInstance(context);
         getProfileInformation();
+//        getGroupList();
+        getFriendsList();
     }
 
 
@@ -56,30 +57,46 @@ public class User {
         RequestQueue.RequestFinishedListener finishedListener = new RequestQueue.RequestFinishedListener() {
             @Override
             public void onRequestFinished(Request request) {
-//                if(hAPI.getAuth()){
+                if(hAPI.getAuth()) {
                     try {
                         JSONObject profileJSON = new JSONObject(hAPI.getResponse());
-                        firstName = (String)profileJSON.get("first_name");
-                        lastName = (String)profileJSON.get("last_name");
-                        profilePicture = (String)profileJSON.get("profile_picture");
-                        age = (Integer)profileJSON.get("age");
-                        description = (String)profileJSON.get("description");
-                        privacy = (String)profileJSON.get("privacy");
+                        firstName = (String) profileJSON.get("first_name");
+                        lastName = (String) profileJSON.get("last_name");
+                        profilePicture = (String) profileJSON.get("profile_picture");
+                        age = (Integer) profileJSON.get("age");
+                        description = (String) profileJSON.get("description");
+                        privacy = (String) profileJSON.get("privacy");
                         Log.i(TAG, "first name: " + firstName);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-//                }else{
-//                    Log.i(TAG, "Failed auth " + hAPI.getMessage());
-//                }
+                }else{
+                    Log.i(TAG, "profile not authorised");
+                }
             }
         };
         reQueue.addRequestFinishedListener(finishedListener);
     }
 
     // creates an arraylist of the profileIds of the user's friends
-    public void createFriendsLis() {
+    private void getFriendsList() {
         RequestQueue reQueue = hAPI.getFriends();
+        RequestQueue.RequestFinishedListener finishedListener = new RequestQueue.RequestFinishedListener() {
+            @Override
+            public void onRequestFinished(Request request) {
+                if(hAPI.getAuth()) {
+                    try {
+                        JSONObject profileJSON = new JSONObject(hAPI.getResponse());
+                        friendsList.add((Integer) profileJSON.get("profile"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+                    Log.i(TAG, "profile not authorised");
+                }
+            }
+        };
+        reQueue.addRequestFinishedListener(finishedListener);
     }
 
 }

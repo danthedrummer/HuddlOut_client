@@ -69,6 +69,7 @@ public class HuddlOutAPI {
             public void onResponse(String response){
                 if(!response.contains("invalid")){
                     token = response;
+                    Log.i(TAG, token);
                     authorised = true;
                 }else{
                     message = response;

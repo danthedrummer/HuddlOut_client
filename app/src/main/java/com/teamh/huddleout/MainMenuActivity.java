@@ -70,6 +70,8 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
+        User user = User.getInstance(8, this.getApplicationContext());
     }
 
 
