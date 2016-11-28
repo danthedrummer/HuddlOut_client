@@ -393,6 +393,11 @@ public class HuddlOutAPI {
                         //Returns "invalid params" if invalid params
                         //Returns "not found" if user does not exist
                         //Returns profile as JSON if registration successful
+                        if(response.equalsIgnoreCase("invalid params") || response.equalsIgnoreCase("not found")){
+                            message = response;
+                        }else{
+                            responseFromServer = response;
+                        }
                     }
                 }, new Response.ErrorListener(){
             @Override

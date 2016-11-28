@@ -1,9 +1,14 @@
 package com.teamh.huddleout;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -13,6 +18,8 @@ import java.util.ArrayList;
 
 public class User {
 
+    private static final String TAG = "DevMsg";
+
     final HuddlOutAPI hAPI;
     private static User user;
 
@@ -20,16 +27,20 @@ public class User {
 
     private String firstName;
     private String lastName;
+    private int age;
+    private String description;
     private String profilePicture;
+    private String privacy;
     private String token;
 
-    ArrayList<Integer> groupIDs = new ArrayList<Integer>();
+//    ArrayList<Integer> groupIDs = new ArrayList<Integer>();
 
-    ArrayList<User> friendsList = new ArrayList<>();
+//    ArrayList<User> friendsList = new ArrayList<>();
     
     public User(int profileID, Context context) {
         this.profileID = profileID;
         hAPI = HuddlOutAPI.getInstance(context);
+        getProfileInformation();
     }
 
 
@@ -40,10 +51,33 @@ public class User {
         return user;
     }
 
-    public String getFullName() {
-        return firstName + " " + lastName;
+    private void getProfileInformation() {
+        RequestQueue reQueue = hAPI.getProfile(profileID);
+        RequestQueue.RequestFinishedListener finishedListener = new RequestQueue.RequestFinishedListener() {
+            @Override
+            public void onRequestFinished(Request request) {
+//                if(hAPI.getAuth()){
+                    try {
+                        JSONObject profileJSON = new JSONObject(hAPI.getResponse());
+                        firstName = (String)profileJSON.get("first_name");
+                        lastName = (String)profileJSON.get("last_name");
+                        profilePicture = (String)profileJSON.get("profile_picture");
+                        age = (Integer)profileJSON.get("age");
+                        description = (String)profileJSON.get("description");
+                        privacy = (String)profileJSON.get("privacy");
+                        Log.i(TAG, "first name: " + firstName);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+//                }else{
+//                    Log.i(TAG, "Failed auth " + hAPI.getMessage());
+//                }
+            }
+        };
+        reQueue.addRequestFinishedListener(finishedListener);
     }
 
+    // creates an arraylist of the profileIds of the user's friends
     public void createFriendsLis() {
         RequestQueue reQueue = hAPI.getFriends();
     }

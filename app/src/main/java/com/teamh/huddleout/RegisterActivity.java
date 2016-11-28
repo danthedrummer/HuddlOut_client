@@ -23,7 +23,7 @@ public class RegisterActivity extends Activity {
 
         Button registerButton = (Button)findViewById(R.id.registrationSubmitButton);
 
-        final HuddlOutAPI hAPI = new HuddlOutAPI(this.getApplicationContext());
+        final HuddlOutAPI hAPI = HuddlOutAPI.getInstance(this.getApplicationContext());
 
         registerButton.setOnClickListener(
                 new Button.OnClickListener(){
