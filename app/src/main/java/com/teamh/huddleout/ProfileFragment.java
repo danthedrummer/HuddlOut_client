@@ -61,7 +61,7 @@ public class ProfileFragment extends Fragment {
         }
 
 
-//        final ImageView profileImageView = (ImageView) getActivity().findViewById(R.id.profileImageView);
+        final ImageView profileImageView = (ImageView) getActivity().findViewById(R.id.profileImageView);
 //
 //        final TextView nameTextView = (TextView)getActivity().findViewById(R.id.nameTextView);
 //        final TextView aboutTextView = (TextView)getActivity().findViewById(R.id.aboutTextView);

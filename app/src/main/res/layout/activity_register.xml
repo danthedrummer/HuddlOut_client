@@ -19,24 +19,6 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-    <Button
-        android:text="Register!"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/registrationSubmitButton"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/passwordField"
-        android:layout_marginTop="20dp"/>
-
-    <TextView
-        android:text="@string/passwordText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="55dp"
-        android:id="@+id/passwordText"
-        android:layout_below="@+id/usernameField"
-        android:layout_alignStart="@+id/passwordField" />
-
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -65,14 +47,69 @@
         android:layout_centerHorizontal="true" />
 
     <TextView
+        android:text="@string/passwordText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/registrationSubmitButton"
-        android:layout_marginTop="36dp"
-        android:id="@+id/messageTxt"
-        android:layout_alignStart="@+id/passwordField"
+        android:layout_marginTop="14dp"
+        android:id="@+id/passwordText"
+        android:layout_below="@+id/usernameField"
+        android:layout_toStartOf="@+id/registrationTitle" />
+
+    <Button
+        android:text="Register!"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/registrationSubmitButton"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="51dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:layout_below="@+id/firstNameTextView"
         android:layout_alignEnd="@+id/passwordField"
-        android:textAlignment="center" />
+        android:id="@+id/firstNameField" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:layout_below="@+id/lastNameTextView"
+        android:layout_alignEnd="@+id/firstNameField"
+        android:id="@+id/lastNameField" />
+
+    <TextView
+        android:text="Last Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lastNameTextView"
+        android:layout_marginTop="12dp"
+        android:layout_below="@+id/firstNameField"
+        android:layout_alignStart="@+id/passwordText" />
+
+    <TextView
+        android:text="First Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/firstNameTextView"
+        android:layout_marginTop="13dp"
+        android:layout_below="@+id/passwordField"
+        android:layout_alignEnd="@+id/lastNameTextView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
+        android:id="@+id/messageTxt"
+        android:textAlignment="center"
+        android:layout_below="@+id/lastNameField"
+        android:layout_alignStart="@+id/lastNameTextView"
+        android:layout_alignEnd="@+id/lastNameField"
+        android:textColor="@android:color/holo_red_light" />
 
 
 </RelativeLayout>

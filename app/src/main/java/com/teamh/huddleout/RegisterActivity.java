@@ -19,6 +19,8 @@ public class RegisterActivity extends Activity {
 
         final EditText username = (EditText)findViewById(R.id.usernameField);
         final EditText password = (EditText)findViewById(R.id.passwordField);
+        final EditText firstName = (EditText)findViewById(R.id.firstNameField);
+        final EditText lastName = (EditText)findViewById(R.id.lastNameField);
         final TextView messageTxt = (TextView)findViewById(R.id.messageTxt);
 
         Button registerButton = (Button)findViewById(R.id.registrationSubmitButton);
@@ -29,7 +31,7 @@ public class RegisterActivity extends Activity {
                 new Button.OnClickListener(){
                     public void onClick(View v){
 
-                        final RequestQueue reQueue = hAPI.register(username.getText().toString(), password.getText().toString());
+                        final RequestQueue reQueue = hAPI.register(username.getText().toString(), password.getText().toString(), firstName.getText().toString(), lastName.getText().toString());
                         RequestQueue.RequestFinishedListener finishedListener = new RequestQueue.RequestFinishedListener() {
                             @Override
                             public void onRequestFinished(Request request) {

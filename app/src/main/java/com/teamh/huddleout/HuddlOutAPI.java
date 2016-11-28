@@ -70,6 +70,7 @@ public class HuddlOutAPI {
                 if(!response.contains("invalid")){
                     token = response;
                     authorised = true;
+                    Log.i(TAG, "Token: " + token);
                 }else{
                     message = response;
                     authorised = false;
@@ -85,33 +86,19 @@ public class HuddlOutAPI {
         return reQueue;
     }
 
-    public RequestQueue register (String username, String password) {
-        String params = url + "api/auth/register?username=" + username + "&password=" + password;
+    public RequestQueue register (String username, String password, String firstName, String lastName) {
+        String params = url + "api/auth/register?username=" + username + "&password=" + password + "&firstName=" + firstName + "&lastName=" + lastName;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>(){
                     @Override
                     public void onResponse(String response){
-                        message = response;
-                        switch(response){
-                            case "success":
-                                token = response;
-                                authorised = true;
-                                break;
-                            case "invalid params":
-                                authorised = false;
-                                break;
-                            case "occupied username":
-                                authorised = false;
-                                break;
-                            case "invalid username":
-                                authorised = false;
-                                break;
-                            case "invalid password":
-                                authorised = false;
-                                break;
-                            default:
-                                Log.i(TAG, "default");
-                                break;
+
+                        if(response.contains("invalid") || response.contains("occupied")){
+                            message = response;
+                            authorised = false;
+                        }else{
+                            token = response;
+                            authorised = true;
                         }
                     }
                 }, new Response.ErrorListener() {

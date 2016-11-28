@@ -58,6 +58,8 @@ public class User {
             public void onRequestFinished(Request request) {
 //                if(hAPI.getAuth()){
                     try {
+                        Log.i(TAG, "Start of try");
+
                         JSONObject profileJSON = new JSONObject(hAPI.getResponse());
                         firstName = (String)profileJSON.get("first_name");
                         lastName = (String)profileJSON.get("last_name");
