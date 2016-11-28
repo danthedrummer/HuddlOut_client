@@ -30,10 +30,6 @@ public class ProfileFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    final HuddlOutAPI hAPI = HuddlOutAPI.getInstance(this.getActivity().getApplicationContext());
-
-
-
     private OnFragmentInteractionListener mListener;
 
     public ProfileFragment() {
@@ -64,15 +60,16 @@ public class ProfileFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        final ImageView profileImageView = (ImageView) getActivity().findViewById(R.id.profileImageView);
 
-        final TextView nameTextView = (TextView)getActivity().findViewById(R.id.nameTextView);
-        final TextView aboutTextView = (TextView)getActivity().findViewById(R.id.aboutTextView);
-        final TextView aboutContentTextView = (TextView)getActivity().findViewById(R.id.aboutContentTextView);
-        final TextView preferencesTextView = (TextView)getActivity().findViewById(R.id.preferencesTextView);
-        final TextView preferencesContentTextView = (TextView)getActivity().findViewById(R.id.preferencesContentTextView);
-
-        final Button topContextButton = (Button)getActivity().findViewById(R.id.topContextButton);
+//        final ImageView profileImageView = (ImageView) getActivity().findViewById(R.id.profileImageView);
+//
+//        final TextView nameTextView = (TextView)getActivity().findViewById(R.id.nameTextView);
+//        final TextView aboutTextView = (TextView)getActivity().findViewById(R.id.aboutTextView);
+//        final TextView aboutContentTextView = (TextView)getActivity().findViewById(R.id.aboutContentTextView);
+//        final TextView preferencesTextView = (TextView)getActivity().findViewById(R.id.preferencesTextView);
+//        final TextView preferencesContentTextView = (TextView)getActivity().findViewById(R.id.preferencesContentTextView);
+//
+//        final Button topContextButton = (Button)getActivity().findViewById(R.id.topContextButton);
 
     }
 

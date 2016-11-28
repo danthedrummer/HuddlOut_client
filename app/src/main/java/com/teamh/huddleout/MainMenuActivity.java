@@ -43,6 +43,9 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
+
+//    final HuddlOutAPI hAPI = HuddlOutAPI.getInstance(this.getApplicationContext());
+
     private GoogleApiClient client;
 
     @Override
