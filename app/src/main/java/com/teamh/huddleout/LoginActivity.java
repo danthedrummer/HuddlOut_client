@@ -21,13 +21,14 @@ public class LoginActivity extends Activity {
 
         final String TAG = "DevMsg";
 
+        final HuddlOutAPI hAPI = HuddlOutAPI.getInstance(this.getApplicationContext());
+
         Button loginButton = (Button)findViewById(R.id.loginButton);
         Button registerButton = (Button)findViewById(R.id.registerButton);
         final EditText username = (EditText)findViewById(R.id.usernameField);
         final EditText password = (EditText)findViewById(R.id.passwordField);
         final TextView messageTxt = (TextView)findViewById(R.id.messageTxt);
-
-        final HuddlOutAPI hAPI = HuddlOutAPI.getInstance(this.getApplicationContext());
+        final TextView signInTitle = (TextView)findViewById(R.id.signInTitle);
 
         loginButton.setOnClickListener(
                 new Button.OnClickListener(){
@@ -37,18 +38,19 @@ public class LoginActivity extends Activity {
                         RequestQueue.RequestFinishedListener finishedListener = new RequestQueue.RequestFinishedListener() {
                             @Override
                             public void onRequestFinished(Request request) {
-                            if(hAPI.getAuth()){
-                                ActivitySwap.swapToNextActivity(LoginActivity.this, MainMenuActivity.class);
-                                finish();
-                            }else{
-                                messageTxt.setText(hAPI.getMessage());
-                            }
+                                if(hAPI.getAuth()){
+                                    ActivitySwap.swapToNextActivity(LoginActivity.this, MainMenuActivity.class);
+                                    finish();
+                                }else{
+                                    messageTxt.setText(hAPI.getMessage());
+                                }
                             }
                         };
                         reQueue.addRequestFinishedListener(finishedListener);
                     }
                 }
         );
+
 
         registerButton.setOnClickListener(
                 new Button.OnClickListener(){
@@ -57,5 +59,30 @@ public class LoginActivity extends Activity {
                     }
                 }
         );
+
+        signInTitle.setOnClickListener(
+                new View.OnClickListener(){
+                    public void onClick(View v) {
+
+                        Log.i(TAG, "DEV Login");
+
+                        final RequestQueue reQueue = hAPI.login("glennncullen", "1234567");
+                        RequestQueue.RequestFinishedListener finishedListener = new RequestQueue.RequestFinishedListener() {
+                            @Override
+                            public void onRequestFinished(Request request) {
+                                if(hAPI.getAuth()){
+                                    ActivitySwap.swapToNextActivity(LoginActivity.this, MainMenuActivity.class);
+                                    finish();
+                                }else{
+
+                                }
+                            }
+                        };
+                        reQueue.addRequestFinishedListener(finishedListener);
+
+                    }
+
+                });
     }
+
 }
