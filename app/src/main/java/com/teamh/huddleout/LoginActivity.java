@@ -68,7 +68,7 @@ public class LoginActivity extends Activity {
 
                         Log.i(TAG, "DEV Login");
 
-                        final RequestQueue reQueue = hAPI.login("glennncullen", "1234567");
+                        final RequestQueue reQueue = hAPI.login("paulwins", "abcdefg");
                         RequestQueue.RequestFinishedListener finishedListener = new RequestQueue.RequestFinishedListener() {
                             @Override
                             public void onRequestFinished(Request request) {

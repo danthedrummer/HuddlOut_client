@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,9 +45,9 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
 
-//    final HuddlOutAPI hAPI = HuddlOutAPI.getInstance(this.getApplicationContext());
-
     private GoogleApiClient client;
+
+    private static final String TAG = "DevMsg";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +71,8 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
+        //final HuddlOutAPI hAPI = HuddlOutAPI.getInstance(this.getApplicationContext());
 
     }
 
@@ -132,6 +135,7 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client.connect();
         AppIndex.AppIndexApi.start(client, getIndexApiAction());
+
     }
 
     @Override
@@ -189,6 +193,8 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
             return null;
         }
     }
+
+
 
     public void onFragmentInteraction(Uri uri) {
         //you can leave it empty

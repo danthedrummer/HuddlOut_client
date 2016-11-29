@@ -4,12 +4,18 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 
 
 /**
@@ -29,6 +35,16 @@ public class ProfileFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private static final String TAG = "DevMsg";
+
+    TextView nameTextView;
+    TextView aboutTextView;
+    TextView aboutContentTextView;
+    TextView preferencesTextView;
+    TextView preferencesContentTextView;
+    Button topContextButton;
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -60,24 +76,29 @@ public class ProfileFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-
         final ImageView profileImageView = (ImageView) getActivity().findViewById(R.id.profileImageView);
-//
-//        final TextView nameTextView = (TextView)getActivity().findViewById(R.id.nameTextView);
-//        final TextView aboutTextView = (TextView)getActivity().findViewById(R.id.aboutTextView);
-//        final TextView aboutContentTextView = (TextView)getActivity().findViewById(R.id.aboutContentTextView);
-//        final TextView preferencesTextView = (TextView)getActivity().findViewById(R.id.preferencesTextView);
-//        final TextView preferencesContentTextView = (TextView)getActivity().findViewById(R.id.preferencesContentTextView);
-//
-//        final Button topContextButton = (Button)getActivity().findViewById(R.id.topContextButton);
+
+        final HuddlOutAPI hAPI = HuddlOutAPI.getInstance(this.getActivity());
+
+        aboutTextView = (TextView)getActivity().findViewById(R.id.aboutTextView);
+        aboutContentTextView = (TextView)getActivity().findViewById(R.id.aboutContentTextView);
+        preferencesContentTextView = (TextView)getActivity().findViewById(R.id.preferencesContentTextView);
+        topContextButton = (Button)getActivity().findViewById(R.id.topContextButton);
 
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+
+        FrameLayout rellay = (FrameLayout) inflater.inflate(R.layout.fragment_profile, container, false);
+
+        preferencesTextView = (TextView)rellay.findViewById(R.id.preferencesTextView);
+
+        return rellay;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -104,6 +125,13 @@ public class ProfileFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState){
+        preferencesTextView = (TextView) getActivity().findViewById(R.id.preferencesTextView);
+        // Displaying the user details on the screen
+        preferencesTextView.setText("Evan Hardware");
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -118,4 +146,9 @@ public class ProfileFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+    public void setProfileName(String firstName, String lastName) {
+        //preferencesTextView.setText(firstName + " " + lastName);
+    }
+
 }

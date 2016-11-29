@@ -63,6 +63,7 @@ public class HuddlOutAPI {
 
     // AUTHORISATION
     public RequestQueue login(String username, String password){
+
         Log.i(TAG, "Login start");
         String params = url + "api/auth/login?username=" + username + "&password=" + password;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
