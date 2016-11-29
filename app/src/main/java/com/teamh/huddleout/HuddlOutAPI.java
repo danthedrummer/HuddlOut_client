@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.android.volley.toolbox.*;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.concurrent.CountDownLatch;
@@ -62,16 +63,22 @@ public class HuddlOutAPI {
 
     // AUTHORISATION
     public RequestQueue login(String username, String password){
+        Log.i(TAG, "Login start");
         String params = url + "api/auth/login?username=" + username + "&password=" + password;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>(){
             @Override
             public void onResponse(String response){
                 if(!response.contains("invalid")){
-                    token = response;
-                    Log.i(TAG, token);
+                    try {
+                        JSONObject loginJSON = new JSONObject(response);
+                        token = (String) loginJSON.get("auth");
+                        User u = User.getInstance((Integer) loginJSON.get("id"), context);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     authorised = true;
-                    Log.i(TAG, "Token: " + token);
+                    message = "";
                 }else{
                     message = response;
                     authorised = false;
@@ -88,6 +95,7 @@ public class HuddlOutAPI {
     }
 
     public RequestQueue register (String username, String password, String firstName, String lastName) {
+        Log.i(TAG, "Register start");
         String params = url + "api/auth/register?username=" + username + "&password=" + password + "&firstName=" + firstName + "&lastName=" + lastName;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>(){
@@ -98,8 +106,15 @@ public class HuddlOutAPI {
                             message = response;
                             authorised = false;
                         }else{
-                            token = response;
+                            try {
+                                JSONObject loginJSON = new JSONObject(response);
+                                token = (String) loginJSON.get("auth");
+                                User u = User.getInstance((Integer) loginJSON.get("id"), context);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                             authorised = true;
+                            message = "";
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -121,8 +136,10 @@ public class HuddlOutAPI {
                     public void onResponse(String response){
                         if(response.equals(token)){
                             authorised = true;
+                            message = "";
                         }else{
                             authorised = false;
+                            message = response;
                         }
                     }
                 }, new Response.ErrorListener(){
@@ -241,6 +258,7 @@ public class HuddlOutAPI {
     }
 
     public RequestQueue getGroups(){
+        Log.i(TAG, "getGroups start");
         String params = url + "api/group/getGroups?token=" + token;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>(){
@@ -249,6 +267,12 @@ public class HuddlOutAPI {
                         //Returns "invalid params" if invalid params
                         //Returns "no groups" if user is not member of a group
                         //Returns list of ids of groups if successful
+                        if(response.equalsIgnoreCase("invalid params") || response.equalsIgnoreCase("no groups")){
+                            message = response;
+                        }else{
+                            responseFromServer = response;
+                            message = "";
+                        }
                     }
                 }, new Response.ErrorListener(){
             @Override
@@ -373,6 +397,7 @@ public class HuddlOutAPI {
 
     // USER
     public RequestQueue getProfile(int profileId){
+        Log.i(TAG, "getProfile start");
         String params = url + "api/user/getProfile?token=" + token + "&profileId=" + profileId;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>(){
@@ -385,6 +410,7 @@ public class HuddlOutAPI {
                             message = response;
                         }else{
                             responseFromServer = response;
+                            message = "";
                         }
                     }
                 }, new Response.ErrorListener(){
@@ -410,6 +436,12 @@ public class HuddlOutAPI {
                         //Returns "description invalid range" if the description value is too large
                         //Returns "privacy invalid value" if privacy does not match either "PUBLIC" or "PRIVATE"
                         //Returns "success" if edit is successful
+                        if(response.equalsIgnoreCase("invalid params") || response.equalsIgnoreCase("description invalid range") || response.equalsIgnoreCase("privacy invalid value")){
+                            message = response;
+                        }else{
+                            responseFromServer = response;
+                            message = "";
+                        }
                     }
                 }, new Response.ErrorListener(){
             @Override
@@ -462,8 +494,8 @@ public class HuddlOutAPI {
 
 
     // FRIEND
-    public RequestQueue sendFriendRequest(String profileId){
-        String params = url + "api/user/sendFriendRequest?token=" + token + "&profileId=" + profileId;
+    public RequestQueue sendFriendRequest(String username){
+        String params = url + "api/user/sendFriendRequest?token=" + token + "&username=" + username;
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>(){
                     @Override
@@ -503,7 +535,7 @@ public class HuddlOutAPI {
         return reQueue;
     }
 
-    public RequestQueue resolveFriendRequest(String profileId, String action){
+    public RequestQueue resolveFriendRequest(int profileId, String action){
         String params = url + "api/user/resolveFriendRequest?token=" + token + "&profileId=" + profileId + "&action=" + action;
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>(){
@@ -525,6 +557,7 @@ public class HuddlOutAPI {
     }
 
     public RequestQueue getFriends(){
+        Log.i(TAG, "getFriends start");
         String params = url + "api/user/viewFriends?token=" + token;
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>(){
@@ -536,7 +569,8 @@ public class HuddlOutAPI {
                         if(response.equalsIgnoreCase("invalid params") || response.equalsIgnoreCase("no friends")){
                             message = response;
                         }else{
-                             responseFromServer = response;
+                            responseFromServer = response;
+                            message = "";
                         }
                     }
                 }, new Response.ErrorListener(){
@@ -551,7 +585,7 @@ public class HuddlOutAPI {
         return reQueue;
     }
 
-    public RequestQueue deleteFriend(String profileId){
+    public RequestQueue deleteFriend(int profileId){
         String params = url + "api/user/deleteFriend?token=" + token + "&profileId" + profileId;
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>(){
