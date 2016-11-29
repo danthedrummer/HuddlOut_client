@@ -58,6 +58,13 @@ public class User {
         return user;
     }
 
+    public static synchronized User getInstance(Context context){
+        if(user == null){
+            return null;
+        }
+        return user;
+    }
+
     private void getProfileInformation() {
         RequestQueue reQueue = hAPI.getProfile(profileID);
         RequestQueue.RequestFinishedListener finishedListener = new RequestQueue.RequestFinishedListener() {
@@ -155,6 +162,10 @@ public class User {
         Toast toast = Toast.makeText(context, message, duration);
         toast.show();
 
+    }
+
+    public String getName(){
+        return firstName + " " + lastName;
     }
 
 }

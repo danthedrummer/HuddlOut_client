@@ -650,6 +650,29 @@ public class HuddlOutAPI {
         return reQueue;
     }
 
+    //########################## EMPTY METHOD NEEDS TO BE FILLED IN #############################
+    public RequestQueue getNotifications(){
+        RequestQueue reQueue = new RequestQueue(cache, network);
+        reQueue.start();
+        String params = url + "api/user/" + token + "&" + null;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
+                new Response.Listener<String>(){
+                    @Override
+                    public void onResponse(String response){
+
+                    }
+                }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError err){
+                Log.i(TAG, "Failed Check Invites" + err);
+            }
+        });
+        reQueue.add(stringRequest);
+        return reQueue;
+
+    }
+    //###########################################################################################
+
 
     // RETURN DATA
     public boolean getAuth(){

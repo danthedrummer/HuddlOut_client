@@ -45,7 +45,6 @@ public class ProfileFragment extends Fragment {
     TextView preferencesContentTextView;
     Button topContextButton;
 
-
     private OnFragmentInteractionListener mListener;
 
     public ProfileFragment() {
@@ -94,9 +93,12 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
+        final User currentUser = User.getInstance(this.getActivity().getApplicationContext());
+
         FrameLayout rellay = (FrameLayout) inflater.inflate(R.layout.fragment_profile, container, false);
 
-        preferencesTextView = (TextView)rellay.findViewById(R.id.preferencesTextView);
+        nameTextView = (TextView)rellay.findViewById(R.id.nameTextView);
+        nameTextView.setText(currentUser.getName());
 
         return rellay;
     }
@@ -147,7 +149,7 @@ public class ProfileFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    public void setProfileName(String firstName, String lastName) {
+    public void setProfileName(String name) {
         //preferencesTextView.setText(firstName + " " + lastName);
     }
 
