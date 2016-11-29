@@ -34,7 +34,7 @@ public class HuddlOutAPI {
     private String url;
 
     private static HuddlOutAPI hAPI;
-    private RequestQueue reQueue;
+//    private RequestQueue reQueue;
     private Cache cache;
     private Context context;
     private Network network;
@@ -49,8 +49,8 @@ public class HuddlOutAPI {
 
         cache = new DiskBasedCache(context.getCacheDir(), 1024 * 1024);
         network = new BasicNetwork(new HurlStack());
-        reQueue = new RequestQueue(cache, network);
-        reQueue.start();
+//        reQueue = new RequestQueue(cache, network);
+//        reQueue.start();
     }
 
     // set up API as a singleton
@@ -65,6 +65,8 @@ public class HuddlOutAPI {
     public RequestQueue login(String username, String password){
 
         Log.i(TAG, "Login start");
+        RequestQueue reQueue = new RequestQueue(cache, network);
+        reQueue.start();
         String params = url + "api/auth/login?username=" + username + "&password=" + password;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>(){
@@ -97,6 +99,8 @@ public class HuddlOutAPI {
 
     public RequestQueue register (String username, String password, String firstName, String lastName) {
         Log.i(TAG, "Register start");
+        RequestQueue reQueue = new RequestQueue(cache, network);
+        reQueue.start();
         String params = url + "api/auth/register?username=" + username + "&password=" + password + "&firstName=" + firstName + "&lastName=" + lastName;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>(){
@@ -130,6 +134,8 @@ public class HuddlOutAPI {
     }
 
     public RequestQueue authoriseUser(){
+        RequestQueue reQueue = new RequestQueue(cache, network);
+        reQueue.start();
         String params = url + "api/auth/checkAuth?token=" + token;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>(){
@@ -154,6 +160,8 @@ public class HuddlOutAPI {
     }
 
     public RequestQueue changePassword(String oldPassword, String newPassword){
+        RequestQueue reQueue = new RequestQueue(cache, network);
+        reQueue.start();
         String params = url + "api/auth/changePassword?token=" + token + "&oldPassword=" + oldPassword + "&newPassword=" + newPassword;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>(){
@@ -180,6 +188,8 @@ public class HuddlOutAPI {
 
     // GROUPS
     public RequestQueue createGroup(String groupName, String activity){
+        RequestQueue reQueue = new RequestQueue(cache, network);
+        reQueue.start();
         String params = url + "api/group/create?token=" + token + "&name=" + groupName + "&activity=" + activity;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>(){
@@ -199,6 +209,8 @@ public class HuddlOutAPI {
     }
 
     public RequestQueue deleteGroup(int groupId){
+        RequestQueue reQueue = new RequestQueue(cache, network);
+        reQueue.start();
         String params = url + "api/group/delete?token=" + token + "&groupId=" + groupId;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>(){
@@ -219,6 +231,8 @@ public class HuddlOutAPI {
     }
 
     public RequestQueue leaveGroup(int groupId){
+        RequestQueue reQueue = new RequestQueue(cache, network);
+        reQueue.start();
         String params = url + "api/group/leave?token=" + token + "&groupId=" + groupId;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>(){
@@ -240,6 +254,8 @@ public class HuddlOutAPI {
     }
 
     public RequestQueue getGroupMembers(int groupId){
+        RequestQueue reQueue = new RequestQueue(cache, network);
+        reQueue.start();
         String params = url + "api/group/getMembers?token=" + token + "&groupId=" + groupId;
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>(){
@@ -260,6 +276,8 @@ public class HuddlOutAPI {
 
     public RequestQueue getGroups(){
         Log.i(TAG, "getGroups start");
+        RequestQueue reQueue = new RequestQueue(cache, network);
+        reQueue.start();
         String params = url + "api/group/getGroups?token=" + token;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>(){
@@ -286,6 +304,8 @@ public class HuddlOutAPI {
     }
 
     public RequestQueue inviteGroupMember(int groupId, int profileId){
+        RequestQueue reQueue = new RequestQueue(cache, network);
+        reQueue.start();
         String params = url + "api/group/inviteMember?token=" + token + "&groupId=" + groupId + "&profileId=" + profileId;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>(){
@@ -310,6 +330,8 @@ public class HuddlOutAPI {
     }
 
     public RequestQueue checkInvites(){
+        RequestQueue reQueue = new RequestQueue(cache, network);
+        reQueue.start();
         String params = url + "api/group/checkInvites?token=" + token;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>(){
@@ -331,6 +353,8 @@ public class HuddlOutAPI {
     }
 
     public RequestQueue resolveGroupInvite(int groupId, String action){
+        RequestQueue reQueue = new RequestQueue(cache, network);
+        reQueue.start();
         String params = url + "api/group/resolveInvite?token=" + token + "&groupId=" + groupId + "&action=" + action;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>(){
@@ -352,6 +376,8 @@ public class HuddlOutAPI {
     }
 
     public RequestQueue kickGroupMember(int groupId, int profileId){
+        RequestQueue reQueue = new RequestQueue(cache, network);
+        reQueue.start();
         String params = url + "/api/group/kickMember?token=" + token + "&groupId=" + groupId + "&profileId=" + profileId;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>(){
@@ -376,6 +402,8 @@ public class HuddlOutAPI {
     }
 
     public RequestQueue checkKicks(){
+        RequestQueue reQueue = new RequestQueue(cache, network);
+        reQueue.start();
         String params = url + "api/group/checkKicks?token=" + token;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>(){
@@ -399,6 +427,8 @@ public class HuddlOutAPI {
     // USER
     public RequestQueue getProfile(int profileId){
         Log.i(TAG, "getProfile start");
+        RequestQueue reQueue = new RequestQueue(cache, network);
+        reQueue.start();
         String params = url + "api/user/getProfile?token=" + token + "&profileId=" + profileId;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>(){
@@ -425,6 +455,8 @@ public class HuddlOutAPI {
     }
 
     public RequestQueue editProfile(String firstName, String lastName, String profilePicture, int age, String description, String privacy){
+        RequestQueue reQueue = new RequestQueue(cache, network);
+        reQueue.start();
         String params = url + "api/user/edit?token=" + token + "&firstName="
                 + firstName + "&lastName=" + lastName + "&profilePicture="
                 + profilePicture + "&age=" + age + "&description="
@@ -455,6 +487,8 @@ public class HuddlOutAPI {
     }
 
     public RequestQueue getProfilePicture(){
+        RequestQueue reQueue = new RequestQueue(cache, network);
+        reQueue.start();
         String params = url + "api/user/getProfilePictures?token=" + token;
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>(){
@@ -474,6 +508,8 @@ public class HuddlOutAPI {
     }
 
     public RequestQueue downloadPicture(String imageName){
+        RequestQueue reQueue = new RequestQueue(cache, network);
+        reQueue.start();
         String params = url + "api/user/downloadPicture?token=" + token + "&imageName=" + imageName;
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>(){
@@ -496,6 +532,8 @@ public class HuddlOutAPI {
 
     // FRIEND
     public RequestQueue sendFriendRequest(String username){
+        RequestQueue reQueue = new RequestQueue(cache, network);
+        reQueue.start();
         String params = url + "api/user/sendFriendRequest?token=" + token + "&username=" + username;
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>(){
@@ -517,6 +555,8 @@ public class HuddlOutAPI {
     }
 
     public RequestQueue getFriendRequests(){
+        RequestQueue reQueue = new RequestQueue(cache, network);
+        reQueue.start();
         String params = url + "api/user/getFriendRequests?token=" + token;
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>(){
@@ -537,6 +577,8 @@ public class HuddlOutAPI {
     }
 
     public RequestQueue resolveFriendRequest(int profileId, String action){
+        RequestQueue reQueue = new RequestQueue(cache, network);
+        reQueue.start();
         String params = url + "api/user/resolveFriendRequest?token=" + token + "&profileId=" + profileId + "&action=" + action;
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>(){
@@ -559,6 +601,8 @@ public class HuddlOutAPI {
 
     public RequestQueue getFriends(){
         Log.i(TAG, "getFriends start");
+        RequestQueue reQueue = new RequestQueue(cache, network);
+        reQueue.start();
         String params = url + "api/user/viewFriends?token=" + token;
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>(){
@@ -587,6 +631,8 @@ public class HuddlOutAPI {
     }
 
     public RequestQueue deleteFriend(int profileId){
+        RequestQueue reQueue = new RequestQueue(cache, network);
+        reQueue.start();
         String params = url + "api/user/deleteFriend?token=" + token + "&profileId" + profileId;
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>(){

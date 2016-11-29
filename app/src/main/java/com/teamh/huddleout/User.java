@@ -9,6 +9,7 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -41,10 +42,12 @@ public class User {
         this.profileID = profileID;
         hAPI = HuddlOutAPI.getInstance(context);
         this.context = context;
+        friendsList = new ArrayList<Integer>();
+        groupsList = new ArrayList<Integer>();
         getProfileInformation();
         getGroupList();
         getFriendsList();
-//        test();
+        test();
     }
 
 
@@ -60,6 +63,7 @@ public class User {
         RequestQueue.RequestFinishedListener finishedListener = new RequestQueue.RequestFinishedListener() {
             @Override
             public void onRequestFinished(Request request) {
+                Log.i(TAG, "getProfileInformation response: " + hAPI.getResponse());
                 if(hAPI.getMessage().equalsIgnoreCase("invalid params") || hAPI.getMessage().equalsIgnoreCase("not found")){
                     Log.i(TAG, "getprofileinformation error: " + hAPI.getMessage());
                 }else if(hAPI.getAuth()) {
@@ -71,7 +75,6 @@ public class User {
                         age = (Integer) profileJSON.get("age");
                         description = (String) profileJSON.get("description");
                         privacy = (String) profileJSON.get("privacy");
-                        Log.i(TAG, "first name: " + firstName);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -89,13 +92,15 @@ public class User {
         RequestQueue.RequestFinishedListener finishedListener = new RequestQueue.RequestFinishedListener() {
             @Override
             public void onRequestFinished(Request request) {
+                Log.i(TAG, "getFriendsList response: " + hAPI.getResponse());
                 if(hAPI.getMessage().equalsIgnoreCase("invalid params") || hAPI.getMessage().equalsIgnoreCase("no friends")){
                     Log.i(TAG, "getfriendslist error: " + hAPI.getMessage());
                 }else if(hAPI.getAuth()) {
                     try {
-                        JSONObject profileJSON = new JSONObject(hAPI.getResponse());
+                        JSONArray profileJSON = new JSONArray(hAPI.getResponse());
                         for(int i = 0; i < profileJSON.length(); i++){
-                            friendsList.add((Integer) profileJSON.get("profile"));
+                            JSONObject j = profileJSON.getJSONObject(i);
+                            friendsList.add((Integer) j.get("profile"));
                         }
                         Log.i(TAG, "friendslist: " + friendsList.toString());
                     } catch (JSONException e) {
@@ -115,18 +120,23 @@ public class User {
         RequestQueue.RequestFinishedListener finishedListener = new RequestQueue.RequestFinishedListener() {
             @Override
             public void onRequestFinished(Request request) {
+                Log.i(TAG, "getGroupsList response: " + hAPI.getResponse());
                 if(hAPI.getMessage().equalsIgnoreCase("invalid params") || hAPI.getMessage().equalsIgnoreCase("no groups")){
                     Log.i(TAG, "getgroupslist error: " + hAPI.getMessage());
                 }else if(hAPI.getAuth()) {
-                    try {
-                        JSONObject groupsJSON = new JSONObject(hAPI.getResponse());
-                        for(int i = 0; i < groupsJSON.length(); i++){
-                            groupsList.add((Integer) groupsJSON.get("group_id"));
+
+                        String output = hAPI.getResponse();
+
+                        for(int i = 0; i < output.length(); i++){
+                            if(Character.isDigit(output.charAt(i))){
+                                Log.i(TAG, "true");
+                            }else{
+                                Log.i(TAG, "false");
+                            }
                         }
+
                         Log.i(TAG, "groupslist: " + groupsList.toString());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+
                 }else{
                     Log.i(TAG, "groups not authorised");
                 }
@@ -138,6 +148,7 @@ public class User {
 
 
     public void test(){
+        Log.i(TAG, "TEST start");
         CharSequence message = "ERROR!!!!";
         int duration = Toast.LENGTH_SHORT;
 
