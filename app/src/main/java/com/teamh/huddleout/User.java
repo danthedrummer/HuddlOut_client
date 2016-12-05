@@ -148,6 +148,9 @@ public class User {
         reQueue.addRequestFinishedListener(finishedListener);
     }
 
+    public ArrayList<JSONObject> getFriends(){
+        return friendsList;
+    }
 
 
     public void test(){

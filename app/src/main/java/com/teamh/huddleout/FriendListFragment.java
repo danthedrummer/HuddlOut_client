@@ -5,12 +5,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -29,6 +33,8 @@ import java.util.List;
 public class FriendListFragment extends ListFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String TAG = "DevMsg";
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -77,9 +83,23 @@ public class FriendListFragment extends ListFragment {
 
         FrameLayout rellay = (FrameLayout) inflater.inflate(R.layout.fragment_friend_list, container, false);
 
-        String[] friendArray = {"Glenn Cullen", "Dan Downey", "Yer ma"};
+        final User currentUser = User.getInstance(this.getActivity().getApplicationContext());
+        ArrayList<JSONObject> friends = currentUser.getFriends();
 
-        ArrayList<String> friendList = new ArrayList<String>(Arrays.asList(friendArray));
+
+
+//        String[] friendArray = {"Glenn Cullen", "Dan Downey", "Yer ma"};
+
+        ArrayList<String> friendList = new ArrayList<String>();
+
+        for(int i = 0; i < friends.size(); i++){
+            try {
+                String x = friends.get(i).getString("first_name");
+                Log.i(TAG, "friends: " + x);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
 
         friendList.add("Young Aaron");
 
