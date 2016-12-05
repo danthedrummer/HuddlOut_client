@@ -56,24 +56,6 @@
         android:id="@+id/passwordField" />
 
     <Button
-        android:text="@string/loginButtonText"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/loginButton"
-        android:layout_marginTop="25dp"
-        android:layout_marginBottom="50dp"
-        android:layout_below="@+id/passwordField"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:text="@string/registerString"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/registerText"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/loginButton"/>
-
-    <Button
         android:text="Register!"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
@@ -94,5 +76,21 @@
         android:textAlignment="center"
         android:layout_alignEnd="@+id/passwordField"
         android:layout_alignStart="@+id/passwordField" />
+
+    <Button
+        android:text="@string/loginButtonText"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/loginButton"
+        android:layout_below="@+id/passwordField"
+        android:layout_alignStart="@+id/registerText" />
+
+    <TextView
+        android:text="@string/registerString"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/registerText"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
