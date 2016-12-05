@@ -4,11 +4,17 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -20,7 +26,7 @@ import java.util.List;
  * Use the {@link FriendListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FriendListFragment extends Fragment {
+public class FriendListFragment extends ListFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -60,9 +66,6 @@ public class FriendListFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        ListView listy = (ListView)getActivity().findViewById(R.id.listy);
-
-
     }
 
 
@@ -71,7 +74,22 @@ public class FriendListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+        FrameLayout rellay = (FrameLayout) inflater.inflate(R.layout.fragment_friend_list, container, false);
+
+        String[] friendArray = {"Glenn Cullen", "Dan Downey", "Yer ma"};
+
+        ArrayList<String> friendList = new ArrayList<String>(Arrays.asList(friendArray));
+
+        friendList.add("Young Aaron");
+
+        final ArrayAdapter<String> friendAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, friendArray);
+
+        setListAdapter(friendAdapter);
+
         return inflater.inflate(R.layout.fragment_friend_list, container, false);
+
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
