@@ -34,6 +34,19 @@ public class GroupListFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+
+//    ######## PAUL REID THIS!!! ########
+//    the getGroupsList() method in the user class will now return
+//    an arrayList of JSONObjects, so we can just do the same thing
+//    as the friendsList when populating.
+//    The Key names for the JSON are:
+//        group_id
+//        group_name
+//        activity
+//    ###################################
+
+
+    
     public GroupListFragment() {
         // Required empty public constructor
     }
