@@ -46,7 +46,7 @@ public class User {
         groupsList = new ArrayList<Integer>();
         getProfileInformation();
         getGroupList();
-        getFriendsList();
+        setFriendsList();
         test();
     }
 
@@ -93,7 +93,11 @@ public class User {
     }
 
     // instantiates the arraylist of the profileIds of the user's friends
-    private void getFriendsList() {
+    public void setFriendsList() {
+        if(!friendsList.isEmpty()){
+            friendsList.clear();
+        }
+
         RequestQueue reQueue = hAPI.getFriends();
         RequestQueue.RequestFinishedListener finishedListener = new RequestQueue.RequestFinishedListener() {
             @Override
@@ -147,6 +151,7 @@ public class User {
         };
         reQueue.addRequestFinishedListener(finishedListener);
     }
+
 
     public ArrayList<JSONObject> getFriends(){
         return friendsList;

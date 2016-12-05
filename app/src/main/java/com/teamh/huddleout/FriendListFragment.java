@@ -88,20 +88,7 @@ public class FriendListFragment extends ListFragment {
 
 
 
-//        String[] friendArray = {"Glenn Cullen", "Dan Downey", "Yer ma"};
-
-        ArrayList<String> friendList = new ArrayList<String>();
-
-        for(int i = 0; i < friends.size(); i++){
-            try {
-                String x = friends.get(i).getString("first_name");
-                Log.i(TAG, "friends: " + x);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-        friendList.add("Young Aaron");
+        String[] friendArray = {"Glenn Cullen", "Dan Downey", "Yer ma"};
 
         final ArrayAdapter<String> friendAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, friendArray);
 
