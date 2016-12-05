@@ -142,5 +142,4 @@ public class GroupListFragment extends ListFragment {
         void onFragmentInteraction(Uri uri);
     }
 
-
 }
