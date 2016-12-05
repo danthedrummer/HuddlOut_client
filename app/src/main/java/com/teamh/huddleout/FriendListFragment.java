@@ -1,15 +1,19 @@
 package com.teamh.huddleout;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
@@ -89,13 +93,12 @@ public class FriendListFragment extends ListFragment {
 
 
         String[] friendArray = {"Glenn Cullen", "Dan Downey", "Yer ma"};
-
         final ArrayAdapter<String> friendAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, friendArray);
-
         setListAdapter(friendAdapter);
 
-        return inflater.inflate(R.layout.fragment_friend_list, container, false);
+        View v = inflater.inflate(R.layout.fragment_group_list, container, false);
 
+        return v;
 
     }
 
@@ -136,5 +139,10 @@ public class FriendListFragment extends ListFragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        System.out.println(l+"\n"+v+"\n"+position+"\n"+id);
     }
 }

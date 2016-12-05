@@ -35,7 +35,7 @@ public class User {
     private String privacy;
     private Context context;
 
-    ArrayList<Integer> groupsList;
+    ArrayList<JSONObject> groupsList;
     ArrayList<JSONObject> friendsList;
     
     public User(int profileID, Context context) {
@@ -43,9 +43,9 @@ public class User {
         hAPI = HuddlOutAPI.getInstance(context);
         this.context = context;
         friendsList = new ArrayList<JSONObject>();
-        groupsList = new ArrayList<Integer>();
+        groupsList = new ArrayList<JSONObject>();
         getProfileInformation();
-        getGroupList();
+        setGroupList();
         setFriendsList();
         test();
     }
@@ -122,7 +122,7 @@ public class User {
     }
 
     // insantiates the arraylist of groupIds
-    private void getGroupList(){
+    private void setGroupList(){
         RequestQueue reQueue = hAPI.getGroups();
         RequestQueue.RequestFinishedListener finishedListener = new RequestQueue.RequestFinishedListener() {
             @Override
@@ -130,20 +130,14 @@ public class User {
                 if(hAPI.getMessage().equalsIgnoreCase("invalid params") || hAPI.getMessage().equalsIgnoreCase("no groups")){
                     Log.i(TAG, "getgroupslist error: " + hAPI.getMessage());
                 }else if(hAPI.getAuth()) {
-
-                        String output = hAPI.getResponse();
-                        StringBuilder sb = new StringBuilder();
-                        for(int i = 0; i < output.length(); i++){
-                            if(Character.isDigit(output.charAt(i))){
-                                sb.append("" + output.charAt(i));
-                            }else{
-                                if(sb.length() > 0){
-                                    String toAdd = sb.toString();
-                                    groupsList.add(Integer.parseInt(toAdd));
-                                    sb.setLength(0);
-                                }
-                            }
+                    try {
+                        JSONArray groupJSON = new JSONArray(hAPI.getResponse());
+                        for(int i = 0; i < groupJSON.length(); i++){
+                            groupsList.add(groupJSON.getJSONObject(i));
                         }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }else{
                     Log.i(TAG, "groups not authorised");
                 }
@@ -157,6 +151,9 @@ public class User {
         return friendsList;
     }
 
+    public ArrayList<JSONObject> getGroupsList(){
+        return groupsList;
+    }
 
     public void test(){
         CharSequence message = "ERROR!!!!";
