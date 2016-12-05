@@ -63,8 +63,7 @@ public class HuddlOutAPI {
 
     // AUTHORISATION
     public RequestQueue login(String username, String password){
-
-        Log.i(TAG, "Login start");
+//        Log.i(TAG, "Login start");
         RequestQueue reQueue = new RequestQueue(cache, network);
         reQueue.start();
         String params = url + "api/auth/login?username=" + username + "&password=" + password;
@@ -90,7 +89,7 @@ public class HuddlOutAPI {
         }, new Response.ErrorListener(){
             @Override
             public void onErrorResponse(VolleyError err){
-                Log.i(TAG, "Failed Login" + err);
+                Log.i(TAG, "Failed Login " + err);
             }
         });
         reQueue.add(stringRequest);
@@ -98,7 +97,7 @@ public class HuddlOutAPI {
     }
 
     public RequestQueue register (String username, String password, String firstName, String lastName) {
-        Log.i(TAG, "Register start");
+//        Log.i(TAG, "Register start");
         RequestQueue reQueue = new RequestQueue(cache, network);
         reQueue.start();
         String params = url + "api/auth/register?username=" + username + "&password=" + password + "&firstName=" + firstName + "&lastName=" + lastName;
@@ -275,7 +274,7 @@ public class HuddlOutAPI {
     }
 
     public RequestQueue getGroups(){
-        Log.i(TAG, "getGroups start");
+//        Log.i(TAG, "getGroups start");
         RequestQueue reQueue = new RequestQueue(cache, network);
         reQueue.start();
         String params = url + "api/group/getGroups?token=" + token;
@@ -426,7 +425,7 @@ public class HuddlOutAPI {
 
     // USER
     public RequestQueue getProfile(int profileId){
-        Log.i(TAG, "getProfile start");
+//        Log.i(TAG, "getProfile start");
         RequestQueue reQueue = new RequestQueue(cache, network);
         reQueue.start();
         String params = url + "api/user/getProfile?token=" + token + "&profileId=" + profileId;
@@ -600,7 +599,7 @@ public class HuddlOutAPI {
     }
 
     public RequestQueue getFriends(){
-        Log.i(TAG, "getFriends start");
+//        Log.i(TAG, "getFriends start");
         RequestQueue reQueue = new RequestQueue(cache, network);
         reQueue.start();
         String params = url + "api/user/viewFriends?token=" + token;
