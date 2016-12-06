@@ -100,7 +100,7 @@ public class GroupListFragment extends ListFragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
 
-        Log.i(TAG, "groups visilble: " + isVisibleToUser);
+        Log.i(TAG, "groups visible: " + isVisibleToUser);
 
         if (isVisibleToUser) {
 

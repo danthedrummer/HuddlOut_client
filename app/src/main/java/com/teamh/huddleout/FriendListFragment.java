@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -84,9 +85,12 @@ public class FriendListFragment extends ListFragment {
 
     }
 
+
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+
+        Log.i(TAG, "friends visible: " + isVisibleToUser);
 
         if (isVisibleToUser) {
             final User currentUser = User.getInstance(this.getActivity().getApplicationContext());
@@ -155,6 +159,49 @@ public class FriendListFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        System.out.println(l+"\n"+v+"\n"+position+"\n"+id);
+//        final User currentUser = User.getInstance(this.getActivity().getApplicationContext());
+//        try {
+//            String name = friends.get((int) id).getString("first_name") + " " + friends.get((int) id).getString("last_name");
+//
+//            currentUser.showFriend(name, friends.get((int) id).getString("description"));
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+
+//        try {
+//            Log.i(TAG, "Chose friend: " + friends.get((int) id).getString("first_name"));
+//
+//
+//            AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+//
+////            alert.setIcon(this.getActivity().getApplicationContext().getResources().getIdentifier("chess", "drawable", "com.teamh.huddleout"));
+//            alert.setTitle(friends.get((int) id).getString("first_name") + " " + friends.get((int) id).getString("last_name"));
+//            alert.setMessage(friends.get((int) id).getString("description"));
+//
+//            // Set an EditText view to get user input
+////            final EditText input = new EditText(v.getContext());
+////            alert.setView(input);
+////
+////            alert.setPositiveButton("Block", new DialogInterface.OnClickListener() {
+////                public void onClick(DialogInterface dialog, int whichButton) {
+////
+////                }
+////            });
+////
+////            alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+////                public void onClick(DialogInterface dialog, int whichButton) {
+////                    // Canceled.
+////                }
+////            });
+//
+//            alert.create();
+//            alert.show();
+//
+//
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
     }
+
 }
+

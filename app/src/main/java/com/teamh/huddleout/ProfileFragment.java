@@ -1,6 +1,8 @@
 package com.teamh.huddleout;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -44,6 +46,8 @@ public class ProfileFragment extends Fragment {
     TextView preferencesTextView;
     TextView preferencesContentTextView;
     Button topContextButton;
+
+    ImageView profilePicture;
 
     Context currentContext;
 
@@ -90,18 +94,21 @@ public class ProfileFragment extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
 
-        Log.i(TAG, "profile visilble: " + isVisibleToUser);
+        Log.i(TAG, "profile visible: " + isVisibleToUser);
 
         if (isVisibleToUser) {
             try{
                 final User currentUser = User.getInstance(currentContext);
+                int id = currentContext.getResources().getIdentifier("chess", "drawable", "com.teamh.huddleout");
+                Log.i(TAG, "id: " + id);
                 Log.i(TAG, "currentUser.getName: " + currentUser.getName());
+
                 nameTextView.setText(currentUser.getName());
                 aboutContentTextView.setText(currentUser.getDescription());
+                profilePicture.setImageResource(id);
             }catch(NullPointerException e){
                 Log.i(TAG, "Null pointer reference on profile fragment: " + e);
             }
-
 //            Log.i(TAG, "");
         }
     }
@@ -115,11 +122,20 @@ public class ProfileFragment extends Fragment {
         FrameLayout rellay = (FrameLayout) inflater.inflate(R.layout.fragment_profile, container, false);
 
         nameTextView = (TextView)rellay.findViewById(R.id.nameTextView);
-
         aboutTextView = (TextView)rellay.findViewById(R.id.aboutTextView);
         aboutContentTextView = (TextView)rellay.findViewById(R.id.aboutContentTextView);
-        preferencesContentTextView = (TextView)rellay.findViewById(R.id.preferencesContentTextView);
         topContextButton = (Button)rellay.findViewById(R.id.topContextButton);
+        profilePicture = (ImageView)rellay.findViewById(R.id.profileImageView);
+
+        try{
+            final User currentUser = User.getInstance(currentContext);
+            int id = currentContext.getResources().getIdentifier("chess", "drawable", "com.teamh.huddleout");
+            nameTextView.setText(currentUser.getName());
+            aboutContentTextView.setText(currentUser.getDescription());
+            profilePicture.setImageResource(id);
+        }catch(NullPointerException e){
+            Log.i(TAG, "Null pointer reference on profile fragment: " + e);
+        }
 
         return rellay;
     }
@@ -150,9 +166,7 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
-        preferencesTextView = (TextView) getActivity().findViewById(R.id.preferencesTextView);
-        // Displaying the user details on the screen
-        preferencesTextView.setText("Evan Hardware");
+
     }
 
     /**
@@ -168,10 +182,6 @@ public class ProfileFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
-    }
-
-    public void setProfileName(String name) {
-        //preferencesTextView.setText(firstName + " " + lastName);
     }
 
 }

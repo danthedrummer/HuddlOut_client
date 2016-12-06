@@ -27,6 +27,8 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import org.json.JSONException;
+
 public class MainMenuActivity extends AppCompatActivity implements GroupListFragment.OnFragmentInteractionListener, FriendListFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener {
 
     /**
@@ -254,4 +256,5 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
 
         alert.show();
     }
+
 }

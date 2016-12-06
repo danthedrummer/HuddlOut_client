@@ -6,6 +6,7 @@ import com.android.volley.RequestQueue;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -166,10 +167,6 @@ public class User {
 
 
     public void test(){
-        CharSequence message = "ERROR!!!!";
-        int duration = Toast.LENGTH_LONG;
-        Toast toast = Toast.makeText(context, message, duration);
-        toast.show();
 
     }
 
@@ -193,5 +190,17 @@ public class User {
     public String getName(){
         return firstName + " " + lastName;
     }
+
+//    public void showFriend(String name, String description){
+//
+//        AlertDialog.Builder alert = new AlertDialog.Builder(context);
+//
+////            alert.setIcon(this.getActivity().getApplicationContext().getResources().getIdentifier("chess", "drawable", "com.teamh.huddleout"));
+//        alert.setTitle(name);
+//        alert.setMessage(description);
+//
+//        alert.show();
+//
+//    }
 
 }

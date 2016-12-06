@@ -66,27 +66,6 @@
             android:id="@+id/aboutContentTextView"
             android:layout_alignEnd="@+id/topContextButton" />
 
-        <TextView
-            android:text="Preferences Text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/preferencesTextView"
-            android:layout_marginTop="14dp"
-            android:layout_below="@+id/aboutContentTextView"
-            android:layout_alignStart="@+id/aboutContentTextView"
-            android:textSize="18sp"
-            android:textStyle="normal|bold" />
-
-        <TextView
-            android:text="Aenean laoreet commodo sem. Praesent viverra neque arcu, in sollicitudin elit accumsan et. Nam aliquam id velit in tincidunt. Nullam elementum augue dui, in placerat nunc blandit at. Quisque nulla turpis, aliquet quis luctus nec, lacinia et turpis. Aliquam sed diam ullamcorper, dapibus ipsum ac"
-            android:layout_width="wrap_content"
-            android:layout_height="120dp"
-            android:layout_below="@+id/preferencesTextView"
-            android:layout_alignStart="@+id/preferencesTextView"
-            android:layout_marginTop="11dp"
-            android:id="@+id/preferencesContentTextView"
-            android:layout_alignEnd="@+id/aboutContentTextView" />
-
     </RelativeLayout>
 
 </FrameLayout>
