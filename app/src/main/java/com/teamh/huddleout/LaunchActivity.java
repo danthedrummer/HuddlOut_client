@@ -18,11 +18,15 @@ public class LaunchActivity extends Activity {
         HANDLER.postDelayed(new Runnable(){
             @Override
             public void run(){
-                ActivitySwap.swapToNextActivity(LaunchActivity.this, LoginActivity.class);
+                ActivitySwap.swapToNextActivityNoHistory(LaunchActivity.this, LoginActivity.class);
                 finish();
             }
-        }, 4000);
+        }, 2000);
     }
 
+    //Prevent back nav
+    @Override
+    public void onBackPressed() {
+    }
 
 }

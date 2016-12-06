@@ -1,41 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_register"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.teamh.huddleout.RegisterActivity">
 
-    <TextView
-        android:text="@string/registerScreenTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/registrationTitle"
-        android:textSize="18sp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <EditText
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/backgroundImage"
+            android:visibility="visible"
+            android:cropToPadding="false"
+            android:scaleType="centerCrop"
+            android:alpha="1"
+            app:srcCompat="@drawable/city"
+            android:src="@drawable/city" />
+    </FrameLayout>
+
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/passwordField"
-        android:layout_below="@+id/passwordText"
-        android:layout_alignStart="@+id/usernameField" />
+        app:srcCompat="@mipmap/huddloutlogo_blue"
+        android:id="@+id/aggregatorImage"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="visible"
+        android:src="@mipmap/huddloutlogo_blue"
+        android:layout_marginTop="10dp"
+        android:tint="@android:color/white" />
+
+    <TextView
+        android:text="Registration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/registerTitle"
+        android:fontFamily="sans-serif"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:textStyle="normal|bold|italic"
+        android:textAllCaps="false"
+        android:layout_below="@+id/aggregatorImage"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:text="@string/usernameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="43dp"
+        android:layout_marginTop="15dp"
         android:id="@+id/usernameText"
-        android:layout_below="@+id/registrationTitle"
-        android:layout_alignStart="@+id/usernameField" />
+        android:layout_below="@+id/registerTitle"
+        android:layout_alignStart="@+id/usernameField"
+        android:textColor="?android:attr/textColorPrimaryInverse" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -44,25 +65,9 @@
         android:ems="10"
         android:id="@+id/usernameField"
         android:layout_below="@+id/usernameText"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:text="@string/passwordText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        android:id="@+id/passwordText"
-        android:layout_below="@+id/usernameField"
-        android:layout_toStartOf="@+id/registrationTitle" />
-
-    <Button
-        android:text="Register!"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/registrationSubmitButton"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="51dp" />
+        android:backgroundTint="@android:color/white"
+        android:textColor="@android:color/white" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -71,7 +76,9 @@
         android:ems="10"
         android:layout_below="@+id/firstNameTextView"
         android:layout_alignEnd="@+id/passwordField"
-        android:id="@+id/firstNameField" />
+        android:id="@+id/firstNameField"
+        android:backgroundTint="@android:color/white"
+        android:textColor="@android:color/white" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -80,36 +87,72 @@
         android:ems="10"
         android:layout_below="@+id/lastNameTextView"
         android:layout_alignEnd="@+id/firstNameField"
-        android:id="@+id/lastNameField" />
+        android:id="@+id/lastNameField"
+        android:backgroundTint="@android:color/white"
+        android:textColor="@android:color/white" />
 
     <TextView
         android:text="Last Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/lastNameTextView"
-        android:layout_marginTop="12dp"
         android:layout_below="@+id/firstNameField"
-        android:layout_alignStart="@+id/passwordText" />
+        android:layout_alignStart="@+id/passwordText"
+        android:layout_marginTop="15dp"
+        android:textColor="?android:attr/textColorPrimaryInverse" />
 
     <TextView
         android:text="First Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/firstNameTextView"
-        android:layout_marginTop="13dp"
         android:layout_below="@+id/passwordField"
-        android:layout_alignEnd="@+id/lastNameTextView" />
+        android:layout_alignEnd="@+id/lastNameTextView"
+        android:layout_marginTop="15dp"
+        android:textColor="?android:attr/textColorPrimaryInverse" />
 
-    <TextView
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="19dp"
-        android:id="@+id/messageTxt"
-        android:textAlignment="center"
-        android:layout_below="@+id/lastNameField"
-        android:layout_alignStart="@+id/lastNameTextView"
-        android:layout_alignEnd="@+id/lastNameField"
-        android:textColor="@android:color/holo_red_light" />
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/passwordField"
+        android:layout_below="@+id/passwordText"
+        android:layout_alignStart="@+id/passwordText"
+        android:backgroundTint="@android:color/white"
+        android:textColor="@android:color/white" />
 
+    <TextView
+        android:text="@string/passwordText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/passwordText"
+        android:layout_below="@+id/usernameField"
+        android:layout_alignEnd="@+id/usernameText"
+        android:layout_marginTop="15dp"
+        android:textColor="?android:attr/textColorPrimaryInverse" />
+
+    <Button
+        android:text="Register"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/registrationSubmitButton"
+        android:layout_below="@+id/lastNameField"
+        android:layout_centerHorizontal="true"
+        android:backgroundTint="@android:color/white" />
+
+    <Button
+        android:text="Already have an account? Sign in!"
+        android:layout_width="match_parent"
+        android:id="@+id/loginButton"
+        android:background="@null"
+        android:textAppearance="@android:style/TextAppearance.Material.Small"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:textAllCaps="false"
+        android:textStyle="normal|italic"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

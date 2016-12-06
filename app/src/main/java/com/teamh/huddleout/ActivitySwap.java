@@ -13,4 +13,9 @@ public class ActivitySwap {
         current.startActivity(new Intent(current, target));
     }
 
+    public static void swapToNextActivityNoHistory(Activity current, Class target) {
+        Intent i = new Intent(current, target);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        current.startActivity(i);
+    }
 }

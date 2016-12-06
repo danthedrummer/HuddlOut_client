@@ -1,9 +1,12 @@
 package com.teamh.huddleout;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.view.View;
 import android.widget.EditText;
@@ -20,6 +23,10 @@ public class LoginActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Set fullscreen
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
 
         final String TAG = "DevMsg";
@@ -37,15 +44,22 @@ public class LoginActivity extends Activity {
         loginButton.setOnClickListener(
                 new Button.OnClickListener(){
                     public void onClick(View v){
-                        Popup.show("LOGGING IN...", context);
+                        final ProgressDialog loginProgress = new ProgressDialog(LoginActivity.this);
+                        loginProgress.setTitle("Logging In");
+                        loginProgress.setMessage("Please wait...");
+                        loginProgress.setCancelable(false); // disable dismiss by tapping outside of the dialog
+                        loginProgress.show();
+
                         final RequestQueue reQueue = hAPI.login(username.getText().toString(), password.getText().toString());
                         RequestQueue.RequestFinishedListener finishedListener = new RequestQueue.RequestFinishedListener() {
                             @Override
                             public void onRequestFinished(Request request) {
                                 if(hAPI.getAuth()){
-                                    ActivitySwap.swapToNextActivity(LoginActivity.this, MainMenuActivity.class);
+                                    loginProgress.dismiss();
+                                    ActivitySwap.swapToNextActivityNoHistory(LoginActivity.this, MainMenuActivity.class);
                                     finish();
                                 }else{
+                                    loginProgress.dismiss();
                                     String errorMsg = hAPI.getMessage();
                                     if(errorMsg != null) {
                                         errorMsg = errorMsg.toUpperCase();
@@ -65,7 +79,7 @@ public class LoginActivity extends Activity {
         registerButton.setOnClickListener(
                 new Button.OnClickListener(){
                     public void onClick(View v){
-                        ActivitySwap.swapToNextActivity(LoginActivity.this, RegisterActivity.class);
+                        ActivitySwap.swapToNextActivityNoHistory(LoginActivity.this, RegisterActivity.class);
                     }
                 }
         );
@@ -81,7 +95,7 @@ public class LoginActivity extends Activity {
                             @Override
                             public void onRequestFinished(Request request) {
                                 if(hAPI.getAuth()){
-                                    ActivitySwap.swapToNextActivity(LoginActivity.this, MainMenuActivity.class);
+                                    ActivitySwap.swapToNextActivityNoHistory(LoginActivity.this, MainMenuActivity.class);
                                     finish();
                                 }else{
                                     Popup.show(hAPI.getMessage().toUpperCase(), context);
@@ -93,6 +107,12 @@ public class LoginActivity extends Activity {
                     }
 
                 });
+
+    }
+
+    //Prevent back nav
+    @Override
+    public void onBackPressed() {
     }
 
 }
