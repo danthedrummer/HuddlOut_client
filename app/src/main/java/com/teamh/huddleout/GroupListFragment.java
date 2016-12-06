@@ -102,7 +102,6 @@ public class GroupListFragment extends ListFragment {
 
         Log.i(TAG, "groups visilble: " + isVisibleToUser);
 
-
         if (isVisibleToUser) {
 
             HANDLER.postDelayed(new Runnable(){
@@ -139,7 +138,6 @@ public class GroupListFragment extends ListFragment {
         FrameLayout rellay = (FrameLayout) inflater.inflate(R.layout.fragment_group_list, container, false);
 
         groupAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, groupList);
-
 
         return rellay;
 

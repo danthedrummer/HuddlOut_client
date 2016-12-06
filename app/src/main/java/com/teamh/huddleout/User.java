@@ -31,6 +31,9 @@ public class User {
     private String lastName;
     private int age;
     private String description;
+
+
+
     private String profilePicture;
     private String privacy;
     private Context context;
@@ -75,6 +78,7 @@ public class User {
                 }else if(hAPI.getAuth()) {
                     try {
                         JSONObject profileJSON = new JSONObject(hAPI.getResponse());
+                        Log.i(TAG, "profile info: " + profileJSON.toString());
                         firstName = (String) profileJSON.get("first_name");
                         lastName = (String) profileJSON.get("last_name");
                         profilePicture = (String) profileJSON.get("profile_picture");
@@ -91,6 +95,7 @@ public class User {
         };
         reQueue.addRequestFinishedListener(finishedListener);
     }
+
 
     // instantiates the arraylist of the profileIds of the user's friends
     public void setFriendsList() {
@@ -120,6 +125,7 @@ public class User {
         };
         reQueue.addRequestFinishedListener(finishedListener);
     }
+
 
     // insantiates the arraylist of groupIds
     private void setGroupList(){
@@ -152,10 +158,12 @@ public class User {
         return friendsList;
     }
 
+
     public ArrayList<JSONObject> getGroupsList(){
         Log.i(TAG, "getgroups: " + groupsList.toString());
         return groupsList;
     }
+
 
     public void test(){
         CharSequence message = "ERROR!!!!";
@@ -163,6 +171,23 @@ public class User {
         Toast toast = Toast.makeText(context, message, duration);
         toast.show();
 
+    }
+
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public String getPrivacy() {
+        return privacy;
     }
 
     public String getName(){

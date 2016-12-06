@@ -45,6 +45,8 @@ public class ProfileFragment extends Fragment {
     TextView preferencesContentTextView;
     Button topContextButton;
 
+    Context currentContext;
+
     private OnFragmentInteractionListener mListener;
 
     public ProfileFragment() {
@@ -79,11 +81,29 @@ public class ProfileFragment extends Fragment {
 
         final HuddlOutAPI hAPI = HuddlOutAPI.getInstance(this.getActivity());
 
-        aboutTextView = (TextView)getActivity().findViewById(R.id.aboutTextView);
-        aboutContentTextView = (TextView)getActivity().findViewById(R.id.aboutContentTextView);
-        preferencesContentTextView = (TextView)getActivity().findViewById(R.id.preferencesContentTextView);
-        topContextButton = (Button)getActivity().findViewById(R.id.topContextButton);
+        currentContext = this.getActivity().getApplicationContext();
 
+    }
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        Log.i(TAG, "profile visilble: " + isVisibleToUser);
+
+        if (isVisibleToUser) {
+            try{
+                final User currentUser = User.getInstance(currentContext);
+                Log.i(TAG, "currentUser.getName: " + currentUser.getName());
+                nameTextView.setText(currentUser.getName());
+                aboutContentTextView.setText(currentUser.getDescription());
+            }catch(NullPointerException e){
+                Log.i(TAG, "Null pointer reference on profile fragment: " + e);
+            }
+
+//            Log.i(TAG, "");
+        }
     }
 
 
@@ -92,13 +112,14 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-        final User currentUser = User.getInstance(this.getActivity().getApplicationContext());
-
         FrameLayout rellay = (FrameLayout) inflater.inflate(R.layout.fragment_profile, container, false);
 
         nameTextView = (TextView)rellay.findViewById(R.id.nameTextView);
-        nameTextView.setText(currentUser.getName());
+
+        aboutTextView = (TextView)rellay.findViewById(R.id.aboutTextView);
+        aboutContentTextView = (TextView)rellay.findViewById(R.id.aboutContentTextView);
+        preferencesContentTextView = (TextView)rellay.findViewById(R.id.preferencesContentTextView);
+        topContextButton = (Button)rellay.findViewById(R.id.topContextButton);
 
         return rellay;
     }
