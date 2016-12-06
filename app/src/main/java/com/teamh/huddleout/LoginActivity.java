@@ -13,6 +13,8 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 
+import java.net.URLEncoder;
+
 public class LoginActivity extends Activity {
 
     @Override
@@ -44,7 +46,13 @@ public class LoginActivity extends Activity {
                                     ActivitySwap.swapToNextActivity(LoginActivity.this, MainMenuActivity.class);
                                     finish();
                                 }else{
-                                    Popup.show(hAPI.getMessage().toUpperCase(), context);
+                                    String errorMsg = hAPI.getMessage();
+                                    if(errorMsg != null) {
+                                        errorMsg = errorMsg.toUpperCase();
+                                        Popup.show(errorMsg, context);
+                                    } else {
+                                        Popup.show("INTERNAL ERROR", context);
+                                    }
                                 }
                             }
                         };

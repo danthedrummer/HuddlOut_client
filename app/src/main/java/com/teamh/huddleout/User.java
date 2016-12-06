@@ -78,6 +78,7 @@ public class User {
                 }else if(hAPI.getAuth()) {
                     try {
                         JSONObject profileJSON = new JSONObject(hAPI.getResponse());
+                        Log.i(TAG, "profile info: " + profileJSON.toString());
                         firstName = (String) profileJSON.get("first_name");
                         lastName = (String) profileJSON.get("last_name");
                         profilePicture = (String) profileJSON.get("profile_picture");

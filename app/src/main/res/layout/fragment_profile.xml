@@ -34,7 +34,7 @@
             android:layout_alignStart="@+id/nameTextView" />
 
         <TextView
-            android:text="About Name"
+            android:text="About Me"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/profileImageView"
