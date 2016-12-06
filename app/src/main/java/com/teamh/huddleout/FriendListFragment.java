@@ -94,7 +94,7 @@ public class FriendListFragment extends ListFragment {
                 friends = currentUser.getFriends();
                 for (int i = 0; i < friends.size(); i++) {
                     try {
-                        friendList.add(friends.get(i).getString("group_name"));
+                        friendList.add(friends.get(i).getString("first_name") + " " + friends.get(i).getString("last_name"));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

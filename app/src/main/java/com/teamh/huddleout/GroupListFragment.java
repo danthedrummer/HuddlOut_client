@@ -122,6 +122,7 @@ public class GroupListFragment extends ListFragment {
 
         groupAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, groupList);
 
+
         return rellay;
 
     }
