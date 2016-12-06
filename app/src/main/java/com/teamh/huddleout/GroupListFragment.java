@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -34,13 +37,22 @@ public class GroupListFragment extends ListFragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private static final String TAG = "DevMsg";
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
+    ArrayList<JSONObject> groups;
+    ArrayList<String> groupList;
+
+    ArrayAdapter<String> groupAdapter;
+
+    final Handler HANDLER = new Handler();
 
     private OnFragmentInteractionListener mListener;
 
+    Context currentContext;
 
 //    ######## PAUL REID THIS!!! ########
 //    the getGroupsList() method in the user class will now return
@@ -53,7 +65,7 @@ public class GroupListFragment extends ListFragment {
 //    ###################################
 
 
-    
+
     public GroupListFragment() {
         // Required empty public constructor
     }
@@ -78,6 +90,45 @@ public class GroupListFragment extends ListFragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        groupList = new ArrayList<String>();
+
+        currentContext = this.getActivity().getApplicationContext();
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        Log.i(TAG, "groups visilble: " + isVisibleToUser);
+
+
+        if (isVisibleToUser) {
+
+            HANDLER.postDelayed(new Runnable(){
+                @Override
+                public void run() {
+                    try {
+                        final User currentUser = User.getInstance(currentContext);
+                        if (groupList.size() == 0) {
+                            groups = currentUser.getGroupsList();
+                            for (int i = 0; i < groups.size(); i++) {
+                                try {
+                                    groupList.add(groups.get(i).getString("group_name"));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            Log.i(TAG, "groups:" + groupList.toString());
+                            setListAdapter(groupAdapter);
+                        }
+                    } catch (NullPointerException e) {
+                        Log.i(TAG, "Failed to user instance: " + e);
+                    }
+                }
+            }, 1500);
+
+        }
     }
 
     @Override
@@ -87,19 +138,10 @@ public class GroupListFragment extends ListFragment {
 
         FrameLayout rellay = (FrameLayout) inflater.inflate(R.layout.fragment_group_list, container, false);
 
-        final User currentUser = User.getInstance(this.getActivity().getApplicationContext());
-        ArrayList<JSONObject> friends = currentUser.getFriends();
+        groupAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, groupList);
 
 
-
-        String[] groupArray = {"Pub", "Enda K's Birthday Bash", "Hmm?"};
-
-        final ArrayAdapter<String> groupAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, groupArray);
-
-        setListAdapter(groupAdapter);
-
-        return inflater.inflate(R.layout.fragment_friend_list, container, false);
-
+        return rellay;
 
     }
 
