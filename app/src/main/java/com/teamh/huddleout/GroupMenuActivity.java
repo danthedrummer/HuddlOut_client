@@ -1,9 +1,11 @@
 package com.teamh.huddleout;
 
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -87,9 +89,32 @@ public class GroupMenuActivity extends AppCompatActivity implements ChatFragment
             return true;
         }
 
-        //TODO: Add logout functionality
         if (id == R.id.action_logout) {
-            System.out.println("logout");
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+            builder.setTitle("Logout");
+            builder.setMessage("Are you sure you want to logout?");
+
+            builder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+
+                public void onClick(DialogInterface dialog, int which) {
+                    // Swap
+                    dialog.dismiss();
+                    ActivitySwap.swapToNextActivityNoHistory(GroupMenuActivity.this, LoginActivity.class);
+                }
+            });
+
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Do nothing
+                    dialog.dismiss();
+                }
+            });
+
+            AlertDialog alert = builder.create();
+            alert.show();
             return true;
         }
         return super.onOptionsItemSelected(item);
