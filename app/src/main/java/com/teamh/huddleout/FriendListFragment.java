@@ -43,6 +43,10 @@ public class FriendListFragment extends ListFragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    ArrayList<JSONObject> friends;
+    ArrayList<String> friendList;
+
+    ArrayAdapter<String> friendAdapter;
 
     public FriendListFragment() {
         // Required empty public constructor
@@ -72,44 +76,38 @@ public class FriendListFragment extends ListFragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+        friendList = new ArrayList<String>();
+
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
 
+        if (isVisibleToUser) {
+            final User currentUser = User.getInstance(this.getActivity().getApplicationContext());
+            if(friendList.size() == 0) {
+                friends = currentUser.getFriends();
+                for (int i = 0; i < friends.size(); i++) {
+                    try {
+                        friendList.add(friends.get(i).getString("first_name") + " " + friends.get(i).getString("last_name"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                Log.i(TAG, "friends:" + friendList.toString());
+                setListAdapter(friendAdapter);
+            }
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
         FrameLayout rellay = (FrameLayout) inflater.inflate(R.layout.fragment_friend_list, container, false);
-
-        final User currentUser = User.getInstance(this.getActivity().getApplicationContext());
-        ArrayList<JSONObject> friends = currentUser.getFriends();
-
-
-
-//        String[] friendArray = {"Glenn Cullen", "Dan Downey", "Yer ma"};
-
-        ArrayList<String> friendList = new ArrayList<String>();
-
-        for(int i = 0; i < friends.size(); i++){
-            try {
-                String x = friends.get(i).getString("first_name");
-                Log.i(TAG, "friends: " + x);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-        friendList.add("Young Aaron");
-
-        final ArrayAdapter<String> friendAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, friendArray);
-
-        setListAdapter(friendAdapter);
-
+        friendAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, friendList);
         return inflater.inflate(R.layout.fragment_friend_list, container, false);
-
-
     }
 
     // TODO: Rename method, update argument and hook method into UI event

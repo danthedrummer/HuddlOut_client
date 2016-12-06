@@ -9,8 +9,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 
 /**
@@ -27,9 +33,17 @@ public class GroupListFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private static final String TAG = "DevMsg";
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    ArrayList<JSONObject> groups;
+    ArrayList<String> groupList;
+
+    ArrayAdapter<String> groupAdapter;
+
 
 
     private OnFragmentInteractionListener mListener;
@@ -58,6 +72,8 @@ public class GroupListFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        groupList = new ArrayList<String>();
     }
 
     @Override
@@ -65,6 +81,9 @@ public class GroupListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_group_list, container, false);
+
+        FrameLayout rellay = (FrameLayout) inflater.inflate(R.layout.fragment_friend_list, container, false);
+        groupAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, groupList);
 
         ImageButton groupButton1 = (ImageButton)v.findViewById(R.id.memberButton1);
         ImageButton groupButton2 = (ImageButton)v.findViewById(R.id.groupButton2);
