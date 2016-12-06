@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -25,7 +26,6 @@ public class LoginActivity extends Activity {
         Button registerButton = (Button)findViewById(R.id.registerButton);
         final EditText username = (EditText)findViewById(R.id.usernameField);
         final EditText password = (EditText)findViewById(R.id.passwordField);
-        final TextView messageTxt = (TextView)findViewById(R.id.messageTxt);
 
         final Context context = this.getApplicationContext();
         final HuddlOutAPI hAPI = HuddlOutAPI.getInstance(context);
@@ -35,7 +35,7 @@ public class LoginActivity extends Activity {
         loginButton.setOnClickListener(
                 new Button.OnClickListener(){
                     public void onClick(View v){
-
+                        Popup.show("LOGGING IN...", context);
                         final RequestQueue reQueue = hAPI.login(username.getText().toString(), password.getText().toString());
                         RequestQueue.RequestFinishedListener finishedListener = new RequestQueue.RequestFinishedListener() {
                             @Override
@@ -44,7 +44,7 @@ public class LoginActivity extends Activity {
                                     ActivitySwap.swapToNextActivity(LoginActivity.this, MainMenuActivity.class);
                                     finish();
                                 }else{
-                                    messageTxt.setText(hAPI.getMessage());
+                                    Popup.show(hAPI.getMessage().toUpperCase(), context);
                                 }
                             }
                         };
@@ -76,7 +76,7 @@ public class LoginActivity extends Activity {
                                     ActivitySwap.swapToNextActivity(LoginActivity.this, MainMenuActivity.class);
                                     finish();
                                 }else{
-
+                                    Popup.show(hAPI.getMessage().toUpperCase(), context);
                                 }
                             }
                         };

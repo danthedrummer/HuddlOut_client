@@ -1,9 +1,11 @@
 package com.teamh.huddleout;
 
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -18,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -198,5 +201,57 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
 
     public void onFragmentInteraction(Uri uri) {
         //you can leave it empty
+    }
+
+    //Listener for the add group floating action button
+    public void addGroup(View v){
+        AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
+
+        alert.setTitle("Create New Group");
+        alert.setMessage("Enter group name:");
+
+        // Set an EditText view to get user input
+        final EditText input = new EditText(v.getContext());
+        alert.setView(input);
+
+        alert.setPositiveButton("Create", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                System.out.println(input.getText());
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+
+        alert.show();
+    }
+
+    //Listener for the add friend floating action button
+    public void addFriend(View v){
+        AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
+
+        alert.setTitle("Add New Friend");
+        alert.setMessage("Enter friend name:");
+
+        // Set an EditText view to get user input
+        final EditText input = new EditText(v.getContext());
+        alert.setView(input);
+
+        alert.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                System.out.println(input.getText());
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+
+        alert.show();
     }
 }

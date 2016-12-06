@@ -5,204 +5,27 @@
     android:layout_height="match_parent"
     tools:context="com.teamh.huddleout.GroupListFragment">
 
-    <GridLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fadeScrollbars="false"
-        android:weightSum="1.0"
-        android:columnCount="2">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:id="@+id/groupTile1"
-            android:layout_margin="5dp"
-            android:layout_columnWeight="1"
-            android:layout_height="100dp"
-            android:layout_width="0dp"
-            android:layout_gravity="fill_horizontal">
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            app:fabSize="mini"
+            app:srcCompat="@android:drawable/ic_input_add"
+            android:id="@+id/addGroupButton"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="16dp"
+            android:onClick="addGroup"/>
 
-            <ImageButton
-                app:srcCompat="?attr/colorAccent"
-                android:id="@+id/memberButton1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?attr/colorAccent"
-                android:padding="5dp"
-                android:elevation="0dp" />
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@android:id/list" />
 
-            <TextView
-                android:text="6 Members"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/memberNameView1"
-                android:layout_alignBottom="@+id/memberButton1"
-                android:layout_alignStart="@+id/memberButton1"
-                android:textColor="?android:attr/textColorPrimaryInverse"
-                android:layout_marginLeft="2dp"
-                android:layout_marginRight="2dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                android:layout_alignEnd="@+id/memberButton1"
-                android:textAlignment="center" />
-
-            <TextView
-                android:text="The Sesh"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/groupTitleView1"
-                android:layout_alignTop="@+id/memberButton1"
-                android:layout_alignStart="@+id/memberButton1"
-                android:layout_above="@+id/memberNameView1"
-                android:layout_alignEnd="@+id/memberButton1"
-                android:textAlignment="center"
-                android:textSize="24sp"
-                android:textColor="?android:attr/textColorPrimaryInverse"
-                android:textAllCaps="false"
-                android:gravity="center_vertical"
-                android:padding="5dp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/groupTile2"
-            android:layout_height="100dp"
-            android:layout_margin="5dp"
-            android:layout_columnWeight="1"
-            android:layout_width="0dp"
-            android:layout_gravity="fill_horizontal">
-
-            <ImageButton
-                app:srcCompat="@android:color/holo_blue_light"
-                android:id="@+id/groupButton2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/holo_blue_light"
-                android:elevation="0dp" />
-
-            <TextView
-                android:text="3 Members"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/groupMemberView2"
-                android:layout_alignBottom="@+id/groupButton2"
-                android:layout_alignStart="@+id/groupButton2"
-                android:textColor="?android:attr/textColorPrimaryInverse"
-                android:layout_marginLeft="2dp"
-                android:layout_marginRight="2dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                android:layout_alignEnd="@+id/groupButton2"
-                android:textAlignment="center" />
-
-            <TextView
-                android:text="Pub"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/groupTitleView2"
-                android:layout_alignTop="@+id/groupButton2"
-                android:layout_alignStart="@+id/groupButton2"
-                android:layout_above="@+id/groupMemberView2"
-                android:layout_alignEnd="@+id/groupButton2"
-                android:textAlignment="center"
-                android:textSize="24sp"
-                android:textColor="?android:attr/textColorPrimaryInverse"
-                android:textAllCaps="false"
-                android:gravity="center_vertical"
-                android:padding="5dp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/groupTile3"
-            android:layout_margin="5dp"
-            android:layout_columnWeight="1"
-            android:layout_height="100dp"
-            android:layout_width="0dp"
-            android:layout_gravity="fill_horizontal">
-
-            <ImageButton
-                app:srcCompat="@android:color/holo_green_light"
-                android:id="@+id/groupButton3"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/holo_green_light"
-                android:elevation="0dp" />
-
-            <TextView
-                android:text="14 Members"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/groupMemberView3"
-                android:layout_alignBottom="@+id/groupButton3"
-                android:layout_alignStart="@+id/groupButton3"
-                android:textColor="?android:attr/textColorPrimaryInverse"
-                android:layout_marginLeft="2dp"
-                android:layout_marginRight="2dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                android:layout_alignEnd="@+id/groupButton3"
-                android:textAlignment="center" />
-
-            <TextView
-                android:text="Picnic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/groupTitleView3"
-                android:layout_alignTop="@+id/groupButton3"
-                android:layout_alignStart="@+id/groupButton3"
-                android:layout_above="@+id/groupMemberView3"
-                android:layout_alignEnd="@+id/groupButton3"
-                android:textAlignment="center"
-                android:textSize="24sp"
-                android:textColor="?android:attr/textColorPrimaryInverse"
-                android:textAllCaps="false"
-                android:gravity="center_vertical"
-                android:padding="5dp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/groupTile4"
-            android:layout_height="100dp"
-            android:layout_margin="5dp"
-            android:layout_columnWeight="1"
-            android:layout_width="0dp"
-            android:layout_gravity="fill_horizontal">
-
-            <ImageButton
-                app:srcCompat="@android:color/holo_orange_light"
-                android:id="@+id/groupButton4"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/holo_orange_light"
-                android:elevation="0dp" />
-
-            <TextView
-                android:text="Create Group"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/groupMemberView4"
-                android:layout_alignBottom="@+id/groupButton4"
-                android:layout_alignStart="@+id/groupButton4"
-                android:textColor="?android:attr/textColorPrimaryInverse"
-                android:layout_marginLeft="2dp"
-                android:layout_marginRight="2dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                android:layout_alignEnd="@+id/groupButton4"
-                android:textAlignment="center" />
-
-            <TextView
-                android:text="+"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/groupTitleView4"
-                android:textAlignment="center"
-                android:textSize="60sp"
-                android:textColor="?android:attr/textColorPrimaryInverse"
-                android:textAllCaps="false"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true"
-                android:layout_above="@+id/groupMemberView4"
-                android:layout_alignEnd="@+id/groupMemberView4"
-                android:gravity="center" />
-        </RelativeLayout>
-    </GridLayout>
+    </RelativeLayout>
 
 </FrameLayout>
