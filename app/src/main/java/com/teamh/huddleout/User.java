@@ -31,6 +31,9 @@ public class User {
     private String lastName;
     private int age;
     private String description;
+
+
+
     private String profilePicture;
     private String privacy;
     private Context context;
@@ -92,6 +95,7 @@ public class User {
         reQueue.addRequestFinishedListener(finishedListener);
     }
 
+
     // instantiates the arraylist of the profileIds of the user's friends
     public void setFriendsList() {
         if(!friendsList.isEmpty()){
@@ -120,6 +124,7 @@ public class User {
         };
         reQueue.addRequestFinishedListener(finishedListener);
     }
+
 
     // insantiates the arraylist of groupIds
     private void setGroupList(){
@@ -151,9 +156,11 @@ public class User {
         return friendsList;
     }
 
+
     public ArrayList<JSONObject> getGroupsList(){
         return groupsList;
     }
+
 
     public void test(){
         CharSequence message = "ERROR!!!!";
@@ -161,6 +168,23 @@ public class User {
         Toast toast = Toast.makeText(context, message, duration);
         toast.show();
 
+    }
+
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public String getPrivacy() {
+        return privacy;
     }
 
     public String getName(){

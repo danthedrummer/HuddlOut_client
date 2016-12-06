@@ -46,7 +46,7 @@ public class GroupListFragment extends Fragment {
 //    ###################################
 
 
-    
+
     public GroupListFragment() {
         // Required empty public constructor
     }
