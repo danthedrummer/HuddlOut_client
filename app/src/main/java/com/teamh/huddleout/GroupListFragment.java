@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
@@ -47,10 +48,11 @@ public class GroupListFragment extends ListFragment {
 
     ArrayAdapter<String> groupAdapter;
 
-
+    final Handler HANDLER = new Handler();
 
     private OnFragmentInteractionListener mListener;
 
+    Context currentContext;
 
 //    ######## PAUL REID THIS!!! ########
 //    the getGroupsList() method in the user class will now return
@@ -90,28 +92,44 @@ public class GroupListFragment extends ListFragment {
         }
 
         groupList = new ArrayList<String>();
+
+        currentContext = this.getActivity().getApplicationContext();
     }
 
-//    @Override
-//    public void setUserVisibleHint(boolean isVisibleToUser) {
-//        super.setUserVisibleHint(isVisibleToUser);
-//
-//        if (isVisibleToUser) {
-//            final User currentUser = User.getInstance(this.getActivity().getApplicationContext());
-//            if(groupList.size() == 0) {
-//                groups = currentUser.getGroupsList();
-//                for (int i = 0; i < groups.size(); i++) {
-//                    try {
-//                        groupList.add(groups.get(i).getString("first_name") + " " + groups.get(i).getString("last_name"));
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//                Log.i(TAG, "groups:" + groupList.toString());
-//                setListAdapter(groupAdapter);
-//            }
-//        }
-//    }
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        Log.i(TAG, "groups visilble: " + isVisibleToUser);
+
+
+        if (isVisibleToUser) {
+
+            HANDLER.postDelayed(new Runnable(){
+                @Override
+                public void run() {
+                    try {
+                        final User currentUser = User.getInstance(currentContext);
+                        if (groupList.size() == 0) {
+                            groups = currentUser.getGroupsList();
+                            for (int i = 0; i < groups.size(); i++) {
+                                try {
+                                    groupList.add(groups.get(i).getString("group_name"));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            Log.i(TAG, "groups:" + groupList.toString());
+                            setListAdapter(groupAdapter);
+                        }
+                    } catch (NullPointerException e) {
+                        Log.i(TAG, "Failed to user instance: " + e);
+                    }
+                }
+            }, 1500);
+
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

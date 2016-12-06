@@ -140,6 +140,7 @@ public class User {
                         for(int i = 0; i < groupJSON.length(); i++){
                             groupsList.add(groupJSON.getJSONObject(i));
                         }
+                        Log.i(TAG, "in setgroups: " + groupsList.toString());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -158,6 +159,7 @@ public class User {
 
 
     public ArrayList<JSONObject> getGroupsList(){
+        Log.i(TAG, "getgroups: " + groupsList.toString());
         return groupsList;
     }
 
