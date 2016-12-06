@@ -92,26 +92,26 @@ public class GroupListFragment extends ListFragment {
         groupList = new ArrayList<String>();
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-
-        if (isVisibleToUser) {
-            final User currentUser = User.getInstance(this.getActivity().getApplicationContext());
-            if(groupList.size() == 0) {
-                groups = currentUser.getGroupsList();
-                for (int i = 0; i < groups.size(); i++) {
-                    try {
-                        groupList.add(groups.get(i).getString("first_name") + " " + groups.get(i).getString("last_name"));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                Log.i(TAG, "groups:" + groupList.toString());
-                setListAdapter(groupAdapter);
-            }
-        }
-    }
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        super.setUserVisibleHint(isVisibleToUser);
+//
+//        if (isVisibleToUser) {
+//            final User currentUser = User.getInstance(this.getActivity().getApplicationContext());
+//            if(groupList.size() == 0) {
+//                groups = currentUser.getGroupsList();
+//                for (int i = 0; i < groups.size(); i++) {
+//                    try {
+//                        groupList.add(groups.get(i).getString("first_name") + " " + groups.get(i).getString("last_name"));
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//                Log.i(TAG, "groups:" + groupList.toString());
+//                setListAdapter(groupAdapter);
+//            }
+//        }
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
