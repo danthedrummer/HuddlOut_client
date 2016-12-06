@@ -6,11 +6,20 @@ import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 
 /**
@@ -21,15 +30,23 @@ import android.widget.ImageButton;
  * Use the {@link GroupListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class GroupListFragment extends Fragment {
+public class GroupListFragment extends ListFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private static final String TAG = "DevMsg";
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    ArrayList<JSONObject> groups;
+    ArrayList<String> groupList;
+
+    ArrayAdapter<String> groupAdapter;
+
 
 
     private OnFragmentInteractionListener mListener;
@@ -71,69 +88,43 @@ public class GroupListFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        groupList = new ArrayList<String>();
     }
+
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        super.setUserVisibleHint(isVisibleToUser);
+//
+//        if (isVisibleToUser) {
+//            final User currentUser = User.getInstance(this.getActivity().getApplicationContext());
+//            if(groupList.size() == 0) {
+//                groups = currentUser.getGroupsList();
+//                for (int i = 0; i < groups.size(); i++) {
+//                    try {
+//                        groupList.add(groups.get(i).getString("first_name") + " " + groups.get(i).getString("last_name"));
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//                Log.i(TAG, "groups:" + groupList.toString());
+//                setListAdapter(groupAdapter);
+//            }
+//        }
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_group_list, container, false);
 
-        ImageButton groupButton1 = (ImageButton)v.findViewById(R.id.memberButton1);
-        ImageButton groupButton2 = (ImageButton)v.findViewById(R.id.groupButton2);
-        ImageButton groupButton3 = (ImageButton)v.findViewById(R.id.groupButton3);
-        ImageButton newGroupButton = (ImageButton)v.findViewById(R.id.groupButton4);
+        FrameLayout rellay = (FrameLayout) inflater.inflate(R.layout.fragment_group_list, container, false);
 
-        groupButton1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ActivitySwap.swapToNextActivity(getActivity(), GroupMenuActivity.class);
-            }
-        });
+        groupAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, groupList);
 
-        groupButton2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ActivitySwap.swapToNextActivity(getActivity(), GroupMenuActivity.class);
-            }
-        });
 
-        groupButton3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ActivitySwap.swapToNextActivity(getActivity(), GroupMenuActivity.class);
-            }
-        });
+        return rellay;
 
-        newGroupButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
-
-                alert.setTitle("Create New Group");
-                alert.setMessage("Enter group name:");
-
-                // Set an EditText view to get user input
-                final EditText input = new EditText(getContext());
-                alert.setView(input);
-
-                alert.setPositiveButton("Create", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        System.out.println(input.getText());
-                    }
-                });
-
-                alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        // Canceled.
-                    }
-                });
-
-                alert.show();
-            }
-        });
-
-        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -174,4 +165,5 @@ public class GroupListFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
 }

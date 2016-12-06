@@ -1,15 +1,19 @@
 package com.teamh.huddleout;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
@@ -43,6 +47,10 @@ public class FriendListFragment extends ListFragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    ArrayList<JSONObject> friends;
+    ArrayList<String> friendList;
+
+    ArrayAdapter<String> friendAdapter;
 
     public FriendListFragment() {
         // Required empty public constructor
@@ -72,31 +80,38 @@ public class FriendListFragment extends ListFragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+        friendList = new ArrayList<String>();
+
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
 
+        if (isVisibleToUser) {
+            final User currentUser = User.getInstance(this.getActivity().getApplicationContext());
+            if(friendList.size() == 0) {
+                friends = currentUser.getFriends();
+                for (int i = 0; i < friends.size(); i++) {
+                    try {
+                        friendList.add(friends.get(i).getString("first_name") + " " + friends.get(i).getString("last_name"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                Log.i(TAG, "friends:" + friendList.toString());
+                setListAdapter(friendAdapter);
+            }
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
         FrameLayout rellay = (FrameLayout) inflater.inflate(R.layout.fragment_friend_list, container, false);
-
-        final User currentUser = User.getInstance(this.getActivity().getApplicationContext());
-        ArrayList<JSONObject> friends = currentUser.getFriends();
-
-
-
-        String[] friendArray = {"Glenn Cullen", "Dan Downey", "Yer ma"};
-
-        final ArrayAdapter<String> friendAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, friendArray);
-
-        setListAdapter(friendAdapter);
-
-        return inflater.inflate(R.layout.fragment_friend_list, container, false);
-
-
+        friendAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, friendList);
+        return rellay;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -136,5 +151,10 @@ public class FriendListFragment extends ListFragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        System.out.println(l+"\n"+v+"\n"+position+"\n"+id);
     }
 }
