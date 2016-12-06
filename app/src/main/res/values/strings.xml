@@ -4,9 +4,9 @@
     <string name="loginScreen">Login Screen</string>
     <string name="usernameText">Username</string>
     <string name="passwordText">Password</string>
-    <string name="loginButtonText">Log In!</string>
+    <string name="loginButtonText">Log In</string>
     <!-- Registration strings -->
-    <string name="registerString">Don\'t have an account?</string>
+    <string name="registerString">Don\'t have an account? Register!</string>
     <string name="registerScreenTitle">Registration</string>
     <string name="emailText">Email</string>
     <string name="firstNameText">First Name</string>

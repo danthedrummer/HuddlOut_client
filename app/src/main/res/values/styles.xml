@@ -35,4 +35,9 @@
 
     <style name="DeepPurpleTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <!-- White Edit Text -->
+    <style name="editTextStyleWhite" parent="android:Widget.EditText">
+        <item name="android:backgroundTint">#FFFFFF</item>
+    </style>
+
 </resources>
