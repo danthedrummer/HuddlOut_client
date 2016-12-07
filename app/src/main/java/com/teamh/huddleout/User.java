@@ -55,10 +55,8 @@ public class User {
         hAPI.getFriendRequests();
     }
 
-    public static synchronized User getInstance(int profileId, Context context) {
-        if (user == null) {
-            user = new User(profileId, context);
-        }
+    public static synchronized User getInstance(int profileId, Context context){
+        user = new User(profileId, context);
         return user;
     }
 
