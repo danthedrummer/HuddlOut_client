@@ -2,8 +2,10 @@ package com.teamh.huddleout;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -57,14 +59,6 @@ public class FriendListFragment extends ListFragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FriendListFragment.
-     */
     // TODO: Rename and change types and number of parameters
     public static FriendListFragment newInstance() {
         FriendListFragment fragment = new FriendListFragment();
@@ -159,6 +153,7 @@ public class FriendListFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
+        viewFriendProfile((int)id);
 //        final User currentUser = User.getInstance(this.getActivity().getApplicationContext());
 //        try {
 //            String name = friends.get((int) id).getString("first_name") + " " + friends.get((int) id).getString("last_name");
@@ -201,6 +196,15 @@ public class FriendListFragment extends ListFragment {
 //        } catch (JSONException e) {
 //            e.printStackTrace();
 //        }
+    }
+
+    //Create a new ProfileActivity by passing in the friend's id
+    private void viewFriendProfile(int id) {
+        Intent intent = new Intent(getActivity(), ProfileActivity.class);
+        Bundle b = new Bundle();
+        b.putInt("friendId", id);
+        intent.putExtras(b);
+        startActivity(intent);
     }
 
 }

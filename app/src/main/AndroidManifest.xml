@@ -12,10 +12,12 @@
         android:theme="@style/DeepPurpleTheme">
 
         <!-- Launch Screen -->
-        <activity android:name=".LaunchActivity"
+        <activity
+            android:name=".LaunchActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -41,11 +43,12 @@
         <activity
             android:name=".GroupMenuActivity"
             android:label="@string/title_activity_group_menu"
-            android:theme="@style/DeepPurpleTheme.NoActionBar"/>
+            android:theme="@style/DeepPurpleTheme.NoActionBar" />
         <activity android:name=".MembersActivity" />
-        <activity android:name=".RegisterActivity"/>
+        <activity android:name=".RegisterActivity" />
         <activity android:name=".RulesActivity" />
-        <activity android:name=".OtherProfileActivity"></activity>
+        <activity android:name=".OtherProfileActivity" />
+        <activity android:name=".ProfileActivity"></activity>
     </application>
 
 </manifest>
