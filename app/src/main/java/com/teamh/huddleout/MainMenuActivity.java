@@ -232,16 +232,18 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
     public void addGroup(View v){
         AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
 
+        LayoutInflater inflater = getLayoutInflater();
+
         alert.setTitle("Create New Group");
-        alert.setMessage("Enter group name:");
+//        alert.setMessage("Enter group name:");
 
         // Set an EditText view to get user input
-        final EditText input = new EditText(v.getContext());
-        alert.setView(input);
+//        final EditText input = new EditText(v.getContext());
+        alert.setView(inflater.inflate(R.layout.group_dialog_box, null));
 
         alert.setPositiveButton("Create", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                System.out.println(input.getText());
+//                System.out.println(input.getText());
             }
         });
 

@@ -47,6 +47,7 @@ public class GroupListFragment extends ListFragment {
     ArrayList<String> groupList;
 
     ArrayAdapter<String> groupAdapter;
+    ArrayAdapter<String> groupActivityAdapter;
 
     final Handler HANDLER = new Handler();
 
