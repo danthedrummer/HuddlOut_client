@@ -20,7 +20,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.android.gms.appindexing.Action;
@@ -29,6 +31,8 @@ import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import org.json.JSONException;
+
+import java.util.ArrayList;
 
 public class MainMenuActivity extends AppCompatActivity implements GroupListFragment.OnFragmentInteractionListener, FriendListFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener {
 
@@ -55,6 +59,13 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
 
     private static final String TAG = "DevMsg";
 
+    private View addGroupView;
+    private ArrayList<String> groupTypes;
+    private ArrayAdapter<String> groupSpinnerAdapter;
+    private Spinner groupTypeSpinner;
+
+    private EditText groupNameText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,8 +91,19 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
 
         //final HuddlOutAPI hAPI = HuddlOutAPI.getInstance(this.getApplicationContext());
 
-    }
+        LayoutInflater inflater = getLayoutInflater();
+        addGroupView = inflater.inflate(R.layout.group_dialog_box, null);
+        groupNameText = (EditText)addGroupView.findViewById(R.id.groupNameEditText);
 
+        groupTypes = new ArrayList<String>();
+        groupTypes.add("Drinking");
+        groupTypes.add("Social Meet");
+
+        groupTypeSpinner = (Spinner)addGroupView.findViewById(R.id.groupActivitySpinner);
+        groupSpinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, groupTypes);
+        groupSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        groupTypeSpinner.setAdapter(groupSpinnerAdapter);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -229,22 +251,21 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
         //you can leave it empty
     }
 
+    //#####################################################################################################################
     //Listener for the add group floating action button
     public void addGroup(View v){
         AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
 
-        LayoutInflater inflater = getLayoutInflater();
-
         alert.setTitle("Create New Group");
-//        alert.setMessage("Enter group name:");
 
         // Set an EditText view to get user input
-//        final EditText input = new EditText(v.getContext());
-        alert.setView(inflater.inflate(R.layout.group_dialog_box, null));
+        final EditText input = new EditText(v.getContext());
+        alert.setView(addGroupView);
 
         alert.setPositiveButton("Create", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-//                System.out.println(input.getText());
+                Log.i(TAG, "Group Name being passed: " + groupNameText.getText());
+                Log.i(TAG, "Type of Group being passed: " + groupTypeSpinner.getSelectedItem().toString());
             }
         });
 

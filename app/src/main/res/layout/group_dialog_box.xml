@@ -5,29 +5,21 @@
     android:layout_height="wrap_content"
     android:weightSum="1">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/createGroupTextView"
-        android:gravity="center"
-        android:text="Create Group"
-        android:textStyle="normal|bold" />
-
     <EditText
         android:id="@+id/groupNameEditText"
         android:layout_width="match_parent"
-        android:layout_height="26dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
         android:layout_marginBottom="4dp"
         android:hint="Group Name"
-        android:inputType="text"
-        android:layout_weight="0.22" />
+        android:inputType="text" />
 
     <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/groupActivitySpinner" />
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/groupActivitySpinner"
+    android:layout_weight="1.25" />
 
 </LinearLayout>
