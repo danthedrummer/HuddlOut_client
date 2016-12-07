@@ -101,9 +101,32 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
             return true;
         }
 
-        //TODO: Add logout functionality
         if (id == R.id.action_logout) {
-            System.out.println("logout");
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+            builder.setTitle("Logout");
+            builder.setMessage("Are you sure you want to logout?");
+
+            builder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+
+                public void onClick(DialogInterface dialog, int which) {
+                    // Swap
+                    dialog.dismiss();
+                    ActivitySwap.swapToNextActivityNoHistory(MainMenuActivity.this, LoginActivity.class);
+                }
+            });
+
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Do nothing
+                    dialog.dismiss();
+                }
+            });
+
+            AlertDialog alert = builder.create();
+            alert.show();
             return true;
         }
 

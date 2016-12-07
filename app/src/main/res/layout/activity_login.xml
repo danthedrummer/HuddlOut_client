@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/usernameField"
         android:layout_alignStart="@+id/usernameField"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="15dp"
         android:id="@+id/passwordText"
         android:textColor="?android:attr/textColorPrimaryInverse" />
 
@@ -67,7 +67,7 @@
         android:layout_centerHorizontal="true"
         android:visibility="visible"
         android:src="@mipmap/huddloutlogo_blue"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:tint="@android:color/white" />
 
     <TextView
@@ -87,7 +87,7 @@
         android:text="@string/usernameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="15dp"
         android:id="@+id/userNameText"
         android:layout_below="@+id/signInTitle"
         android:layout_alignStart="@+id/usernameField"
