@@ -164,7 +164,7 @@ public class FriendListFragment extends ListFragment {
         viewFriendProfile((int) id);
     }
 
-    
+
 //    @Override
 //    public void onListItemClick(ListView l, View v, int position, long id) {
 //        final User currentUser = User.getInstance(this.getActivity().getApplicationContext());
