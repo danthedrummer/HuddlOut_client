@@ -99,7 +99,7 @@ public class ProfileFragment extends Fragment {
         if (isVisibleToUser) {
             try{
                 final User currentUser = User.getInstance(currentContext);
-                int id = currentContext.getResources().getIdentifier("chess", "drawable", "com.teamh.huddleout");
+                int id = currentContext.getResources().getIdentifier(currentUser.getProfilePicture(), "drawable", "com.teamh.huddleout");
                 Log.i(TAG, "id: " + id);
                 Log.i(TAG, "currentUser.getName: " + currentUser.getName());
 
