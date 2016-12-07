@@ -100,9 +100,6 @@ public class GroupListFragment extends ListFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-
-        Log.i(TAG, "groups visible: " + isVisibleToUser);
-
         if (isVisibleToUser) {
 
             HANDLER.postDelayed(new Runnable(){

@@ -93,13 +93,10 @@ public class ProfileFragment extends Fragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-
-        Log.i(TAG, "profile visible: " + isVisibleToUser);
-
         if (isVisibleToUser) {
             try{
                 final User currentUser = User.getInstance(currentContext);
-                int id = currentContext.getResources().getIdentifier("chess", "drawable", "com.teamh.huddleout");
+                int id = currentContext.getResources().getIdentifier(currentUser.getProfilePicture(), "drawable", "com.teamh.huddleout");
                 Log.i(TAG, "id: " + id);
                 Log.i(TAG, "currentUser.getName: " + currentUser.getName());
 

@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -256,6 +257,35 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
         alert.show();
     }
 
+
+
+    public void showFriend(View v, String name, String description, String profilePic){
+        AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
+
+        Log.i(TAG, "showFriend: " + name);
+
+        alert.setIcon(getApplicationContext().getResources().getIdentifier(profilePic, "drawable", "com.teamh.huddleout"));
+        alert.setTitle(name);
+        alert.setMessage(description);
+
+        final TextView input = new TextView(v.getContext());
+        alert.setView(input);
+
+        alert.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+//                System.out.println(input.getText());
+            }
+        });
+
+        alert.setNegativeButton("Block", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+
+        alert.show();
+    }
+
     //Listener for the add friend floating action button
     public void addFriend(View v){
         AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
@@ -269,7 +299,8 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
 
         alert.setPositiveButton("Add", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                System.out.println(input.getText());
+                Log.i(TAG, "friend request name: " + input.getText());
+                HuddlOutAPI.getInstance(getApplicationContext()).sendFriendRequest(input.getText().toString());
             }
         });
 

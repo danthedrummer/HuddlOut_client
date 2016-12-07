@@ -31,20 +31,17 @@ public class HuddlOutAPI {
 
     private static final String TAG = "DevMsg";
 
-    private String responseFromServer;
     private boolean authorised;
-    private String message;
     static String token;
     private String url;
 
     private static HuddlOutAPI hAPI;
-    //    private RequestQueue reQueue;
+    private RequestQueue reQueue;
     private Cache cache;
     private Context context;
     private Network network;
 
     public HuddlOutAPI(Context context) {
-        responseFromServer = "";
         token = null;
         authorised = false;
         url = "https://huddlout-server-reccy.c9users.io:8081/";
@@ -53,8 +50,8 @@ public class HuddlOutAPI {
 
         cache = new DiskBasedCache(context.getCacheDir(), 1024 * 1024);
         network = new BasicNetwork(new HurlStack());
-//        reQueue = new RequestQueue(cache, network);
-//        reQueue.start();
+        reQueue = new RequestQueue(cache, network);
+        reQueue.start();
     }
 
     // set up API as a singleton
@@ -79,14 +76,14 @@ public class HuddlOutAPI {
                             try {
                                 JSONObject loginJSON = new JSONObject(response);
                                 token = (String) loginJSON.get("auth");
-                                User u = User.getInstance((Integer) loginJSON.get("id"), context);
+                                User.getInstance((Integer) loginJSON.get("id"), context);
+                                getFriends();
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                             authorised = true;
-                            message = "";
                         } else {
-                            message = response;
+                            Popup.show(response, context);
                             authorised = false;
                         }
                     }
@@ -110,8 +107,9 @@ public class HuddlOutAPI {
                     @Override
                     public void onResponse(String response) {
 
+
                         if (response.contains("invalid") || response.contains("occupied")) {
-                            message = response;
+                            Popup.show(response, context);
                             authorised = false;
                         } else {
                             try {
@@ -122,7 +120,6 @@ public class HuddlOutAPI {
                                 e.printStackTrace();
                             }
                             authorised = true;
-                            message = "";
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -146,10 +143,9 @@ public class HuddlOutAPI {
                     public void onResponse(String response) {
                         if (response.equals(token)) {
                             authorised = true;
-                            message = "";
                         } else {
                             authorised = false;
-                            message = response;
+                            Popup.show(response, context);
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -174,7 +170,7 @@ public class HuddlOutAPI {
                             token = response;
                             authorised = true;
                         } else {
-                            message = response;
+                            Popup.show(response, context);
                             authorised = false;
                         }
                     }
@@ -277,10 +273,8 @@ public class HuddlOutAPI {
         return reQueue;
     }
 
-    public RequestQueue getGroups() {
+    public void getGroups() {
 //        Log.i(TAG, "getGroups start");
-        RequestQueue reQueue = new RequestQueue(cache, network);
-        reQueue.start();
         String params = url + "api/group/getGroups?token=" + token;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>() {
@@ -290,10 +284,9 @@ public class HuddlOutAPI {
                         //Returns "no groups" if user is not member of a group
                         //Returns list of ids of groups if successful
                         if (response.equalsIgnoreCase("invalid params") || response.equalsIgnoreCase("no groups")) {
-                            message = response;
+                            Popup.show(response, context);
                         } else {
-                            responseFromServer = response;
-                            message = "";
+                            User.getInstance(context).setGroupList(response);
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -303,7 +296,6 @@ public class HuddlOutAPI {
             }
         });
         reQueue.add(stringRequest);
-        return reQueue;
     }
 
     public RequestQueue inviteGroupMember(int groupId, int profileId) {
@@ -441,10 +433,9 @@ public class HuddlOutAPI {
                         //Returns "not found" if user does not exist
                         //Returns profile as JSON if registration successful
                         if (response.equalsIgnoreCase("invalid params") || response.equalsIgnoreCase("not found")) {
-                            message = response;
+                            Popup.show(response, context);
                         } else {
-                            responseFromServer = response;
-                            message = "";
+                            User.getInstance(context).setProfileInformation(response);
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -473,10 +464,9 @@ public class HuddlOutAPI {
                         //Returns "privacy invalid value" if privacy does not match either "PUBLIC" or "PRIVATE"
                         //Returns "success" if edit is successful
                         if (response.equalsIgnoreCase("invalid params") || response.equalsIgnoreCase("description invalid range") || response.equalsIgnoreCase("privacy invalid value")) {
-                            message = response;
+                            Popup.show(response, context);
                         } else {
-                            responseFromServer = response;
-                            message = "";
+
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -546,6 +536,7 @@ public class HuddlOutAPI {
                         //Returns "relationship already exists" if user_a already has a relationship with user_b
                         //Returns "user not found" if user_b cannot be found
                         //Returns "success" if friend request is successfully created
+                        Popup.show(response, context);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -557,9 +548,7 @@ public class HuddlOutAPI {
         return reQueue;
     }
 
-    public RequestQueue getFriendRequests() {
-        RequestQueue reQueue = new RequestQueue(cache, network);
-        reQueue.start();
+    public void getFriendRequests() {
         String params = url + "api/user/getFriendRequests?token=" + token;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>() {
@@ -568,6 +557,11 @@ public class HuddlOutAPI {
                         //Returns "invalid params" if invalid params
                         //Returns "no requests found" if there are no friend requests
                         //Returns list of friend requests
+                        if (response.equalsIgnoreCase("invalid params") || response.equalsIgnoreCase("no requests found")) {
+                            Popup.show(response, context);
+                        } else {
+                            User.getInstance(context).setFriendRequests(response);
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -575,13 +569,9 @@ public class HuddlOutAPI {
                 Log.i(TAG, "Failed Check Invites" + err);
             }
         });
-        reQueue.add(stringRequest);
-        return reQueue;
     }
 
-    public RequestQueue resolveFriendRequest(int profileId, String action) {
-        RequestQueue reQueue = new RequestQueue(cache, network);
-        reQueue.start();
+    public void resolveFriendRequest(int profileId, String action) {
         String params = url + "api/user/resolveFriendRequest?token=" + token + "&profileId=" + profileId + "&action=" + Uri.encode(action);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>() {
@@ -591,6 +581,11 @@ public class HuddlOutAPI {
                         //Returns "cannot befriend yourself" if user tried to befriend themself
                         //Returns "invite not found" if invite does not exist
                         //Returns "success" if friend request action completes
+                        Popup.show(response, context);
+                        if(response.equalsIgnoreCase("success")){
+                            getFriends();
+                            getFriendRequests();
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -599,11 +594,10 @@ public class HuddlOutAPI {
             }
         });
         reQueue.add(stringRequest);
-        return reQueue;
     }
 
-    public RequestQueue getFriends() {
-//        Log.i(TAG, "getFriends start");
+    public void getFriends() {
+        Log.i(TAG, "getFriends start");
         RequestQueue reQueue = new RequestQueue(cache, network);
         reQueue.start();
         String params = url + "api/user/viewFriends?token=" + token;
@@ -615,33 +609,35 @@ public class HuddlOutAPI {
                         //Returns "no friends" if user has no friends
                         //Returns list of friend ids and relationshp types if user has friends
                         if (response.equalsIgnoreCase("invalid params") || response.equalsIgnoreCase("no friends")) {
-                            message = response;
+                            Popup.show(response, context);
                         } else {
-                            responseFromServer = response;
-                            message = "";
+                            User.getInstance(context).setFriendsList(response);
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError err) {
                 Log.i(TAG, "Failed Check Invites" + err);
-                message = "error";
-                responseFromServer = "error";
+                Popup.show("Error", context);
             }
         });
         reQueue.add(stringRequest);
-        return reQueue;
     }
 
-    public RequestQueue deleteFriend(int profileId) {
-        RequestQueue reQueue = new RequestQueue(cache, network);
-        reQueue.start();
+    public void deleteFriend(int profileId) {
         String params = url + "api/user/deleteFriend?token=" + token + "&profileId" + profileId;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
+                        //Params: ?token, ?profileId
+                        //Returns "invalid params" if invalid params
+                        //Returns "friend not found" if friend cannot be found
+                        //Returns "success" if friend is deleted
+                        Popup.show(response, context);
+                        if(response.equalsIgnoreCase("success")){
+                            getFriends();
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -650,7 +646,6 @@ public class HuddlOutAPI {
             }
         });
         reQueue.add(stringRequest);
-        return reQueue;
     }
 
     //########################## EMPTY METHOD NEEDS TO BE FILLED IN #############################
@@ -682,29 +677,4 @@ public class HuddlOutAPI {
         return authorised;
     }
 
-    public String getMessage() {
-
-        return message;
-    }
-
-    public String getResponse() {
-        return responseFromServer;
-    }
 }
-
-
-//        String params = url +
-//        StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
-//                new Response.Listener<String>(){
-//                    @Override
-//                    public void onResponse(String response){
-//
-//                    }
-//                }, new Response.ErrorListener(){
-//            @Override
-//            public void onErrorResponse(VolleyError err){
-//                Log.i(TAG, "Failed Check Invites" + err);
-//            }
-//        });
-//        reQueue.add(stringRequest);
-//        return reQueue;

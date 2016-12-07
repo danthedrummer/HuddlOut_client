@@ -2,8 +2,10 @@ package com.teamh.huddleout;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -49,6 +51,7 @@ public class FriendListFragment extends ListFragment {
 
     private OnFragmentInteractionListener mListener;
     ArrayList<JSONObject> friends;
+    ArrayList<JSONObject> friendRequests;
     ArrayList<String> friendList;
 
     ArrayAdapter<String> friendAdapter;
@@ -57,14 +60,6 @@ public class FriendListFragment extends ListFragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FriendListFragment.
-     */
     // TODO: Rename and change types and number of parameters
     public static FriendListFragment newInstance() {
         FriendListFragment fragment = new FriendListFragment();
@@ -89,13 +84,11 @@ public class FriendListFragment extends ListFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-
-        Log.i(TAG, "friends visible: " + isVisibleToUser);
-
         if (isVisibleToUser) {
             final User currentUser = User.getInstance(this.getActivity().getApplicationContext());
             if(friendList.size() == 0) {
                 friends = currentUser.getFriends();
+                friendRequests = currentUser.getFriendRequests();
                 for (int i = 0; i < friends.size(); i++) {
                     try {
                         friendList.add(friends.get(i).getString("first_name") + " " + friends.get(i).getString("last_name"));
@@ -103,7 +96,15 @@ public class FriendListFragment extends ListFragment {
                         e.printStackTrace();
                     }
                 }
-                Log.i(TAG, "friends:" + friendList.toString());
+
+//                for (int i = 0; i < friends.size(); i++) {
+//                    try {
+//                        friendList.add(friendRequests.get(i).getString("first_name") + " " + friends.get(i).getString("last_name"));
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+
                 setListAdapter(friendAdapter);
             }
         }
@@ -157,50 +158,37 @@ public class FriendListFragment extends ListFragment {
         void onFragmentInteraction(Uri uri);
     }
 
+
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
+        viewFriendProfile((int) id);
+    }
+
+
+//    @Override
+//    public void onListItemClick(ListView l, View v, int position, long id) {
 //        final User currentUser = User.getInstance(this.getActivity().getApplicationContext());
 //        try {
+//            String profilePic = friends.get((int) id).getString("profile_picture");
 //            String name = friends.get((int) id).getString("first_name") + " " + friends.get((int) id).getString("last_name");
+//            String description = friends.get((int) id).getString("desc");
+//            Log.i(TAG, "about to show friend");
+//            ((MainMenuActivity)getActivity()).showFriend(v, name, description, profilePic);
 //
-//            currentUser.showFriend(name, friends.get((int) id).getString("description"));
 //        } catch (JSONException e) {
+//            Log.i(TAG, "list click fail: " + e);
 //            e.printStackTrace();
 //        }
+//
+//    }
 
-//        try {
-//            Log.i(TAG, "Chose friend: " + friends.get((int) id).getString("first_name"));
-//
-//
-//            AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-//
-////            alert.setIcon(this.getActivity().getApplicationContext().getResources().getIdentifier("chess", "drawable", "com.teamh.huddleout"));
-//            alert.setTitle(friends.get((int) id).getString("first_name") + " " + friends.get((int) id).getString("last_name"));
-//            alert.setMessage(friends.get((int) id).getString("description"));
-//
-//            // Set an EditText view to get user input
-////            final EditText input = new EditText(v.getContext());
-////            alert.setView(input);
-////
-////            alert.setPositiveButton("Block", new DialogInterface.OnClickListener() {
-////                public void onClick(DialogInterface dialog, int whichButton) {
-////
-////                }
-////            });
-////
-////            alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-////                public void onClick(DialogInterface dialog, int whichButton) {
-////                    // Canceled.
-////                }
-////            });
-//
-//            alert.create();
-//            alert.show();
-//
-//
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
+    //Create a new ProfileActivity by passing in the friend's id
+    private void viewFriendProfile(int id) {
+        Intent intent = new Intent(getActivity(), ProfileActivity.class);
+        Bundle b = new Bundle();
+        b.putInt("friendId", id);
+        intent.putExtras(b);
+        startActivity(intent);
     }
 
 }

@@ -57,13 +57,13 @@ public class RegisterActivity extends Activity {
                                     finish();
                                 }else{
                                     registerProgress.dismiss();
-                                    String errorMsg = hAPI.getMessage();
-                                    if(errorMsg != null) {
-                                        errorMsg = errorMsg.toUpperCase();
-                                        Popup.show(errorMsg, context);
-                                    } else {
-                                        Popup.show("INTERNAL ERROR", context);
-                                    }
+//                                    String errorMsg = hAPI.getMessage();
+//                                    if(errorMsg != null) {
+//                                        errorMsg = errorMsg.toUpperCase();
+//                                        Popup.show(errorMsg, context);
+//                                    } else {
+//                                        Popup.show("INTERNAL ERROR", context);
+//                                    }
                                 }
                             }
                         };

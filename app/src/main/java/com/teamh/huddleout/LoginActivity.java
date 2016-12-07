@@ -58,15 +58,6 @@ public class LoginActivity extends Activity {
                                     loginProgress.dismiss();
                                     ActivitySwap.swapToNextActivityNoHistory(LoginActivity.this, MainMenuActivity.class);
                                     finish();
-                                }else{
-                                    loginProgress.dismiss();
-                                    String errorMsg = hAPI.getMessage();
-                                    if(errorMsg != null) {
-                                        errorMsg = errorMsg.toUpperCase();
-                                        Popup.show(errorMsg, context);
-                                    } else {
-                                        Popup.show("INTERNAL ERROR", context);
-                                    }
                                 }
                             }
                         };
@@ -97,8 +88,6 @@ public class LoginActivity extends Activity {
                                 if(hAPI.getAuth()){
                                     ActivitySwap.swapToNextActivityNoHistory(LoginActivity.this, MainMenuActivity.class);
                                     finish();
-                                }else{
-                                    Popup.show(hAPI.getMessage().toUpperCase(), context);
                                 }
                             }
                         };
