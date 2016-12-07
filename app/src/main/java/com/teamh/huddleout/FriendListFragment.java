@@ -164,22 +164,22 @@ public class FriendListFragment extends ListFragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-
-        try {
-            String profilePic = friends.get((int) id).getString("profile_picture");
-            String name = friends.get((int) id).getString("first_name") + " " + friends.get((int) id).getString("last_name");
-            String description = friends.get((int) id).getString("desc");
-            Log.i(TAG, "about to show friend");
-            ((MainMenuActivity)getActivity()).showFriend(v, name, description, profilePic);
-
-        } catch (JSONException e) {
-            Log.i(TAG, "list click fail: " + e);
-            e.printStackTrace();
-        }
-
-    }
+//    @Override
+//    public void onListItemClick(ListView l, View v, int position, long id) {
+//
+//        try {
+//            String profilePic = friends.get((int) id).getString("profile_picture");
+//            String name = friends.get((int) id).getString("first_name") + " " + friends.get((int) id).getString("last_name");
+//            String description = friends.get((int) id).getString("desc");
+//            Log.i(TAG, "about to show friend");
+//            ((MainMenuActivity)getActivity()).showFriend(v, name, description, profilePic);
+//
+//        } catch (JSONException e) {
+//            Log.i(TAG, "list click fail: " + e);
+//            e.printStackTrace();
+//        }
+//
+//    }
 
 }
 
