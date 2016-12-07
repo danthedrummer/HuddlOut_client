@@ -56,9 +56,7 @@ public class User {
 
 
     public static synchronized User getInstance(int profileId, Context context){
-        if(user == null){
-            user = new User(profileId, context);
-        }
+        user = new User(profileId, context);
         return user;
     }
 
