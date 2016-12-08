@@ -34,6 +34,7 @@ public class GroupMenuActivity extends AppCompatActivity implements ChatFragment
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private static final String TAG = "DevMsg";
 
+    private int groupId;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -61,6 +62,10 @@ public class GroupMenuActivity extends AppCompatActivity implements ChatFragment
         tabLayout.setupWithViewPager(mViewPager);
 
         User currentUser = User.getInstance(getApplicationContext());
+
+        groupId = getIntent().getIntExtra("GROUP_ID", 0);
+
+        Log.i(TAG, "Intent: " + getIntent().getIntExtra("GROUP_ID", 0));
 
     }
 
@@ -175,8 +180,8 @@ public class GroupMenuActivity extends AppCompatActivity implements ChatFragment
     }
 
     //Prevent back nav
-    @Override
-    public void onBackPressed() {
-    }
+//    @Override
+//    public void onBackPressed() {
+//    }
 
 }

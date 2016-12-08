@@ -177,7 +177,7 @@ public class User {
         return groupsList.get(groupInFocus);
     }
 
-    public void setGetGroupInFocus(int groupId) {
+    public void setGroupInFocus(int groupId) {
         this.groupInFocus = groupId;
     }
 

@@ -184,9 +184,13 @@ public class GroupListFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int id, long position) {
         User currentUser = User.getInstance(this.getActivity().getApplicationContext());
-
-        currentUser.
-
+        try {
+            int groupId = groups.get(id).getInt("group_id");
+            currentUser.setGroupInFocus(groupId);
+            ((MainMenuActivity)getActivity()).openGroupMenu(groupId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        };
     }
 
 }

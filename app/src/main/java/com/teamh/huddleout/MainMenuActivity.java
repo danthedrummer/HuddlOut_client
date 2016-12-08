@@ -1,6 +1,7 @@
 package com.teamh.huddleout;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -333,6 +334,12 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
         });
 
         alert.show();
+    }
+
+    public void openGroupMenu(int groupId){
+        Intent intent = new Intent(getBaseContext(), GroupMenuActivity.class);
+        intent.putExtra("GROUP_ID", groupId);
+        startActivity(intent);
     }
 
 }
