@@ -12,45 +12,64 @@
         android:layout_height="match_parent"
         android:fillViewport="true" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dip"
-            android:weightSum="1">
+            android:clickable="true"
+            app:fabSize="mini"
+            app:srcCompat="@android:drawable/ic_input_add"
+            android:id="@+id/addGroupButton"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="100dp"
+            android:onClick="addFriend"/>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:text="Friends"
-                android:id="@+id/friendsTextView" />
+                android:orientation="vertical"
+                android:padding="10dip"
+                android:weightSum="1">
 
-            <ListView
-                android:id="@+id/friendListView"
-                android:layout_width="match_parent"
-                android:layout_height="214dp"
-                android:layout_marginTop="10dip"
-                android:layout_weight="0.65">
-            </ListView>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="Friends"
+                    android:id="@+id/friendsTextView" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dip"
-                android:gravity="center_vertical"
-                android:text="Friend Requests"
-                android:id="@+id/friendRequestTextView" />
 
-            <ListView
-                android:id="@+id/friendRequestListView"
-                android:background="#e2f7de"
-                android:layout_width="match_parent"
-                android:layout_height="181dp"
-                android:layout_marginTop="10dip">
-            </ListView>
-        </LinearLayout>
+                <ListView
+                    android:id="@+id/friendListView"
+                    android:layout_width="match_parent"
+                    android:layout_height="214dp"
+                    android:layout_marginTop="10dip"
+                    android:layout_weight="0.65">
+                </ListView>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:gravity="center_vertical"
+                    android:text="Friend Requests"
+                    android:id="@+id/friendRequestTextView" />
+
+                <ListView
+                    android:id="@+id/friendRequestListView"
+                    android:background="#e2f7de"
+                    android:layout_width="match_parent"
+                    android:layout_height="181dp"
+                    android:layout_marginTop="10dip">
+
+                </ListView>
+            </LinearLayout>
+        </RelativeLayout>
     </ScrollView>
 
 </FrameLayout>

@@ -18,11 +18,11 @@
         android:layout_alignParentStart="true" />
 
     <Button
-        android:text="Context Text"
+        android:text="Remove Friend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/profileImageView"
-        android:id="@+id/topContextButton"
+        android:id="@+id/removeBtn"
         android:layout_alignEnd="@+id/nameTextView"
         android:layout_alignStart="@+id/nameTextView" />
 
@@ -57,6 +57,6 @@
         android:layout_alignStart="@+id/aboutTextView"
         android:layout_marginTop="13dp"
         android:id="@+id/aboutContentTextView"
-        android:layout_alignEnd="@+id/topContextButton" />
+        android:layout_alignEnd="@+id/removeBtn" />
 
 </RelativeLayout>

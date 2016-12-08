@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,6 +26,7 @@ public class ProfileActivity extends AppCompatActivity {
     private int friendId = -1; //ID of current friend
     private User currentUser; //Current User
     private ArrayList<JSONObject> friends; //User's friends
+    private Button removeBtn;
 
     //Friend Data
     private int friendProfile = -1;
@@ -78,6 +81,15 @@ public class ProfileActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        // Remove friend button
+        removeBtn = (Button)findViewById(R.id.removeBtn);
+        removeBtn.setOnClickListener( new Button.OnClickListener(){
+            public void onClick(View v){
+                Log.i(TAG, "friend to be deleted: " + friendProfile);
+                HuddlOutAPI.getInstance(getApplicationContext()).deleteFriend(friendProfile);
+            }
+        });
 
         //Update UI elements
         name.setText(friendFirstName + " " + friendLastName);

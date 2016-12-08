@@ -32,6 +32,7 @@ import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -322,7 +323,6 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
 
         alert.setPositiveButton("Add", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                Log.i(TAG, "friend request name: " + input.getText());
                 HuddlOutAPI.getInstance(getApplicationContext()).sendFriendRequest(input.getText().toString());
             }
         });
