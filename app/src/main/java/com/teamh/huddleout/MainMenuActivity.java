@@ -250,7 +250,7 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
     public void onFragmentInteraction(Uri uri) {
         //you can leave it empty
     }
-    
+
     //#####################################################################################################################
     //Listener for the add group floating action button
     public void addGroup(View v){

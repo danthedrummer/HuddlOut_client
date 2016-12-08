@@ -31,6 +31,7 @@ public class User {
 
     private int profileID;
     private int age;
+    private int getGroupInFocus;
 
     private String firstName;
     private String lastName;
@@ -132,14 +133,15 @@ public class User {
         }
 
         try {
-            JSONArray profileJSON = new JSONArray(requests);
-            for (int i = 0; i < profileJSON.length(); i++) {
-                friendRequests.add(profileJSON.getJSONObject(i));
+            JSONArray friendRequestsJSON = new JSONArray(requests);
+            for (int i = 0; i < friendRequestsJSON.length(); i++) {
+                friendRequests.add(friendRequestsJSON.getJSONObject(i));
             }
         } catch (JSONException e) {
             Log.i(TAG, "setFriendsList failure: " + e);
             e.printStackTrace();
         }
+        Log.i(TAG, "Friend Requests: " + friendRequests.toString());
     }
 
 
@@ -159,6 +161,10 @@ public class User {
 
     public ArrayList<JSONObject> getFriendRequests() {
         return friendRequests;
+    }
+
+    public JSONObject getGroupInFocus(){
+        return groupsList.get(getGroupInFocus);
     }
 
 

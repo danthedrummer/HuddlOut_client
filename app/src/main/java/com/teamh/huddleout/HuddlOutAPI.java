@@ -420,10 +420,8 @@ public class HuddlOutAPI {
 
 
     // USER
-    public RequestQueue getProfile(int profileId) {
+    public void getProfile(final int profileId) {
 //        Log.i(TAG, "getProfile start");
-        RequestQueue reQueue = new RequestQueue(cache, network);
-        reQueue.start();
         String params = url + "api/user/getProfile?token=" + token + "&profileId=" + profileId;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>() {
@@ -445,7 +443,6 @@ public class HuddlOutAPI {
             }
         });
         reQueue.add(stringRequest);
-        return reQueue;
     }
 
     public RequestQueue editProfile(String firstName, String lastName, String profilePicture, int age, String description, String privacy) {
@@ -549,6 +546,7 @@ public class HuddlOutAPI {
     }
 
     public void getFriendRequests() {
+        Log.i(TAG, "getFriendRequests");
         String params = url + "api/user/getFriendRequests?token=" + token;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>() {
@@ -557,6 +555,7 @@ public class HuddlOutAPI {
                         //Returns "invalid params" if invalid params
                         //Returns "no requests found" if there are no friend requests
                         //Returns list of friend requests
+                        Log.i(TAG, "response from getFriendRequests: " + response);
                         if (response.equalsIgnoreCase("invalid params") || response.equalsIgnoreCase("no requests found")) {
                             Popup.show(response, context);
                         } else {
@@ -569,6 +568,7 @@ public class HuddlOutAPI {
                 Log.i(TAG, "Failed Check Invites" + err);
             }
         });
+        reQueue.add(stringRequest);
     }
 
     public void resolveFriendRequest(int profileId, String action) {
@@ -598,8 +598,6 @@ public class HuddlOutAPI {
 
     public void getFriends() {
         Log.i(TAG, "getFriends start");
-        RequestQueue reQueue = new RequestQueue(cache, network);
-        reQueue.start();
         String params = url + "api/user/viewFriends?token=" + token;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>() {
