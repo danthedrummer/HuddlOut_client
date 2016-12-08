@@ -87,17 +87,6 @@ public class GroupMenuActivity extends AppCompatActivity implements ChatFragment
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        /*if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }*/
-
         //Request permission to use location
         if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(requestLocation, 2);
@@ -110,6 +99,8 @@ public class GroupMenuActivity extends AppCompatActivity implements ChatFragment
                 .addApi(Places.PLACE_DETECTION_API)
                 .enableAutoManage(this, 0, this)
                 .build();
+
+        User currentUser = User.getInstance(getApplicationContext());
     }
 
 
@@ -281,5 +272,10 @@ public class GroupMenuActivity extends AppCompatActivity implements ChatFragment
                 likelyPlaces.release();
             }
         });
+    }
+
+    //Prevent back nav
+    @Override
+    public void onBackPressed() {
     }
 }

@@ -420,10 +420,8 @@ public class HuddlOutAPI {
 
 
     // USER
-    public RequestQueue getProfile(int profileId) {
+    public void getProfile(final int profileId) {
 //        Log.i(TAG, "getProfile start");
-        RequestQueue reQueue = new RequestQueue(cache, network);
-        reQueue.start();
         String params = url + "api/user/getProfile?token=" + token + "&profileId=" + profileId;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>() {
@@ -445,7 +443,6 @@ public class HuddlOutAPI {
             }
         });
         reQueue.add(stringRequest);
-        return reQueue;
     }
 
     public RequestQueue editProfile(String firstName, String lastName, String profilePicture, int age, String description, String privacy) {
@@ -549,6 +546,7 @@ public class HuddlOutAPI {
     }
 
     public void getFriendRequests() {
+        Log.i(TAG, "getFriendRequests");
         String params = url + "api/user/getFriendRequests?token=" + token;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>() {
@@ -557,6 +555,7 @@ public class HuddlOutAPI {
                         //Returns "invalid params" if invalid params
                         //Returns "no requests found" if there are no friend requests
                         //Returns list of friend requests
+                        Log.i(TAG, "response from getFriendRequests: " + response);
                         if (response.equalsIgnoreCase("invalid params") || response.equalsIgnoreCase("no requests found")) {
                             Popup.show(response, context);
                         } else {
@@ -569,6 +568,7 @@ public class HuddlOutAPI {
                 Log.i(TAG, "Failed Check Invites" + err);
             }
         });
+        reQueue.add(stringRequest);
     }
 
     public void resolveFriendRequest(int profileId, String action) {
@@ -598,8 +598,6 @@ public class HuddlOutAPI {
 
     public void getFriends() {
         Log.i(TAG, "getFriends start");
-        RequestQueue reQueue = new RequestQueue(cache, network);
-        reQueue.start();
         String params = url + "api/user/viewFriends?token=" + token;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>() {
@@ -643,6 +641,102 @@ public class HuddlOutAPI {
             @Override
             public void onErrorResponse(VolleyError err) {
                 Log.i(TAG, "Failed Check Invites" + err);
+            }
+        });
+        reQueue.add(stringRequest);
+    }
+
+    //Create a new vote for the group (UNTESTED, WIP)
+    public void createVote(int groupId, String name, String desc, int duration, String option1, String option2, String option3, String option4) {
+        Log.i(TAG, "Creating Vote for group: " + groupId);
+
+        //Build GET request
+        String params;
+        if(option3 == null && option4 == null) {
+            params = url + "api/group/createVote?token=" + token +
+                    "&groupId=" + groupId +
+                    "&name=" + Uri.encode(name) +
+                    "&desc=" + Uri.encode(desc) +
+                    "&duration=" + duration +
+                    "&option1=" + Uri.encode(option1) +
+                    "&option2=" + Uri.encode(option2);
+        } else if(option4 == null) {
+            params = url + "api/group/createVote?token=" + token +
+                    "&groupId=" + groupId +
+                    "&name=" + Uri.encode(name) +
+                    "&desc=" + Uri.encode(desc) +
+                    "&duration=" + duration +
+                    "&option1=" + Uri.encode(option1) +
+                    "&option2=" + Uri.encode(option2) +
+                    "&option3=" + Uri.encode(option3);
+        } else {
+            params = url + "api/group/createVote?token=" + token +
+                    "&groupId=" + groupId +
+                    "&name=" + Uri.encode(name) +
+                    "&desc=" + Uri.encode(desc) +
+                    "&duration=" + duration +
+                    "&option1=" + Uri.encode(option1) +
+                    "&option2=" + Uri.encode(option2) +
+                    "&option3=" + Uri.encode(option3) +
+                    "&option4=" + Uri.encode(option4);
+        }
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Popup.show(response, context);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError err) {
+                Log.i(TAG, "Failed Create Vote" + err);
+            }
+        });
+        reQueue.add(stringRequest);
+    }
+
+    //Get votes a new vote for the group (UNTESTED, WIP)
+    public void getVotes(int groupId) {
+        Log.i(TAG, "Checking Vote for group: " + groupId);
+
+        //Build GET request
+        String params = url + "api/group/getVotes?token=" + token +
+                "&groupId=" + groupId;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Popup.show(response, context);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError err) {
+                Log.i(TAG, "Failed Create Vote" + err);
+            }
+        });
+        reQueue.add(stringRequest);
+    }
+
+    //Submit a vote (UNTESTED, WIP)
+    public void submitVote(int optionId) {
+        Log.i(TAG, "Submitting Vote: " + optionId);
+
+        //Build GET request
+        String params = url + "api/group/submitVote?token=" + token +
+                "&optionId=" + optionId;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Popup.show(response, context);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError err) {
+                Log.i(TAG, "Failed Create Vote" + err);
             }
         });
         reQueue.add(stringRequest);

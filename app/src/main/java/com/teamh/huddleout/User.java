@@ -26,16 +26,19 @@ public class User {
     private static final String TAG = "DevMsg";
 
     final HuddlOutAPI hAPI;
+
     private static User user;
 
     private int profileID;
+    private int age;
+    private int getGroupInFocus;
+
     private String firstName;
     private String lastName;
-    private int age;
     private String description;
-
     private String profilePicture;
     private String privacy;
+
     private Context context;
 
     ArrayList<JSONObject> groupsList;
@@ -130,16 +133,27 @@ public class User {
         }
 
         try {
-            JSONArray profileJSON = new JSONArray(requests);
-            for (int i = 0; i < profileJSON.length(); i++) {
-                friendRequests.add(profileJSON.getJSONObject(i));
+            JSONArray friendRequestsJSON = new JSONArray(requests);
+            for (int i = 0; i < friendRequestsJSON.length(); i++) {
+                friendRequests.add(friendRequestsJSON.getJSONObject(i));
             }
         } catch (JSONException e) {
             Log.i(TAG, "setFriendsList failure: " + e);
             e.printStackTrace();
         }
+        Log.i(TAG, "Friend Requests: " + friendRequests.toString());
     }
 
+
+    public void resolveFriendRequest(int id, String action){
+        int userProfileId = 0;
+        try {
+            userProfileId = friendRequests.get(id).getInt("profile_id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        hAPI.resolveFriendRequest(userProfileId, action);
+    }
 
 
 
@@ -157,6 +171,10 @@ public class User {
 
     public ArrayList<JSONObject> getFriendRequests() {
         return friendRequests;
+    }
+
+    public JSONObject getGroupInFocus(){
+        return groupsList.get(getGroupInFocus);
     }
 
 
