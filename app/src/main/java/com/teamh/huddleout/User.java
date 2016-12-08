@@ -130,14 +130,17 @@ public class User {
         }
 
         try {
-            JSONArray profileJSON = new JSONArray(requests);
-            for (int i = 0; i < profileJSON.length(); i++) {
-                friendRequests.add(profileJSON.getJSONObject(i));
+            JSONArray friendRequestsJSON = new JSONArray(requests);
+            for (int i = 0; i < friendRequestsJSON.length(); i++) {
+//                JSONObject curRequest = friendRequestsJSON.getJSONObject(i);
+//                String profile = hAPI.getProfile(curRequest.getInt("profile_a"));
+//                friendRequests.add(friendRequestsJSON.getJSONObject(i));
             }
         } catch (JSONException e) {
             Log.i(TAG, "setFriendsList failure: " + e);
             e.printStackTrace();
         }
+        Log.i(TAG, "Friend Requests: " + friendRequests.toString());
     }
 
 

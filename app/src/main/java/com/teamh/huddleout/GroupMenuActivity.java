@@ -59,6 +59,9 @@ public class GroupMenuActivity extends AppCompatActivity implements ChatFragment
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
+        User currentUser = User.getInstance(getApplicationContext());
+
     }
 
 

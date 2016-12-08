@@ -97,9 +97,9 @@ public class FriendListFragment extends ListFragment {
                     }
                 }
 
-//                for (int i = 0; i < friends.size(); i++) {
+//                for (int i = 0; i < friendRequests.size(); i++) {
 //                    try {
-//                        friendList.add(friendRequests.get(i).getString("first_name") + " " + friends.get(i).getString("last_name"));
+//                        friendList.add("Friend Request From: " + friendRequests.get(i).getString("first_name") + " " + friends.get(i).getString("last_name"));
 //                    } catch (JSONException e) {
 //                        e.printStackTrace();
 //                    }
