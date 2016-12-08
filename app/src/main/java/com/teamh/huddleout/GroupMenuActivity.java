@@ -233,15 +233,15 @@ public class GroupMenuActivity extends AppCompatActivity implements ChatFragment
         //If location request was allowed, then launch the map
         if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
-            callPlaceDetectionApi();
-/*
+            //callPlaceDetectionApi();
+
             try {
                 startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);
             } catch (GooglePlayServicesNotAvailableException e1) {
 
             } catch (GooglePlayServicesRepairableException e2) {
 
-            }*/
+            }
         }
     }
 
