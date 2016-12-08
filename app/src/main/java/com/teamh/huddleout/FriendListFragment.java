@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -21,6 +22,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -128,47 +130,44 @@ public class FriendListFragment extends Fragment implements AdapterView.OnItemCl
         // Inflate the layout for this fragment
         FrameLayout rellay = (FrameLayout) inflater.inflate(R.layout.fragment_friend_list, container, false);
         friendAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, friendList);
+
         friendsListView = (ListView)rellay.findViewById(R.id.friendListView);
         friendsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int id, long l) {
                 viewFriendProfile(id);
             }
-
         });
-
-
 
         friendRequestAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, friendRequestList);
         friendsRequestListView = (ListView)rellay.findViewById(R.id.friendRequestListView);
-
         friendsRequestListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int id, long l) {
                 try {
-                    String profilePic = friends.get(id).getString("profile_picture");
-                    String name = friends.get(id).getString("first_name") + " " + friends.get(id).getString("last_name");
-                    String description = friends.get(id).getString("desc");
-                    Log.i(TAG, "about to show friend");
-                    ((MainMenuActivity)getActivity()).showFriendRequest(view, id, name, description, profilePic);
+                    String profilePic = friendRequests.get(id).getString("profile_picture");
+                    String name = friendRequests.get(id).getString("first_name") + " " + friendRequests.get(id).getString("last_name");
+                    String description = friendRequests.get(id).getString("description");
+                    int profileId = friendRequests.get(id).getInt("profile_a");
+
+                    showFriendRequest(view, profileId, name, description, profilePic);
 
                 } catch (JSONException e) {
                     Log.i(TAG, "list click fail: " + e);
                     e.printStackTrace();
+                }catch (IndexOutOfBoundsException e){
+                    Log.i(TAG, "Index out of bounds for request list: " + e);
+                    e.printStackTrace();
                 }
             }
-
         });
-
 
         ListUtils.setDynamicHeight(friendsListView);
         ListUtils.setDynamicHeight(friendsRequestListView);
 
-
-
         return rellay;
     }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -194,6 +193,7 @@ public class FriendListFragment extends Fragment implements AdapterView.OnItemCl
         mListener = null;
     }
 
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -210,60 +210,52 @@ public class FriendListFragment extends Fragment implements AdapterView.OnItemCl
     }
 
 
-//    @Override
-//    public void onListItemClick(ListView l, View v, int position, long id) {
-//        viewFriendProfile((int) id);
-//    }
-
-
-//    @Override
-//    public void onListItemClick(ListView l, View v, int position, long id) {
-//        final User currentUser = User.getInstance(this.getActivity().getApplicationContext());
-//        try {
-//            String profilePic = friends.get((int) id).getString("profile_picture");
-//            String name = friends.get((int) id).getString("first_name") + " " + friends.get((int) id).getString("last_name");
-//            String description = friends.get((int) id).getString("desc");
-//            Log.i(TAG, "about to show friend");
-//            ((MainMenuActivity)getActivity()).showFriend(v, name, description, profilePic);
-//
-//        } catch (JSONException e) {
-//            Log.i(TAG, "list click fail: " + e);
-//            e.printStackTrace();
-//        }
-//
-//    }
-
-
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
     }
 
+
     public void setAdapters(){
+//        Log.i(TAG, "Setting Adapters");
         final User currentUser = User.getInstance(this.getActivity().getApplicationContext());
-        if(friendList.size() == 0) {
-            friends = currentUser.getFriends();
-            friendRequests = currentUser.getFriendRequests();
-            for (int i = 0; i < friends.size(); i++) {
-                try {
-                    friendList.add(friends.get(i).getString("first_name") + " " + friends.get(i).getString("last_name"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
 
-            for (int i = 0; i < friendRequests.size(); i++) {
-                try {
-                    friendRequestList.add(friendRequests.get(i).getString("first_name") + " " + friendRequests.get(i).getString("last_name"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            friendsListView.setAdapter(friendAdapter);
-            friendsRequestListView.setAdapter(friendRequestAdapter);
+        try {
+            friendList.clear();
+        }catch (IndexOutOfBoundsException e){
+            Log.i(TAG, "list clearance fail: " + e);
         }
+
+        try {
+            friendRequestList.clear();
+        }catch (IndexOutOfBoundsException e){
+            Log.i(TAG, "list clearance fail: " + e);
+        }
+
+        friends = currentUser.getFriends();
+        friendRequests = currentUser.getFriendRequests();
+        Log.i(TAG, friendRequests.toString());
+
+        for (int i = 0; i < friends.size(); i++) {
+            try {
+                friendList.add(friends.get(i).getString("first_name") + " " + friends.get(i).getString("last_name"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        for (int i = 0; i < friendRequests.size(); i++) {
+            try {
+                friendRequestList.add(friendRequests.get(i).getString("first_name") + " " + friendRequests.get(i).getString("last_name"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        friendsListView.setAdapter(friendAdapter);
+        friendsRequestListView.setAdapter(friendRequestAdapter);
     }
+
 
     //Create a new ProfileActivity by passing in the friend's id
     private void viewFriendProfile(int id) {
@@ -273,6 +265,47 @@ public class FriendListFragment extends Fragment implements AdapterView.OnItemCl
         intent.putExtras(b);
         startActivity(intent);
     }
+
+
+
+    public void showFriendRequest(View v, final int profileId, String name, String description, String profilePic){
+        AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
+        final Handler HANDLER = new Handler();
+
+        alert.setIcon(getActivity().getApplicationContext().getResources().getIdentifier(profilePic, "drawable", "com.teamh.huddleout"));
+        alert.setTitle(name);
+        alert.setMessage(description);
+
+        final TextView input = new TextView(v.getContext());
+        alert.setView(input);
+
+        alert.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                User.getInstance(getActivity().getApplicationContext()).resolveFriendRequest(profileId, "accept");
+                HANDLER.postDelayed(new Runnable(){
+                    @Override
+                    public void run(){
+                        setAdapters();
+                    }
+                }, 2000);
+            }
+        });
+
+        alert.setNegativeButton("Decline", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                User.getInstance(getActivity().getApplicationContext()).resolveFriendRequest(profileId, "deny");
+                HANDLER.postDelayed(new Runnable(){
+                    @Override
+                    public void run(){
+                        setAdapters();
+                    }
+                }, 2000);
+            }
+        });
+
+        alert.show();
+    }
+
 
 }
 

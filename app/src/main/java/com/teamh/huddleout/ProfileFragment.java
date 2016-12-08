@@ -1,8 +1,6 @@
 package com.teamh.huddleout;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,11 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 
 
 /**
@@ -121,7 +115,7 @@ public class ProfileFragment extends Fragment {
         nameTextView = (TextView)rellay.findViewById(R.id.nameTextView);
         aboutTextView = (TextView)rellay.findViewById(R.id.aboutTextView);
         aboutContentTextView = (TextView)rellay.findViewById(R.id.aboutContentTextView);
-        topContextButton = (Button)rellay.findViewById(R.id.topContextButton);
+        topContextButton = (Button)rellay.findViewById(R.id.removeBtn);
         profilePicture = (ImageView)rellay.findViewById(R.id.profileImageView);
 
         try{

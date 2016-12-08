@@ -31,6 +31,7 @@ import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -281,35 +282,6 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
         alert.show();
     }
 
-    public void showFriendRequest(View v, final int id, String name, String description, String profilePic){
-        AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
-
-        Log.i(TAG, "showFriend: " + name);
-
-        alert.setIcon(getApplicationContext().getResources().getIdentifier(profilePic, "drawable", "com.teamh.huddleout"));
-        alert.setTitle(name);
-        alert.setMessage(description);
-
-        final TextView input = new TextView(v.getContext());
-        alert.setView(input);
-
-        alert.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                User.getInstance(getApplicationContext()).resolveFriendRequest(id, "accept");
-//                FriendListFragment fragment = (FriendListFragment) getFragmentManager().findFragmentById(R.id.example_fragment);
-//                fragment.<specific_function_name>();
-            }
-        });
-
-        alert.setNegativeButton("Decline", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                User.getInstance(getApplicationContext()).resolveFriendRequest(id, "deny");
-            }
-        });
-
-        alert.show();
-    }
-
     //Listener for the add friend floating action button
     public void addFriend(View v){
         AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
@@ -323,7 +295,6 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
 
         alert.setPositiveButton("Add", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                Log.i(TAG, "friend request name: " + input.getText());
                 HuddlOutAPI.getInstance(getApplicationContext()).sendFriendRequest(input.getText().toString());
             }
         });

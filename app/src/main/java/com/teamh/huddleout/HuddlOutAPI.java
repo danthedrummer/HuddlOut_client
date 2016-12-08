@@ -521,9 +521,7 @@ public class HuddlOutAPI {
 
 
     // FRIEND
-    public RequestQueue sendFriendRequest(String username) {
-        RequestQueue reQueue = new RequestQueue(cache, network);
-        reQueue.start();
+    public void sendFriendRequest(String username) {
         String params = url + "api/user/sendFriendRequest?token=" + token + "&username=" + Uri.encode(username);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>() {
@@ -542,7 +540,6 @@ public class HuddlOutAPI {
             }
         });
         reQueue.add(stringRequest);
-        return reQueue;
     }
 
     public void getFriendRequests() {
@@ -556,9 +553,7 @@ public class HuddlOutAPI {
                         //Returns "no requests found" if there are no friend requests
                         //Returns list of friend requests
                         Log.i(TAG, "response from getFriendRequests: " + response);
-                        if (response.equalsIgnoreCase("invalid params") || response.equalsIgnoreCase("no requests found")) {
-                            Popup.show(response, context);
-                        } else {
+                        if (!response.equalsIgnoreCase("invalid params") && !response.equalsIgnoreCase("no requests found")) {
                             User.getInstance(context).setFriendRequests(response);
                         }
                     }
@@ -571,7 +566,9 @@ public class HuddlOutAPI {
         reQueue.add(stringRequest);
     }
 
+
     public void resolveFriendRequest(int profileId, String action) {
+        Log.i(TAG, "Resolve friend request: " + profileId + " " + action);
         String params = url + "api/user/resolveFriendRequest?token=" + token + "&profileId=" + profileId + "&action=" + Uri.encode(action);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>() {
@@ -623,7 +620,8 @@ public class HuddlOutAPI {
     }
 
     public void deleteFriend(int profileId) {
-        String params = url + "api/user/deleteFriend?token=" + token + "&profileId" + profileId;
+        Log.i(TAG, "Start deletefriend with params: " + profileId + "   " + token);
+        String params = url + "api/user/deleteFriend?token=" + token + "&profileId=" + profileId;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>() {
                     @Override
@@ -640,7 +638,7 @@ public class HuddlOutAPI {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError err) {
-                Log.i(TAG, "Failed Check Invites" + err);
+                Log.i(TAG, "Failed Delete Friend: " + err);
             }
         });
         reQueue.add(stringRequest);

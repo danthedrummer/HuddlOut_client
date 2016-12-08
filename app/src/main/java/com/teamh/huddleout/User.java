@@ -75,7 +75,9 @@ public class User {
         if (hAPI.getAuth()) {
             try {
                 JSONObject profileJSON = new JSONObject(profileInfo);
-                Log.i(TAG, "profile info: " + profileJSON.toString());
+
+//                Log.i(TAG, "profile info: " + profileJSON.toString());
+
                 firstName = (String) profileJSON.get("first_name");
                 lastName = (String) profileJSON.get("last_name");
                 profilePicture = (String) profileJSON.get("profile_picture");
@@ -117,7 +119,7 @@ public class User {
                 for (int i = 0; i < groupJSON.length(); i++) {
                     groupsList.add(groupJSON.getJSONObject(i));
                 }
-                Log.i(TAG, "in setgroups: " + groupsList.toString());
+//                Log.i(TAG, "in setgroups: " + groupsList.toString());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -141,18 +143,12 @@ public class User {
             Log.i(TAG, "setFriendsList failure: " + e);
             e.printStackTrace();
         }
-        Log.i(TAG, "Friend Requests: " + friendRequests.toString());
+//        Log.i(TAG, "Friend Requests: " + friendRequests.toString());
     }
 
 
-    public void resolveFriendRequest(int id, String action){
-        int userProfileId = 0;
-        try {
-            userProfileId = friendRequests.get(id).getInt("profile_id");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        hAPI.resolveFriendRequest(userProfileId, action);
+    public void resolveFriendRequest(int profileId, String action){
+        hAPI.resolveFriendRequest(profileId, action);
     }
 
 
@@ -197,6 +193,5 @@ public class User {
     public String getName(){
         return firstName + " " + lastName;
     }
-
 
 }
