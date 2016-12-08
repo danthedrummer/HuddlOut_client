@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import org.json.JSONException;
@@ -37,7 +38,7 @@ import java.util.List;
  * Use the {@link FriendListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FriendListFragment extends ListFragment {
+public class FriendListFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String TAG = "DevMsg";
@@ -52,9 +53,15 @@ public class FriendListFragment extends ListFragment {
     private OnFragmentInteractionListener mListener;
     ArrayList<JSONObject> friends;
     ArrayList<JSONObject> friendRequests;
+
     ArrayList<String> friendList;
+    ArrayList<String> friendRequestList;
 
     ArrayAdapter<String> friendAdapter;
+    ArrayAdapter<String> friendRequestAdapter;
+
+    ListView friendsListView;
+    ListView friendsRequestListView;
 
     public FriendListFragment() {
         // Required empty public constructor
@@ -77,6 +84,13 @@ public class FriendListFragment extends ListFragment {
         }
 
         friendList = new ArrayList<String>();
+        friendRequestList = new ArrayList<String>();
+
+        friendRequestList.add("Glenn Cullen wants to succ");
+        friendRequestList.add("Durn Down");
+        friendRequestList.add("Calvin");
+        friendRequestList.add("Klein");
+        friendRequestList.add("Rambo");
 
     }
 
@@ -105,10 +119,35 @@ public class FriendListFragment extends ListFragment {
 //                    }
 //                }
 
-                setListAdapter(friendAdapter);
+                friendsListView.setAdapter(friendAdapter);
+                friendsRequestListView.setAdapter(friendRequestAdapter);
             }
         }
     }
+
+    //Solution for this found on http://stackoverflow.com/questions/17693578/android-how-to-display-2-listviews-in-one-activity-one-after-the-other
+    public static class ListUtils {
+        public static void setDynamicHeight(ListView mListView) {
+            ListAdapter mListAdapter = mListView.getAdapter();
+            if (mListAdapter == null) {
+                // when adapter is null
+                return;
+            }
+            int height = 0;
+            int desiredWidth = View.MeasureSpec.makeMeasureSpec(mListView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+            for (int i = 0; i < mListAdapter.getCount(); i++) {
+                View listItem = mListAdapter.getView(i, null, mListView);
+                listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+                height += listItem.getMeasuredHeight();
+            }
+            ViewGroup.LayoutParams params = mListView.getLayoutParams();
+            params.height = height + (mListView.getDividerHeight() * (mListAdapter.getCount() - 1));
+            mListView.setLayoutParams(params);
+            mListView.requestLayout();
+        }
+    }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -116,6 +155,16 @@ public class FriendListFragment extends ListFragment {
         // Inflate the layout for this fragment
         FrameLayout rellay = (FrameLayout) inflater.inflate(R.layout.fragment_friend_list, container, false);
         friendAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, friendList);
+        friendsListView = (ListView)rellay.findViewById(R.id.friendListView);
+
+        friendRequestAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, friendRequestList);
+        friendsRequestListView = (ListView)rellay.findViewById(R.id.friendRequestListView);
+
+        ListUtils.setDynamicHeight(friendsListView);
+        ListUtils.setDynamicHeight(friendsRequestListView);
+
+
+
         return rellay;
     }
 
@@ -159,10 +208,10 @@ public class FriendListFragment extends ListFragment {
     }
 
 
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        viewFriendProfile((int) id);
-    }
+//    @Override
+//    public void onListItemClick(ListView l, View v, int position, long id) {
+//        viewFriendProfile((int) id);
+//    }
 
 
 //    @Override

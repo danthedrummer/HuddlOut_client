@@ -170,4 +170,10 @@ public class GroupMenuActivity extends AppCompatActivity implements ChatFragment
     public void onFragmentInteraction(Uri uri) {
         //you can leave it empty
     }
+
+    //Prevent back nav
+    @Override
+    public void onBackPressed() {
+    }
+
 }
