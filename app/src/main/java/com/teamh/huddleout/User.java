@@ -26,16 +26,18 @@ public class User {
     private static final String TAG = "DevMsg";
 
     final HuddlOutAPI hAPI;
+
     private static User user;
 
     private int profileID;
+    private int age;
+
     private String firstName;
     private String lastName;
-    private int age;
     private String description;
-
     private String profilePicture;
     private String privacy;
+
     private Context context;
 
     ArrayList<JSONObject> groupsList;
