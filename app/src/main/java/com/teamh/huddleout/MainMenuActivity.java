@@ -296,6 +296,8 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
         alert.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 User.getInstance(getApplicationContext()).resolveFriendRequest(id, "accept");
+//                FriendListFragment fragment = (FriendListFragment) getFragmentManager().findFragmentById(R.id.example_fragment);
+//                fragment.<specific_function_name>();
             }
         });
 

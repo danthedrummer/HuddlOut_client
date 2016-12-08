@@ -93,29 +93,7 @@ public class FriendListFragment extends Fragment implements AdapterView.OnItemCl
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
-            final User currentUser = User.getInstance(this.getActivity().getApplicationContext());
-            if(friendList.size() == 0) {
-                friends = currentUser.getFriends();
-                friendRequests = currentUser.getFriendRequests();
-                for (int i = 0; i < friends.size(); i++) {
-                    try {
-                        friendList.add(friends.get(i).getString("first_name") + " " + friends.get(i).getString("last_name"));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                for (int i = 0; i < friendRequests.size(); i++) {
-                    try {
-                        friendRequestList.add(friendRequests.get(i).getString("first_name") + " " + friendRequests.get(i).getString("last_name"));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                friendsListView.setAdapter(friendAdapter);
-                friendsRequestListView.setAdapter(friendRequestAdapter);
-            }
+            setAdapters();
         }
     }
 
@@ -260,6 +238,32 @@ public class FriendListFragment extends Fragment implements AdapterView.OnItemCl
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+    }
+
+    public void setAdapters(){
+        final User currentUser = User.getInstance(this.getActivity().getApplicationContext());
+        if(friendList.size() == 0) {
+            friends = currentUser.getFriends();
+            friendRequests = currentUser.getFriendRequests();
+            for (int i = 0; i < friends.size(); i++) {
+                try {
+                    friendList.add(friends.get(i).getString("first_name") + " " + friends.get(i).getString("last_name"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            for (int i = 0; i < friendRequests.size(); i++) {
+                try {
+                    friendRequestList.add(friendRequests.get(i).getString("first_name") + " " + friendRequests.get(i).getString("last_name"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            friendsListView.setAdapter(friendAdapter);
+            friendsRequestListView.setAdapter(friendRequestAdapter);
+        }
     }
 
     //Create a new ProfileActivity by passing in the friend's id
