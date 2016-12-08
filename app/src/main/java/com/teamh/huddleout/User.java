@@ -31,6 +31,7 @@ public class User {
 
     private int profileID;
     private int age;
+    private int getGroupInFocus;
 
     private String firstName;
     private String lastName;
@@ -134,9 +135,7 @@ public class User {
         try {
             JSONArray friendRequestsJSON = new JSONArray(requests);
             for (int i = 0; i < friendRequestsJSON.length(); i++) {
-//                JSONObject curRequest = friendRequestsJSON.getJSONObject(i);
-//                String profile = hAPI.getProfile(curRequest.getInt("profile_a"));
-//                friendRequests.add(friendRequestsJSON.getJSONObject(i));
+                friendRequests.add(friendRequestsJSON.getJSONObject(i));
             }
         } catch (JSONException e) {
             Log.i(TAG, "setFriendsList failure: " + e);
@@ -162,6 +161,10 @@ public class User {
 
     public ArrayList<JSONObject> getFriendRequests() {
         return friendRequests;
+    }
+
+    public JSONObject getGroupInFocus(){
+        return groupsList.get(getGroupInFocus);
     }
 
 

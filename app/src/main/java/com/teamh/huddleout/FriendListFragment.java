@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -38,7 +39,7 @@ import java.util.List;
  * Use the {@link FriendListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FriendListFragment extends Fragment {
+public class FriendListFragment extends Fragment implements AdapterView.OnItemClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String TAG = "DevMsg";
@@ -86,12 +87,6 @@ public class FriendListFragment extends Fragment {
         friendList = new ArrayList<String>();
         friendRequestList = new ArrayList<String>();
 
-        friendRequestList.add("Glenn Cullen wants to succ");
-        friendRequestList.add("Durn Down");
-        friendRequestList.add("Calvin");
-        friendRequestList.add("Klein");
-        friendRequestList.add("Rambo");
-
     }
 
 
@@ -111,19 +106,20 @@ public class FriendListFragment extends Fragment {
                     }
                 }
 
-//                for (int i = 0; i < friendRequests.size(); i++) {
-//                    try {
-//                        friendList.add("Friend Request From: " + friendRequests.get(i).getString("first_name") + " " + friends.get(i).getString("last_name"));
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
+                for (int i = 0; i < friendRequests.size(); i++) {
+                    try {
+                        friendRequestList.add(friendRequests.get(i).getString("first_name") + " " + friendRequests.get(i).getString("last_name"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
 
                 friendsListView.setAdapter(friendAdapter);
                 friendsRequestListView.setAdapter(friendRequestAdapter);
             }
         }
     }
+
 
     //Solution for this found on http://stackoverflow.com/questions/17693578/android-how-to-display-2-listviews-in-one-activity-one-after-the-other
     public static class ListUtils {
@@ -156,6 +152,12 @@ public class FriendListFragment extends Fragment {
         FrameLayout rellay = (FrameLayout) inflater.inflate(R.layout.fragment_friend_list, container, false);
         friendAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, friendList);
         friendsListView = (ListView)rellay.findViewById(R.id.friendListView);
+        friendsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+        });
 
         friendRequestAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, friendRequestList);
         friendsRequestListView = (ListView)rellay.findViewById(R.id.friendRequestListView);
@@ -230,6 +232,13 @@ public class FriendListFragment extends Fragment {
 //        }
 //
 //    }
+
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+    }
+
 
     //Create a new ProfileActivity by passing in the friend's id
     private void viewFriendProfile(int id) {
