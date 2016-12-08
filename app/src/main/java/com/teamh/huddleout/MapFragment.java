@@ -7,6 +7,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
+
+import com.google.android.gms.location.places.ui.PlacePicker;
 
 public class MapFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
@@ -32,6 +36,18 @@ public class MapFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        FrameLayout rellay = (FrameLayout) inflater.inflate(R.layout.fragment_profile, container, false);
+
+        Button launchMapPicker = (Button)rellay.findViewById(R.id.launchMapPicker);
+        /*launchMapPicker.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                int PLACE_PICKER_REQUEST = 1;
+                PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+
+                startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);
+            }
+        });*/
+
         return inflater.inflate(R.layout.fragment_map, container, false);
     }
 
