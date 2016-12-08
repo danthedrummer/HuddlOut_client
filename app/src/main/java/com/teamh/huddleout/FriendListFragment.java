@@ -1,5 +1,5 @@
-package com.teamh.huddleout;
 
+package com.teamh.huddleout;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;

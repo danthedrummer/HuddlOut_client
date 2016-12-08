@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ListView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -178,6 +179,14 @@ public class GroupListFragment extends ListFragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int id, long position) {
+        User currentUser = User.getInstance(this.getActivity().getApplicationContext());
+
+        currentUser.
+
     }
 
 }

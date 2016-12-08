@@ -31,7 +31,7 @@ public class User {
 
     private int profileID;
     private int age;
-    private int getGroupInFocus;
+    private int groupInFocus;
 
     private String firstName;
     private String lastName;
@@ -174,7 +174,11 @@ public class User {
     }
 
     public JSONObject getGroupInFocus(){
-        return groupsList.get(getGroupInFocus);
+        return groupsList.get(groupInFocus);
+    }
+
+    public void setGetGroupInFocus(int groupId) {
+        this.groupInFocus = groupId;
     }
 
 
