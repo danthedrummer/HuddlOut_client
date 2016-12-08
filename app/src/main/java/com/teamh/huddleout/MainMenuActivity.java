@@ -91,7 +91,7 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
 
         //final HuddlOutAPI hAPI = HuddlOutAPI.getInstance(this.getApplicationContext());
 
-        LayoutInflater inflater = getLayoutInflater();
+        LayoutInflater inflater = getLayoutInflater();1
         addGroupView = inflater.inflate(R.layout.group_dialog_box, null);
         groupNameText = (EditText)addGroupView.findViewById(R.id.groupNameEditText);
 
@@ -266,6 +266,9 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
             public void onClick(DialogInterface dialog, int whichButton) {
                 Log.i(TAG, "Group Name being passed: " + groupNameText.getText());
                 Log.i(TAG, "Type of Group being passed: " + groupTypeSpinner.getSelectedItem().toString());
+                ActivitySwap.swapToNextActivityNoHistory(MainMenuActivity.this, GroupMenuActivity.class);
+
+
             }
         });
 

@@ -47,6 +47,8 @@ public class GroupMenuActivity extends AppCompatActivity implements ChatFragment
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //Set the text at the top of the activity - Populate it with the generated group name
+        getSupportActionBar().setTitle("Group Name Placeholder");
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
