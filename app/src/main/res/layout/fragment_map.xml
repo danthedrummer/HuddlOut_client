@@ -12,47 +12,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:layout_width="match_parent"
-            app:srcCompat="@drawable/google_map"
-            android:id="@+id/mapView"
-            android:scaleType="fitXY"
-            android:layout_height="200dp" />
-
-        <TextView
-            android:text="Suggested Venues:"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/suggestedTextView"
-            android:textSize="18sp"
-            android:textStyle="normal|bold"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="5dp" />
-
-        <Button
-            android:text="Drunken Fish"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/button1"
-            android:textAlignment="center"
-            android:backgroundTint="?attr/colorAccent"
-            android:textColor="?android:attr/textColorPrimaryInverse" />
-
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/button2"
-            android:backgroundTint="?attr/colorAccent"
-            android:textColor="?android:attr/textColorPrimaryInverse"
-            android:text="Seven Wonders" />
-
-        <Button
-            android:text="Foodies"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/button3"
-            android:textColor="?android:attr/textColorPrimaryInverse"
-            android:backgroundTint="?attr/colorAccent" />
+            android:text="Press Me!"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:id="@+id/launchMapPicker"
+            android:onClick="onLaunchMapIntentClicked"/>
     </LinearLayout>
 
 </FrameLayout>
