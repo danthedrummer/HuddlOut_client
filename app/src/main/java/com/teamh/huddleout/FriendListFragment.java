@@ -86,7 +86,6 @@ public class FriendListFragment extends Fragment implements AdapterView.OnItemCl
 
         friendList = new ArrayList<String>();
         friendRequestList = new ArrayList<String>();
-
     }
 
 
@@ -94,29 +93,7 @@ public class FriendListFragment extends Fragment implements AdapterView.OnItemCl
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
-            final User currentUser = User.getInstance(this.getActivity().getApplicationContext());
-            if(friendList.size() == 0) {
-                friends = currentUser.getFriends();
-                friendRequests = currentUser.getFriendRequests();
-                for (int i = 0; i < friends.size(); i++) {
-                    try {
-                        friendList.add(friends.get(i).getString("first_name") + " " + friends.get(i).getString("last_name"));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                for (int i = 0; i < friendRequests.size(); i++) {
-                    try {
-                        friendRequestList.add(friendRequests.get(i).getString("first_name") + " " + friendRequests.get(i).getString("last_name"));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                friendsListView.setAdapter(friendAdapter);
-                friendsRequestListView.setAdapter(friendRequestAdapter);
-            }
+            setAdapters();
         }
     }
 
@@ -157,10 +134,33 @@ public class FriendListFragment extends Fragment implements AdapterView.OnItemCl
             public void onItemClick(AdapterView<?> adapterView, View view, int id, long l) {
                 viewFriendProfile(id);
             }
+
         });
+
+
 
         friendRequestAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, friendRequestList);
         friendsRequestListView = (ListView)rellay.findViewById(R.id.friendRequestListView);
+
+        friendsRequestListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int id, long l) {
+                try {
+                    String profilePic = friends.get(id).getString("profile_picture");
+                    String name = friends.get(id).getString("first_name") + " " + friends.get(id).getString("last_name");
+                    String description = friends.get(id).getString("desc");
+                    Log.i(TAG, "about to show friend");
+                    ((MainMenuActivity)getActivity()).showFriendRequest(view, id, name, description, profilePic);
+
+                } catch (JSONException e) {
+                    Log.i(TAG, "list click fail: " + e);
+                    e.printStackTrace();
+                }
+            }
+
+        });
+
 
         ListUtils.setDynamicHeight(friendsListView);
         ListUtils.setDynamicHeight(friendsRequestListView);
@@ -239,6 +239,31 @@ public class FriendListFragment extends Fragment implements AdapterView.OnItemCl
 
     }
 
+    public void setAdapters(){
+        final User currentUser = User.getInstance(this.getActivity().getApplicationContext());
+        if(friendList.size() == 0) {
+            friends = currentUser.getFriends();
+            friendRequests = currentUser.getFriendRequests();
+            for (int i = 0; i < friends.size(); i++) {
+                try {
+                    friendList.add(friends.get(i).getString("first_name") + " " + friends.get(i).getString("last_name"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            for (int i = 0; i < friendRequests.size(); i++) {
+                try {
+                    friendRequestList.add(friendRequests.get(i).getString("first_name") + " " + friendRequests.get(i).getString("last_name"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            friendsListView.setAdapter(friendAdapter);
+            friendsRequestListView.setAdapter(friendRequestAdapter);
+        }
+    }
 
     //Create a new ProfileActivity by passing in the friend's id
     private void viewFriendProfile(int id) {

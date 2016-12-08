@@ -145,6 +145,16 @@ public class User {
     }
 
 
+    public void resolveFriendRequest(int id, String action){
+        int userProfileId = 0;
+        try {
+            userProfileId = friendRequests.get(id).getInt("profile_id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        hAPI.resolveFriendRequest(userProfileId, action);
+    }
+
 
 
     // GETTERS
