@@ -86,11 +86,12 @@ public class FriendListFragment extends Fragment {
         friendList = new ArrayList<String>();
         friendRequestList = new ArrayList<String>();
 
-        friendRequestList.add("Glenn Cullen wants to succ");
-        friendRequestList.add("Durn Down");
-        friendRequestList.add("Calvin");
-        friendRequestList.add("Klein");
-        friendRequestList.add("Rambo");
+        //Test Data for populating friend request list
+//        friendRequestList.add("Glenn Cullen wants to succ");
+//        friendRequestList.add("Durn Down");
+//        friendRequestList.add("Calvin");
+//        friendRequestList.add("Klein");
+//        friendRequestList.add("Rambo");
 
     }
 
@@ -230,6 +231,7 @@ public class FriendListFragment extends Fragment {
 //        }
 //
 //    }
+
 
     //Create a new ProfileActivity by passing in the friend's id
     private void viewFriendProfile(int id) {

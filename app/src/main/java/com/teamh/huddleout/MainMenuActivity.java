@@ -63,8 +63,8 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
     private ArrayList<String> groupTypes;
     private ArrayAdapter<String> groupSpinnerAdapter;
     private Spinner groupTypeSpinner;
-
     private EditText groupNameText;
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -251,6 +251,16 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
         //you can leave it empty
     }
 
+    friendListView.setOnItemClickListener(new OnItemClickListener() {
+        public void onItemClick(AdapterView<?> parent, View view,
+        int position, long id) {
+
+            Object o = prestListView.getItemAtPosition(position);
+            prestationEco str=(prestationEco)o;//As you are using Default String Adapter
+            Toast.makeText(getBaseContext(),str.getTitle(),Toast.LENGTH_SHORT).show();
+        }
+    });
+
     //#####################################################################################################################
     //Listener for the add group floating action button
     public void addGroup(View v){
@@ -280,8 +290,6 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
 
         alert.show();
     }
-
-
 
     public void showFriend(View v, String name, String description, String profilePic){
         AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
