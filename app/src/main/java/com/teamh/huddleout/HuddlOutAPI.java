@@ -695,7 +695,7 @@ public class HuddlOutAPI {
     }
 
     //Get votes a new vote for the group (UNTESTED, WIP)
-    public void getVotes(int groupId) {
+    public void getVotes(int groupId, final VotingFragment votingFragment) {
         Log.i(TAG, "Checking Vote for group: " + groupId);
 
         //Build GET request
@@ -707,6 +707,7 @@ public class HuddlOutAPI {
                     @Override
                     public void onResponse(String response) {
                         Popup.show(response, context);
+                        votingFragment.setVotes(response);
                     }
                 }, new Response.ErrorListener() {
             @Override

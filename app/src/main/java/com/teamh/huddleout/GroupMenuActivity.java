@@ -85,8 +85,8 @@ public class GroupMenuActivity extends AppCompatActivity implements ChatFragment
         groupId = getIntent().getIntExtra("GROUP_ID", 0);
         User currentUser = User.getInstance(getApplicationContext());
         for (JSONObject group : currentUser.getGroupsList()) {
-            try{
-                if(group.getInt("group_id") == groupId) {
+            try {
+                if (group.getInt("group_id") == groupId) {
                     thisGroup = group;
                     break;
                 }
@@ -96,7 +96,7 @@ public class GroupMenuActivity extends AppCompatActivity implements ChatFragment
         }
 
         //Set the text at the top of the activity - Populate it with the generated group name
-        try{
+        try {
             getSupportActionBar().setTitle(thisGroup.getString("group_name"));
         } catch (JSONException e) {
             e.printStackTrace();
@@ -113,7 +113,7 @@ public class GroupMenuActivity extends AppCompatActivity implements ChatFragment
         tabLayout.setupWithViewPager(mViewPager);
 
         //Request permission to use location
-        if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(requestLocation, 2);
         }
 
@@ -128,6 +128,9 @@ public class GroupMenuActivity extends AppCompatActivity implements ChatFragment
 
     }
 
+    public int getGroupId() {
+        return groupId;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
