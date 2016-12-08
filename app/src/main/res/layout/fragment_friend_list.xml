@@ -43,25 +43,7 @@
                     android:text="Friends"
                     android:id="@+id/friendsTextView" />
 
-<<<<<<< HEAD
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dip"
-                android:gravity="center_vertical"
-                android:text="Friend Requests"
-                android:id="@+id/friendRequestTextView" />
 
-            <ListView
-                android:id="@+id/friendRequestListView"
-                android:background="#e2f7de"
-                android:layout_width="match_parent"
-                android:layout_height="181dp"
-                android:layout_marginTop="10dip">
-            </ListView>
-
-        </LinearLayout>
-=======
                 <ListView
                     android:id="@+id/friendListView"
                     android:layout_width="match_parent"
@@ -84,7 +66,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="181dp"
                     android:layout_marginTop="10dip">
->>>>>>> b61ceb233a857c23426398696bb6f09976d48339
 
                 </ListView>
             </LinearLayout>
