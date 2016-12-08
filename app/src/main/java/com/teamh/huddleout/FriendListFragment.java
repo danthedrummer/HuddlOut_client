@@ -154,8 +154,8 @@ public class FriendListFragment extends Fragment implements AdapterView.OnItemCl
         friendsListView = (ListView)rellay.findViewById(R.id.friendListView);
         friendsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+            public void onItemClick(AdapterView<?> adapterView, View view, int id, long l) {
+                viewFriendProfile(id);
             }
         });
 
