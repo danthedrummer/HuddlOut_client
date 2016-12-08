@@ -281,7 +281,7 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
         alert.show();
     }
 
-    public void showFriend(View v, String name, String description, String profilePic){
+    public void showFriendRequest(View v, final int id, String name, String description, String profilePic){
         AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
 
         Log.i(TAG, "showFriend: " + name);
@@ -293,15 +293,15 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
         final TextView input = new TextView(v.getContext());
         alert.setView(input);
 
-        alert.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+        alert.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-//                System.out.println(input.getText());
+                User.getInstance(getApplicationContext()).resolveFriendRequest(id, "accept");
             }
         });
 
-        alert.setNegativeButton("Block", new DialogInterface.OnClickListener() {
+        alert.setNegativeButton("Decline", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                // Canceled.
+                User.getInstance(getApplicationContext()).resolveFriendRequest(id, "deny");
             }
         });
 

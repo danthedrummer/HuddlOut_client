@@ -169,7 +169,17 @@ public class FriendListFragment extends Fragment implements AdapterView.OnItemCl
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int id, long l) {
-                Log.i(TAG, "Item Clicked: " + id + "  Long l: " + l);
+                try {
+                    String profilePic = friends.get(id).getString("profile_picture");
+                    String name = friends.get(id).getString("first_name") + " " + friends.get(id).getString("last_name");
+                    String description = friends.get(id).getString("desc");
+                    Log.i(TAG, "about to show friend");
+                    ((MainMenuActivity)getActivity()).showFriendRequest(view, id, name, description, profilePic);
+
+                } catch (JSONException e) {
+                    Log.i(TAG, "list click fail: " + e);
+                    e.printStackTrace();
+                }
             }
 
         });
