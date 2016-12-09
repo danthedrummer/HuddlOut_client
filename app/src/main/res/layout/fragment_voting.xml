@@ -20,7 +20,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/loadLayout"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <TextView
                     android:text="Loading vote..."
@@ -71,7 +71,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/voteLayout"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -94,44 +94,94 @@
                     />
 
                 <RadioGroup
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/voteDescriptionBox"
-                    android:layout_marginStart="30dp"
                     android:id="@+id/votingOptionsGroup">
 
                     <RadioButton
                         android:text="@string/voteOption1"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/voteOptionButton1"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginStart="20dp"/>
+
+                    <TextView
+                        android:text="Current Votes: 2/5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/voteOptionText1"
+                        android:layout_weight="1"
+                        android:textSize="14sp"
+                        android:paddingLeft="30dp"
+                        android:textColor="@android:color/black" />
 
                     <RadioButton
                         android:text="@string/voteOption2"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/voteOptionButton2"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginStart="20dp"/>
+
+                    <TextView
+                        android:text="Current Votes: 2/5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/voteOptionText2"
+                        android:layout_weight="1"
+                        android:textSize="14sp"
+                        android:paddingLeft="30dp"
+                        android:textColor="@android:color/black" />
 
                     <RadioButton
                         android:text="@string/voteOption3"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/voteOptionButton3"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginStart="20dp"/>
+
+                    <TextView
+                        android:text="Current Votes: 2/5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/voteOptionText3"
+                        android:layout_weight="1"
+                        android:textSize="14sp"
+                        android:paddingLeft="30dp"
+                        android:textColor="@android:color/black" />
 
                     <RadioButton
                         android:text="@string/voteOption4"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/voteOptionButton4"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginStart="20dp"/>
+
+                    <TextView
+                        android:text="Current Votes: 2/5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/voteOptionText4"
+                        android:layout_weight="1"
+                        android:textSize="14sp"
+                        android:paddingLeft="30dp"
+                        android:textColor="@android:color/black" />
+
+                    <Button
+                        android:text="Vote"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/voteButton"
+                        android:layout_weight="1"
+                        android:textAlignment="center"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp" />
                 </RadioGroup>
+
             </RelativeLayout>
         </RelativeLayout>
     </ScrollView>

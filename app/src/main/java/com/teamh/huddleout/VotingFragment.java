@@ -16,6 +16,7 @@ import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.security.acl.Group;
 import java.text.ParseException;
@@ -68,6 +69,10 @@ public class VotingFragment extends Fragment {
     private RadioButton voteOption2Button;
     private RadioButton voteOption3Button;
     private RadioButton voteOption4Button;
+    private TextView voteOption1Text;
+    private TextView voteOption2Text;
+    private TextView voteOption3Text;
+    private TextView voteOption4Text;
 
     public VotingFragment() {
         // Required empty public constructor
@@ -109,8 +114,13 @@ public class VotingFragment extends Fragment {
         voteOption2Button = (RadioButton)fLayout.findViewById(R.id.voteOptionButton2);
         voteOption3Button = (RadioButton)fLayout.findViewById(R.id.voteOptionButton3);
         voteOption4Button = (RadioButton)fLayout.findViewById(R.id.voteOptionButton4);
+        voteOption1Text = (TextView)fLayout.findViewById(R.id.voteOptionText1);
+        voteOption2Text = (TextView)fLayout.findViewById(R.id.voteOptionText2);
+        voteOption3Text = (TextView)fLayout.findViewById(R.id.voteOptionText3);
+        voteOption4Text = (TextView)fLayout.findViewById(R.id.voteOptionText4);
 
         //Check for current votes
+        swapToLayout(2);
         groupActivity = (GroupMenuActivity)getActivity();
         hAPI.getVotes(groupActivity.getGroupId(), this);
 
@@ -163,7 +173,6 @@ public class VotingFragment extends Fragment {
 
             try {
                 voteOptions = currentVoteObject.getJSONArray("options");
-
                 Log.i(TAG, "Length: " + voteOptions.length());
 
                 voteNameText.setText(currentVoteObject.getString("name"));
@@ -171,18 +180,25 @@ public class VotingFragment extends Fragment {
 
                 //Populate options
                 voteOption1Button.setText(voteOptions.getJSONObject(0).getString("name"));
+                voteOption1Text.setText("Votes: " + voteOptions.getJSONObject(0).getInt("count"));
+
                 voteOption2Button.setText(voteOptions.getJSONObject(1).getString("name"));
+                voteOption2Text.setText("Votes: " + voteOptions.getJSONObject(1).getInt("count"));
 
                 if(voteOptions.length() < 3) {
                     voteOption3Button.setVisibility(View.GONE);
+                    voteOption3Text.setVisibility(View.GONE);
                 } else {
                     voteOption3Button.setText(voteOptions.getJSONObject(2).getString("name"));
+                    voteOption3Text.setText("Votes: " + voteOptions.getJSONObject(2).getInt("count"));
                 }
 
                 if(voteOptions.length() < 4) {
                     voteOption4Button.setVisibility(View.GONE);
+                    voteOption4Text.setVisibility(View.GONE);
                 } else {
                     voteOption4Button.setText(voteOptions.getJSONObject(3).getString("name"));
+                    voteOption4Text.setText("Votes: " + voteOptions.getJSONObject(3).getInt("count"));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
