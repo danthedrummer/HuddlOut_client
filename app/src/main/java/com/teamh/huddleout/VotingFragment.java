@@ -55,6 +55,9 @@ public class VotingFragment extends Fragment {
     //UI elements
     private RelativeLayout voteLayout;
     private RelativeLayout loadLayout;
+    private RelativeLayout createVoteLayout;
+
+    //Vote Layout elements
     private TextView voteNameText;
     private TextView voteDescText;
     private RadioButton voteOption1Button;
@@ -93,20 +96,15 @@ public class VotingFragment extends Fragment {
         //Get UI element instances
         voteLayout = (RelativeLayout)fLayout.findViewById(R.id.voteLayout);
         loadLayout = (RelativeLayout)fLayout.findViewById(R.id.loadLayout);
+        createVoteLayout = (RelativeLayout)fLayout.findViewById(R.id.createVoteLayout);
+
+        //Vote layout UI
         voteNameText = (TextView)fLayout.findViewById(R.id.voteName);
         voteDescText = (TextView)fLayout.findViewById(R.id.voteDescriptionBox);
         voteOption1Button = (RadioButton)fLayout.findViewById(R.id.voteOptionButton1);
         voteOption2Button = (RadioButton)fLayout.findViewById(R.id.voteOptionButton2);
         voteOption3Button = (RadioButton)fLayout.findViewById(R.id.voteOptionButton3);
         voteOption4Button = (RadioButton)fLayout.findViewById(R.id.voteOptionButton4);
-
-        //Set UI elements to be invisible
-        voteNameText.setVisibility(View.INVISIBLE);
-        voteDescText.setVisibility(View.INVISIBLE);
-        voteOption1Button.setVisibility(View.INVISIBLE);
-        voteOption2Button.setVisibility(View.INVISIBLE);
-        voteOption3Button.setVisibility(View.INVISIBLE);
-        voteOption4Button.setVisibility(View.INVISIBLE);
 
         //Check for current votes
         groupActivity = (GroupMenuActivity)getActivity();
@@ -137,20 +135,32 @@ public class VotingFragment extends Fragment {
             }
         }
 
-        voteNameText.setText("TITEL");
-        voteDescText.setText("DO YEW VANT TO ARRRRRRRRRRRRRRRRRRR PI?");
-        voteOption1Button.setText("YES");
-        voteOption2Button.setText("YES");
-        voteOption3Button.setText("YES");
-        voteOption4Button.setText("YES");
+        voteDescText.setText(voteJSONObject.toString());
 
-        //Swap to appropriate layout
-        loadLayout.setVisibility(View.GONE);
-        voteLayout.setVisibility(View.VISIBLE);
-        voteNameText.setVisibility(View.VISIBLE);
-        voteDescText.setVisibility(View.VISIBLE);
-        voteOption1Button.setVisibility(View.VISIBLE);
-        voteOption2Button.setVisibility(View.VISIBLE);
+        swapToLayout(2);
+    }
+
+    //Swaps the relative layouts of the vote fragment (0 = Load, 1 = Create, 2 = Vote)
+    private void swapToLayout(int layout) {
+        switch(layout) {
+            case 0:
+                voteLayout.setVisibility(View.VISIBLE);
+                createVoteLayout.setVisibility(View.GONE);
+                loadLayout.setVisibility(View.GONE);
+                break;
+            case 1:
+                voteLayout.setVisibility(View.GONE);
+                createVoteLayout.setVisibility(View.VISIBLE);
+                loadLayout.setVisibility(View.GONE);
+                break;
+            case 2:
+                voteLayout.setVisibility(View.GONE);
+                createVoteLayout.setVisibility(View.GONE);
+                loadLayout.setVisibility(View.VISIBLE);
+                break;
+            default:
+                Log.i(TAG, "SWAP TO LAYOUT only works with an input range between 0 and 2");
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event

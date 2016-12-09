@@ -39,6 +39,31 @@
                     android:layout_below="@+id/textView"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="30dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/createVoteLayout"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/createTextView"
+                    android:textAlignment="center"
+                    android:textSize="18sp"
+                    android:text="No votes found.\nDo you want to create a new vote?"
+                    android:layout_marginTop="140dp" />
+
+                <Button
+                    android:text="Create Vote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/createVoteButtonHidden"
+                    android:layout_below="@+id/createTextView"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="30dp" />
 
             </RelativeLayout>
 
@@ -67,8 +92,6 @@
                     android:layout_marginEnd="20dp"
                     android:id="@+id/voteDescriptionBox"
                     />
-
-
 
                 <RadioGroup
                     android:layout_width="wrap_content"
@@ -108,13 +131,8 @@
                         android:id="@+id/voteOptionButton4"
                         android:layout_marginTop="20dp"
                         android:layout_marginStart="20dp"/>
-
                 </RadioGroup>
-
             </RelativeLayout>
-
         </RelativeLayout>
-
-
     </ScrollView>
 </FrameLayout>
