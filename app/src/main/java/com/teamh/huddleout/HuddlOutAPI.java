@@ -552,8 +552,7 @@ public class HuddlOutAPI {
                         //Returns "invalid params" if invalid params
                         //Returns "no requests found" if there are no friend requests
                         //Returns list of friend requests
-                        Log.i(TAG, "response from getFriendRequests: " + response);
-                        if (!response.equalsIgnoreCase("invalid params") && !response.equalsIgnoreCase("no requests found")) {
+                        if (!response.equalsIgnoreCase("invalid params")) {
                             User.getInstance(context).setFriendRequests(response);
                         }
                     }
@@ -565,7 +564,6 @@ public class HuddlOutAPI {
         });
         reQueue.add(stringRequest);
     }
-
 
     public void resolveFriendRequest(int profileId, String action) {
         Log.i(TAG, "Resolve friend request: " + profileId + " " + action);
@@ -603,7 +601,7 @@ public class HuddlOutAPI {
                         //Returns "invalid params" if invalid params
                         //Returns "no friends" if user has no friends
                         //Returns list of friend ids and relationshp types if user has friends
-                        if (response.equalsIgnoreCase("invalid params") || response.equalsIgnoreCase("no friends")) {
+                        if (response.equalsIgnoreCase("invalid params")) {
                             Popup.show(response, context);
                         } else {
                             User.getInstance(context).setFriendsList(response);
@@ -644,6 +642,8 @@ public class HuddlOutAPI {
         reQueue.add(stringRequest);
     }
 
+
+    // VOTING
     //Create a new vote for the group (UNTESTED, WIP)
     public void createVote(int groupId, String name, String desc, int duration, String option1, String option2, String option3, String option4) {
         Log.i(TAG, "Creating Vote for group: " + groupId);
