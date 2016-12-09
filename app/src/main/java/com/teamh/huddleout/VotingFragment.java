@@ -2,14 +2,18 @@ package com.teamh.huddleout;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -28,6 +32,7 @@ import java.security.acl.Group;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.zip.Inflater;
 
 
 /**
@@ -58,6 +63,16 @@ public class VotingFragment extends Fragment {
     //HuddlOut API
     private HuddlOutAPI hAPI = HuddlOutAPI.getInstance(this.getActivity());
 
+    //Views for dialog
+    private LayoutInflater thisInflater;
+    private EditText voteCreateNameText;
+    private EditText voteCreateDescText;
+    private EditText voteCreateDurationText;
+    private EditText voteCreateOption1Text;
+    private EditText voteCreateOption2Text;
+    private EditText voteCreateOption3Text;
+    private EditText voteCreateOption4Text;
+
     //Current vote details
     private JSONArray voteJSONObject;
     private JSONObject currentVoteObject;
@@ -83,6 +98,7 @@ public class VotingFragment extends Fragment {
     private TextView voteOption4Text;
     private TextView voteStatusText;
     private Button voteButton;
+    private Button voteButtonHidden;
 
     public VotingFragment() {
         // Required empty public constructor
@@ -111,6 +127,7 @@ public class VotingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         FrameLayout fLayout = (FrameLayout)inflater.inflate(R.layout.fragment_voting, container, false);
+        thisInflater = inflater;
 
         //Get UI element instances
         voteLayout = (RelativeLayout)fLayout.findViewById(R.id.voteLayout);
@@ -131,6 +148,15 @@ public class VotingFragment extends Fragment {
         voteOption4Text = (TextView)fLayout.findViewById(R.id.voteOptionText4);
         voteStatusText = (TextView)fLayout.findViewById(R.id.voteStatusText);
         voteButton = (Button)fLayout.findViewById(R.id.voteButton);
+        voteButtonHidden = (Button)fLayout.findViewById(R.id.createVoteButtonHidden);
+
+        voteButtonHidden.setOnClickListener(
+                new Button.OnClickListener(){
+                    public void onClick(View v){
+                        createVoteHandler(v);
+                    }
+                }
+        );
 
         //Check for current votes
         initVotes();
@@ -146,12 +172,104 @@ public class VotingFragment extends Fragment {
         hAPI.getVotes(groupActivity.getGroupId(), this);
     }
 
+    //Handler for vote creation
+    private void createVoteHandler(View v) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
+        final AlertDialog alertd = alert.create();
+
+        alert.setTitle("Create New Group");
+
+        View dialogView = thisInflater.inflate(R.layout.vote_dialog_box, null);
+
+        //Dialog UI
+        voteCreateNameText = (EditText)dialogView.findViewById(R.id.voteNameEditText);
+        voteCreateDescText = (EditText)dialogView.findViewById(R.id.voteDescEditText);
+        voteCreateDurationText = (EditText)dialogView.findViewById(R.id.voteDurationEditText);
+        voteCreateOption1Text = (EditText)dialogView.findViewById(R.id.voteOption1EditText);
+        voteCreateOption2Text = (EditText)dialogView.findViewById(R.id.voteOption2EditText);
+        voteCreateOption3Text = (EditText)dialogView.findViewById(R.id.voteOption3EditText);
+        voteCreateOption4Text = (EditText)dialogView.findViewById(R.id.voteOption4EditText);
+
+        alert.setView(dialogView);
+
+        final VotingFragment votingFragment = this;
+
+        alert.setPositiveButton("Create", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+
+                String name, desc, op1, op2, op3, op4;
+                int duration = -1;
+
+                if(voteCreateNameText.getText().toString().trim().length() == 0) {
+                    name = null;
+                } else {
+                    name = voteCreateNameText.getText().toString();
+                }
+
+                if(voteCreateDescText.getText().toString().trim().length() == 0) {
+                    desc = null;
+                } else {
+                    desc = voteCreateDescText.getText().toString();
+                }
+
+                if(voteCreateDurationText.getText().toString().trim().length() > 0) {
+                    duration = Integer.parseInt(voteCreateDurationText.getText().toString());
+                }
+
+                if(voteCreateOption1Text.getText().toString().trim().length() == 0) {
+                    op1 = null;
+                } else {
+                    op1 = voteCreateOption1Text.getText().toString();
+                }
+
+                if(voteCreateOption2Text.getText().toString().trim().length() == 0) {
+                    op2 = null;
+                } else {
+                    op2 = voteCreateOption2Text.getText().toString();
+                }
+
+                if(voteCreateOption3Text.getText().toString().trim().length() == 0) {
+                    op3 = null;
+                } else {
+                    op3 = voteCreateOption3Text.getText().toString();
+                }
+
+                if(voteCreateOption4Text.getText().toString().trim().length() == 0) {
+                    op4 = null;
+                } else {
+                    op4 = voteCreateOption4Text.getText().toString();
+                }
+
+                hAPI.createVote(groupActivity.getGroupId(), name, desc, duration, op1, op2, op3, op4, votingFragment);
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+                dialog.cancel();
+                alertd.dismiss();
+            }
+        });
+
+        alert.show();
+    }
+
     //Called by the HuddlOut API to update the votes
     public void setVotes(String voteJSONString) {
         Log.i(TAG, "Setting votes");
 
         //If there are no votes, display create page
         if(voteJSONString.equals("no votes")) {
+
+            voteButton.setOnClickListener(
+                    new Button.OnClickListener(){
+                        public void onClick(View v){
+                            createVoteHandler(v);
+                        }
+                    }
+            );
+
             swapToLayout(1);
         } else {
             try{
@@ -207,6 +325,8 @@ public class VotingFragment extends Fragment {
                     voteOption3Button.setVisibility(View.GONE);
                     voteOption3Text.setVisibility(View.GONE);
                 } else {
+                    voteOption3Button.setVisibility(View.VISIBLE);
+                    voteOption3Text.setVisibility(View.VISIBLE);
                     voteOption3Button.setText(voteOptions.getJSONObject(2).getString("name"));
                     voteOption3Text.setText("Votes: " + voteOptions.getJSONObject(2).getInt("count"));
                 }
@@ -215,6 +335,10 @@ public class VotingFragment extends Fragment {
                     voteOption4Button.setVisibility(View.GONE);
                     voteOption4Text.setVisibility(View.GONE);
                 } else {
+                    voteOption3Button.setVisibility(View.VISIBLE);
+                    voteOption3Text.setVisibility(View.VISIBLE);
+                    voteOption4Button.setVisibility(View.VISIBLE);
+                    voteOption4Text.setVisibility(View.VISIBLE);
                     voteOption4Button.setText(voteOptions.getJSONObject(3).getString("name"));
                     voteOption4Text.setText("Votes: " + voteOptions.getJSONObject(3).getInt("count"));
                 }
@@ -264,7 +388,7 @@ public class VotingFragment extends Fragment {
                         public void onClick(View v){
                             if(voteExpired) {
                                 //Create new vote
-                                Popup.show("NOT YET IMPLEMENTED", getContext());
+                                createVoteHandler(v);
                             } else {
                                 //Submit vote
                                 int voteIndex = votingOptionsGroup.indexOfChild(getActivity().findViewById(votingOptionsGroup.getCheckedRadioButtonId()));
@@ -319,6 +443,19 @@ public class VotingFragment extends Fragment {
             Popup.show("Error: " + response.toUpperCase(), this.getContext());
         }
         initVotes();
+    }
+
+    //HuddlOut Callback
+    public void createVoteCallback(String response) {
+        Log.i(TAG, "res: " + response);
+
+        if(response.equals("success")) {
+            initVotes();
+        } else {
+            Popup.show("Error: " + response.toString().toUpperCase(), getContext());
+            initVotes();
+        }
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

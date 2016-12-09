@@ -11,6 +11,7 @@ import com.android.volley.toolbox.*;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.util.concurrent.CountDownLatch;
@@ -645,53 +646,63 @@ public class HuddlOutAPI {
 
     // VOTING
     //Create a new vote for the group (UNTESTED, WIP)
-    public void createVote(int groupId, String name, String desc, int duration, String option1, String option2, String option3, String option4) {
+    public void createVote(int groupId, String name, String desc, int duration, String option1, String option2, String option3, String option4, final VotingFragment votingFragment) {
         Log.i(TAG, "Creating Vote for group: " + groupId);
 
-        //Build GET request
-        String params;
-        if(option3 == null && option4 == null) {
-            params = url + "api/group/createVote?token=" + token +
-                    "&groupId=" + groupId +
-                    "&name=" + Uri.encode(name) +
-                    "&desc=" + Uri.encode(desc) +
-                    "&duration=" + duration +
-                    "&option1=" + Uri.encode(option1) +
-                    "&option2=" + Uri.encode(option2);
-        } else if(option4 == null) {
-            params = url + "api/group/createVote?token=" + token +
-                    "&groupId=" + groupId +
-                    "&name=" + Uri.encode(name) +
-                    "&desc=" + Uri.encode(desc) +
-                    "&duration=" + duration +
-                    "&option1=" + Uri.encode(option1) +
-                    "&option2=" + Uri.encode(option2) +
-                    "&option3=" + Uri.encode(option3);
+        if(groupId == -1 || name == null || desc == null || duration == -1 || option1 == null || option2 == null) {
+            votingFragment.createVoteCallback("invalid input paramaters");
         } else {
-            params = url + "api/group/createVote?token=" + token +
-                    "&groupId=" + groupId +
-                    "&name=" + Uri.encode(name) +
-                    "&desc=" + Uri.encode(desc) +
-                    "&duration=" + duration +
-                    "&option1=" + Uri.encode(option1) +
-                    "&option2=" + Uri.encode(option2) +
-                    "&option3=" + Uri.encode(option3) +
-                    "&option4=" + Uri.encode(option4);
-        }
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Popup.show(response, context);
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError err) {
-                Log.i(TAG, "Failed Create Vote" + err);
+            //Build GET request
+            String params = "";
+            try {
+                if(option3 == null && option4 == null) {
+                    params = url + "api/group/createVote?token=" + token +
+                            "&groupId=" + groupId +
+                            "&name=" + URLEncoder.encode(name, "UTF-8") +
+                            "&desc=" + URLEncoder.encode(desc, "UTF-8") +
+                            "&duration=" + duration +
+                            "&option1=" + URLEncoder.encode(option1, "UTF-8") +
+                            "&option2=" + URLEncoder.encode(option2, "UTF-8");
+                } else if(option4 == null) {
+                    params = url + "api/group/createVote?token=" + token +
+                            "&groupId=" + groupId +
+                            "&name=" + URLEncoder.encode(name, "UTF-8") +
+                            "&desc=" + URLEncoder.encode(desc, "UTF-8") +
+                            "&duration=" + duration +
+                            "&option1=" + URLEncoder.encode(option1, "UTF-8") +
+                            "&option2=" + URLEncoder.encode(option2, "UTF-8") +
+                            "&option3=" + URLEncoder.encode(option3, "UTF-8");
+                } else {
+                    params = url + "api/group/createVote?token=" + token +
+                            "&groupId=" + groupId +
+                            "&name=" + URLEncoder.encode(name, "UTF-8") +
+                            "&desc=" + URLEncoder.encode(desc, "UTF-8") +
+                            "&duration=" + duration +
+                            "&option1=" + URLEncoder.encode(option1, "UTF-8") +
+                            "&option2=" + URLEncoder.encode(option2, "UTF-8") +
+                            "&option3=" + URLEncoder.encode(option3, "UTF-8") +
+                            "&option4=" + URLEncoder.encode(option4, "UTF-8");
+                }
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
             }
-        });
-        reQueue.add(stringRequest);
+
+
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.i(TAG, "Create Group Response: " + response);
+                            votingFragment.createVoteCallback(response);
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError err) {
+                    Log.i(TAG, "Failed Create Vote" + err);
+                }
+            });
+            reQueue.add(stringRequest);
+        }
     }
 
     //Get votes a new vote for the group (UNTESTED, WIP)
