@@ -273,7 +273,7 @@ public class FriendListFragment extends Fragment implements AdapterView.OnItemCl
         startActivity(intent);
     }
 
-
+    
     public void showFriendRequest(View v, final int profileId, String name, String description, String profilePic){
         AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
         final Handler HANDLER = new Handler();
