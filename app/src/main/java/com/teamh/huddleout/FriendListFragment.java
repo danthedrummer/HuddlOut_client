@@ -272,13 +272,7 @@ public class FriendListFragment extends Fragment implements AdapterView.OnItemCl
         intent.putExtras(b);
         startActivity(intent);
     }
-
-    @Override
-    public void onResume(){
-        super.onResume();
-        Log.i(TAG, "RESUMED");
-    }
-
+    
     public void showFriendRequest(View v, final int profileId, String name, String description, String profilePic){
         AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
         final Handler HANDLER = new Handler();
