@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import org.json.JSONException;
@@ -47,8 +48,16 @@ public class GroupListFragment extends ListFragment {
     ArrayList<JSONObject> groups;
     ArrayList<String> groupList;
 
+    ArrayList<JSONObject> groupInvites;
+    ArrayList<String> groupInviteList;
+
     ArrayAdapter<String> groupAdapter;
+    ArrayAdapter<String> groupInviteAdapter;
+
     ArrayAdapter<String> groupActivityAdapter;
+
+    ListView groupListView;
+    ListView groupInviteListView;
 
     final Handler HANDLER = new Handler();
 
@@ -94,6 +103,7 @@ public class GroupListFragment extends ListFragment {
         }
 
         groupList = new ArrayList<String>();
+        groupInviteList = new ArrayList<String>();
 
         currentContext = this.getActivity().getApplicationContext();
     }
@@ -129,6 +139,28 @@ public class GroupListFragment extends ListFragment {
         }
     }
 
+    //Solution for this found on http://stackoverflow.com/questions/17693578/android-how-to-display-2-listviews-in-one-activity-one-after-the-other
+    public static class ListUtils {
+        public static void setDynamicHeight(ListView mListView) {
+            ListAdapter mListAdapter = mListView.getAdapter();
+            if (mListAdapter == null) {
+                // when adapter is null
+                return;
+            }
+            int height = 0;
+            int desiredWidth = View.MeasureSpec.makeMeasureSpec(mListView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+            for (int i = 0; i < mListAdapter.getCount(); i++) {
+                View listItem = mListAdapter.getView(i, null, mListView);
+                listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+                height += listItem.getMeasuredHeight();
+            }
+            ViewGroup.LayoutParams params = mListView.getLayoutParams();
+            params.height = height + (mListView.getDividerHeight() * (mListAdapter.getCount() - 1));
+            mListView.setLayoutParams(params);
+            mListView.requestLayout();
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -137,6 +169,16 @@ public class GroupListFragment extends ListFragment {
         FrameLayout rellay = (FrameLayout) inflater.inflate(R.layout.fragment_group_list, container, false);
 
         groupAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, groupList);
+        groupInviteAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, groupInviteList);
+
+        groupListView = (ListView)rellay.findViewById(R.id.groupListView);
+        groupInviteListView = (ListView)rellay.findViewById(R.id.groupInviteListView);
+
+        ListUtils.setDynamicHeight(groupListView);
+        ListUtils.setDynamicHeight(groupInviteListView);
+
+        groupListView.setAdapter(groupAdapter);
+        groupInviteListView.setAdapter(groupInviteAdapter);
 
         return rellay;
 
@@ -192,5 +234,48 @@ public class GroupListFragment extends ListFragment {
             e.printStackTrace();
         };
     }
+
+
+//    public void setAdapters(){
+//        Log.i(TAG, "Setting Adapters");
+//        final User currentUser = User.getInstance(this.getActivity().getApplicationContext());
+//        HuddlOutAPI.getInstance(this.getActivity().getApplicationContext()).getFriends();
+//        HuddlOutAPI.getInstance(this.getActivity().getApplicationContext()).getFriendRequests();
+//
+//        try {
+//            friendList.clear();
+//        }catch (IndexOutOfBoundsException e){
+//            Log.i(TAG, "list clearance fail: " + e);
+//        }
+//
+//        try {
+//            friendRequestList.clear();
+//        }catch (IndexOutOfBoundsException e){
+//            Log.i(TAG, "list clearance fail: " + e);
+//        }
+//
+//        friends = currentUser.getFriends();
+//        friendRequests = currentUser.getFriendRequests();
+//
+//        for (int i = 0; i < friends.size(); i++) {
+//            try {
+//                friendList.add(friends.get(i).getString("first_name") + " " + friends.get(i).getString("last_name"));
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        for (int i = 0; i < friendRequests.size(); i++) {
+//            try {
+//                friendRequestList.add(friendRequests.get(i).getString("first_name") + " " + friendRequests.get(i).getString("last_name"));
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        friendsListView.setAdapter(friendAdapter);
+//        friendsRequestListView.setAdapter(friendRequestAdapter);
+//
+//    }
 
 }
