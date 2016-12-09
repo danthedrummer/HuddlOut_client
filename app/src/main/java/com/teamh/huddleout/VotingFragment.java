@@ -18,6 +18,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.security.acl.Group;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 /**
@@ -50,7 +53,8 @@ public class VotingFragment extends Fragment {
 
     //Current vote details
     private JSONArray voteJSONObject;
-    private int currentVoteIndex;
+    private JSONObject currentVoteObject;
+    private JSONArray voteOptions;
 
     //UI elements
     private RelativeLayout voteLayout;
@@ -116,31 +120,79 @@ public class VotingFragment extends Fragment {
 
     //Called by the HuddlOut API to update the votes
     public void setVotes(String voteJSONString) {
-        Log.i(TAG, "Hold my drink, doing some mad shit over here!");
+        Log.i(TAG, "Setting votes");
 
-        try{
-            voteJSONObject = new JSONArray(voteJSONString);
-            Log.i(TAG, voteJSONObject.toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-
-        for (int i = 0; i < voteJSONObject.length(); i++) {
-            try {
-                JSONObject vote = (JSONObject) voteJSONObject.get(i);
-                Log.i("Dev", vote.getString("creation_date"));
+        //If there are no votes, display create page
+        if(voteJSONString.equals("no votes")) {
+            swapToLayout(1);
+        } else {
+            try{
+                voteJSONObject = new JSONArray(voteJSONString);
+                Log.i(TAG, voteJSONObject.toString());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
+            //Look for the newest vote
+            SimpleDateFormat sqlDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            long timestamp = 0;
+            for (int i = 0; i < voteJSONObject.length(); i++) {
+                try {
+                    JSONObject vote = (JSONObject) voteJSONObject.get(i);
+
+                    //Format date string
+                    String dateString = vote.getString("creation_date").replaceAll("(T)", " ");
+                    dateString = dateString.replaceAll("(Z)", "");
+
+                    //Parse date
+                    try {
+                        Date creationDate = sqlDate.parse(dateString);
+                        Log.i(TAG, "Parsed Time: " + creationDate.getTime());
+
+                        if(timestamp < creationDate.getTime()) {
+                            timestamp = creationDate.getTime();
+                            currentVoteObject = vote;
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            try {
+                voteOptions = currentVoteObject.getJSONArray("options");
+
+                Log.i(TAG, "Length: " + voteOptions.length());
+
+                voteNameText.setText(currentVoteObject.getString("name"));
+                voteDescText.setText(currentVoteObject.getString("description"));
+
+                //Populate options
+                voteOption1Button.setText(voteOptions.getJSONObject(0).getString("name"));
+                voteOption2Button.setText(voteOptions.getJSONObject(1).getString("name"));
+
+                if(voteOptions.length() < 3) {
+                    voteOption3Button.setVisibility(View.GONE);
+                } else {
+                    voteOption3Button.setText(voteOptions.getJSONObject(2).getString("name"));
+                }
+
+                if(voteOptions.length() < 4) {
+                    voteOption4Button.setVisibility(View.GONE);
+                } else {
+                    voteOption4Button.setText(voteOptions.getJSONObject(3).getString("name"));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            swapToLayout(0);
         }
-
-        voteDescText.setText(voteJSONObject.toString());
-
-        swapToLayout(2);
     }
 
-    //Swaps the relative layouts of the vote fragment (0 = Load, 1 = Create, 2 = Vote)
+    //Swaps the relative layouts of the vote fragment (0 = Vote, 1 = Create, 2 = Load)
     private void swapToLayout(int layout) {
         switch(layout) {
             case 0:
