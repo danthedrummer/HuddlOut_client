@@ -116,9 +116,15 @@ public class User {
     }
 
 
-    // insantiates the arraylist of groupIds
+    // Instantiates the ArrayList of groupIds
     public void setGroupList(final String groups) {
-        if (hAPI.getAuth()) {
+        try {
+            groupsList.clear();
+        }catch (IndexOutOfBoundsException e){
+            Log.i(TAG, "setFriendsList clearance fail: " + e);
+        }
+
+        if (!groups.equalsIgnoreCase("no groups")) {
             try {
                 JSONArray groupJSON = new JSONArray(groups);
                 for (int i = 0; i < groupJSON.length(); i++) {
@@ -128,8 +134,6 @@ public class User {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        } else {
-            Log.i(TAG, "groups not authorised");
         }
     }
 
@@ -168,7 +172,6 @@ public class User {
 
 
     public ArrayList<JSONObject> getGroupsList(){
-        Log.i(TAG, "getgroups: " + groupsList.toString());
         return groupsList;
     }
 

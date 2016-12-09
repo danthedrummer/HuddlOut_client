@@ -87,7 +87,7 @@ public class ProfileActivity extends AppCompatActivity {
         removeBtn = (Button)findViewById(R.id.removeBtn);
         removeBtn.setOnClickListener( new Button.OnClickListener(){
             public void onClick(View v){
-                Log.i(TAG, "friend to be deleted: " + friendProfile);
+//                Log.i(TAG, "friend to be deleted: " + friendProfile);
                 HuddlOutAPI.getInstance(getApplicationContext()).deleteFriend(friendProfile);
             }
         });

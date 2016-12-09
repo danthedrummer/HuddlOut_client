@@ -91,16 +91,12 @@ public class ProfileFragment extends Fragment {
             try{
                 final User currentUser = User.getInstance(currentContext);
                 int id = currentContext.getResources().getIdentifier(currentUser.getProfilePicture(), "drawable", "com.teamh.huddleout");
-                Log.i(TAG, "id: " + id);
-                Log.i(TAG, "currentUser.getName: " + currentUser.getName());
-
                 nameTextView.setText(currentUser.getName());
                 aboutContentTextView.setText(currentUser.getDescription());
                 profilePicture.setImageResource(id);
             }catch(NullPointerException e){
                 Log.i(TAG, "Null pointer reference on profile fragment: " + e);
             }
-//            Log.i(TAG, "");
         }
     }
 
