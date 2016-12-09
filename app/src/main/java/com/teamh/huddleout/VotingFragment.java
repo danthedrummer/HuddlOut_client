@@ -4,9 +4,19 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.RadioButton;
+import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.security.acl.Group;
 
 
 /**
@@ -29,6 +39,24 @@ public class VotingFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+    //Group Activity instance
+    GroupMenuActivity groupActivity;
+
+    //HuddlOut API
+    private HuddlOutAPI hAPI = HuddlOutAPI.getInstance(this.getActivity());
+
+    //Current vote details
+    private JSONArray voteJSONObject;
+    private int currentVoteIndex;
+
+    //UI elements
+    private TextView voteNameText;
+    private TextView voteDescText;
+    private RadioButton voteOption1Button;
+    private RadioButton voteOption2Button;
+    private RadioButton voteOption3Button;
+    private RadioButton voteOption4Button;
+
     public VotingFragment() {
         // Required empty public constructor
     }
@@ -37,8 +65,6 @@ public class VotingFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment VotingFragment.
      */
     // TODO: Rename and change types and number of parameters
@@ -52,21 +78,69 @@ public class VotingFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_voting, container, false);
+        FrameLayout fLayout = (FrameLayout)inflater.inflate(R.layout.fragment_voting, container, false);
 
+        //Get UI element instances
+        voteNameText = (TextView)fLayout.findViewById(R.id.voteName);
+        voteDescText = (TextView)fLayout.findViewById(R.id.voteDescriptionBox);
+        voteOption1Button = (RadioButton)fLayout.findViewById(R.id.voteOptionButton1);
+        voteOption2Button = (RadioButton)fLayout.findViewById(R.id.voteOptionButton2);
+        voteOption3Button = (RadioButton)fLayout.findViewById(R.id.voteOptionButton3);
+        voteOption4Button = (RadioButton)fLayout.findViewById(R.id.voteOptionButton4);
 
+        //Set UI elements to be invisible
+        voteNameText.setVisibility(View.INVISIBLE);
+        voteDescText.setVisibility(View.INVISIBLE);
+        voteOption1Button.setVisibility(View.INVISIBLE);
+        voteOption2Button.setVisibility(View.INVISIBLE);
+        voteOption3Button.setVisibility(View.INVISIBLE);
+        voteOption4Button.setVisibility(View.INVISIBLE);
+
+        //Check for current votes
+        groupActivity = (GroupMenuActivity)getActivity();
+        hAPI.getVotes(groupActivity.getGroupId(), this);
+
+        //Inflate the layout for this fragment
+        return fLayout;
+    }
+
+    public void setVotes(String voteJSONString) {
+        Log.i("DevMSG", "Hold my drink, doing some mad shit over here!");
+
+        try{
+            voteJSONObject = new JSONArray(voteJSONString);
+            Log.i("DevMSG", voteJSONObject.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        for (int i = 0; i < voteJSONObject.length(); i++) {
+            try {
+                JSONObject vote = (JSONObject)voteJSONObject.get(i);
+                Log.i("DevMSG", vote.getString("creation_date"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        voteNameText.setText("TITEL");
+        voteDescText.setText("DO YEW VANT TO ARRRRRRRRRRRRRRRRRRR PI?");
+        voteOption1Button.setText("YES");
+        voteOption2Button.setText("YES");
+        voteOption3Button.setText("YES");
+        voteOption4Button.setText("YES");
+
+        voteNameText.setVisibility(View.VISIBLE);
+        voteDescText.setVisibility(View.VISIBLE);
+        voteOption1Button.setVisibility(View.VISIBLE);
+        voteOption2Button.setVisibility(View.VISIBLE);
+        voteOption3Button.setVisibility(View.VISIBLE);
+        voteOption4Button.setVisibility(View.VISIBLE);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

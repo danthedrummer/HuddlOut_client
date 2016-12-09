@@ -44,6 +44,9 @@ import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class GroupMenuActivity extends AppCompatActivity implements ChatFragment.OnFragmentInteractionListener, MapFragment.OnFragmentInteractionListener, VotingFragment.OnFragmentInteractionListener, PlaceSelectionListener ,GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleApiClient mGoogleApiClient;
@@ -59,7 +62,10 @@ public class GroupMenuActivity extends AppCompatActivity implements ChatFragment
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private static final String TAG = "DevMsg";
 
-    private int groupId;
+    //Group info
+    private int groupId; //Group ID
+    private JSONObject thisGroup;//
+
     private final int PLACE_PICKER_REQUEST = 1;
     private final String[] requestLocation = {Manifest.permission.ACCESS_FINE_LOCATION};
 
@@ -75,8 +81,26 @@ public class GroupMenuActivity extends AppCompatActivity implements ChatFragment
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        groupId = getIntent().getIntExtra("GROUP_ID", 0);
+        User currentUser = User.getInstance(getApplicationContext());
+        for (JSONObject group : currentUser.getGroupsList()) {
+            try {
+                if (group.getInt("group_id") == groupId) {
+                    thisGroup = group;
+                    break;
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
         //Set the text at the top of the activity - Populate it with the generated group name
-        getSupportActionBar().setTitle("Group Name Placeholder");
+        try {
+            getSupportActionBar().setTitle(thisGroup.getString("group_name"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -89,7 +113,7 @@ public class GroupMenuActivity extends AppCompatActivity implements ChatFragment
         tabLayout.setupWithViewPager(mViewPager);
 
         //Request permission to use location
-        if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(requestLocation, 2);
         }
 
@@ -101,13 +125,12 @@ public class GroupMenuActivity extends AppCompatActivity implements ChatFragment
                 .enableAutoManage(this, 0, this)
                 .build();
 
-        groupId = getIntent().getIntExtra("GROUP_ID", 0);
 
-        Log.i(TAG, "Intent: " + getIntent().getIntExtra("GROUP_ID", 0));
-
-        User currentUser = User.getInstance(getApplicationContext());
     }
 
+    public int getGroupId() {
+        return groupId;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -259,9 +282,6 @@ public class GroupMenuActivity extends AppCompatActivity implements ChatFragment
         System.out.println("There was an error: " + status);
     }
 
-
-
-
     private void callPlaceDetectionApi() throws SecurityException {
         PendingResult<PlaceLikelihoodBuffer> result = Places.PlaceDetectionApi
                 .getCurrentPlace(mGoogleApiClient, null);
@@ -283,5 +303,3 @@ public class GroupMenuActivity extends AppCompatActivity implements ChatFragment
 //    @Override
 //    public void onBackPressed() {
 //    }
-
-}
