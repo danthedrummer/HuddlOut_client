@@ -148,7 +148,8 @@ public class GroupListFragment extends Fragment {
 
         groupAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, groupList);
 
-        
+        groupListView = rellay.findViewById(R.id.group)
+
 
         return rellay;
 
