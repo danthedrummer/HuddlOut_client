@@ -257,9 +257,9 @@ public class GroupMenuActivity extends AppCompatActivity implements ChatFragment
         //you can leave it empty
     }
 
-    public void onLaunchMapIntentClicked(View v){
+    public void onLaunchMapIntentClicked(View v) {
         //If location request was allowed, then launch the map
-        if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
             //callPlaceDetectionApi();
 
@@ -273,8 +273,8 @@ public class GroupMenuActivity extends AppCompatActivity implements ChatFragment
         }
     }
 
-    public void onPlaceSelected(Place place){
-        System.out.println("Selected new place: "+place);
+    public void onPlaceSelected(Place place) {
+        System.out.println("Selected new place: " + place);
     }
 
     @Override
@@ -298,6 +298,7 @@ public class GroupMenuActivity extends AppCompatActivity implements ChatFragment
             }
         });
     }
+}
 
     //Prevent back nav
 //    @Override

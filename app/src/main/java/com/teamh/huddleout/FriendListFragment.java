@@ -279,7 +279,6 @@ public class FriendListFragment extends Fragment implements AdapterView.OnItemCl
         Log.i(TAG, "RESUMED");
     }
 
-
     public void showFriendRequest(View v, final int profileId, String name, String description, String profilePic){
         AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
         final Handler HANDLER = new Handler();
@@ -318,6 +317,12 @@ public class FriendListFragment extends Fragment implements AdapterView.OnItemCl
         alert.show();
     }
 
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        setAdapters();
+    }
 
 }
 
