@@ -7,27 +7,27 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true" >
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <android.support.design.widget.FloatingActionButton
+        <android.support.design.widget.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
             app:fabSize="mini"
             app:srcCompat="@android:drawable/ic_input_add"
             android:id="@+id/addGroupButton"
-            android:layout_alignParentBottom="true"
+            android:layout_alignBottom="@+id/friendListScrollView"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="100dp"
+            android:layout_margin="16dp"
             android:onClick="addFriend"/>
+
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:id="@+id/friendListScrollView">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -42,7 +42,6 @@
                     android:gravity="center_vertical"
                     android:text="Friends"
                     android:id="@+id/friendsTextView" />
-
 
                 <ListView
                     android:id="@+id/friendListView"
@@ -69,7 +68,7 @@
 
                 </ListView>
             </LinearLayout>
-        </RelativeLayout>
-    </ScrollView>
+        </ScrollView>
+    </RelativeLayout>
 
 </FrameLayout>

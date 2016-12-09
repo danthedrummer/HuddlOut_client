@@ -9,10 +9,64 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ListView
-            android:layout_width="match_parent"
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            app:fabSize="mini"
+            app:srcCompat="@android:drawable/ic_input_add"
+            android:id="@+id/addGroupButton"
+            android:layout_alignBottom="@+id/groupListScrollView"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="16dp"
+            android:onClick="addGroup"/>
+
+        <ScrollView
+            android:layout_width="fill_parent"
             android:layout_height="match_parent"
-            android:id="@android:id/list" />
+            android:fillViewport="true"
+            android:id="@+id/groupListScrollView">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dip"
+                android:weightSum="1">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="Groups"
+                    android:id="@+id/groupsTextView" />
+
+                <ListView
+                    android:id="@+id/groupListView"
+                    android:layout_width="match_parent"
+                    android:layout_height="214dp"
+                    android:layout_marginTop="10dip"
+                    android:layout_weight="0.65">
+                </ListView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:gravity="center_vertical"
+                    android:text="Group Invites"
+                    android:id="@+id/groupInviteTextView" />
+
+                <ListView
+                    android:id="@+id/groupInviteListView"
+                    android:background="#e2f7de"
+                    android:layout_width="match_parent"
+                    android:layout_height="181dp"
+                    android:layout_marginTop="10dip">
+
+                </ListView>
+            </LinearLayout>
+        </ScrollView>
 
     </RelativeLayout>
 
