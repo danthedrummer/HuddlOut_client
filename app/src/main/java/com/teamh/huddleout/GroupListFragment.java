@@ -32,7 +32,7 @@ import java.util.ArrayList;
  * Use the {@link GroupListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class GroupListFragment extends ListFragment {
+public class GroupListFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -47,8 +47,16 @@ public class GroupListFragment extends ListFragment {
     ArrayList<JSONObject> groups;
     ArrayList<String> groupList;
 
+    ArrayList<JSONObject> groupInvites;
+    ArrayList<String> groupInviteList;
+
     ArrayAdapter<String> groupAdapter;
     ArrayAdapter<String> groupActivityAdapter;
+
+    ArrayAdapter<String> groupInviteAdapter;
+
+    ListView groupListView;
+    ListView groupInviteListView;
 
     final Handler HANDLER = new Handler();
 
@@ -95,6 +103,8 @@ public class GroupListFragment extends ListFragment {
 
         groupList = new ArrayList<String>();
 
+        groupInviteList = new ArrayList<String>();
+
         currentContext = this.getActivity().getApplicationContext();
     }
 
@@ -118,7 +128,7 @@ public class GroupListFragment extends ListFragment {
                                 }
                             }
                             Log.i(TAG, "groups:" + groupList.toString());
-                            setListAdapter(groupAdapter);
+                            groupList.(groupAdapter);
                         }
                     } catch (NullPointerException e) {
                         Log.i(TAG, "Failed to user instance: " + e);
@@ -137,6 +147,8 @@ public class GroupListFragment extends ListFragment {
         FrameLayout rellay = (FrameLayout) inflater.inflate(R.layout.fragment_group_list, container, false);
 
         groupAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, groupList);
+
+        
 
         return rellay;
 
