@@ -135,12 +135,7 @@ public class FriendListFragment extends Fragment implements AdapterView.OnItemCl
         friendsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int id, long l) {
-                ArrayList<JSONObject> temp = User.getInstance(getContext()).getFriends();
-                if(id >= temp.size()){
-                    setAdapters();
-                }else{
-                    viewFriendProfile(id);
-                }
+                viewFriendProfile(id);
             }
         });
 
@@ -273,12 +268,6 @@ public class FriendListFragment extends Fragment implements AdapterView.OnItemCl
         startActivity(intent);
     }
 
-    @Override
-    public void onResume(){
-        super.onResume();
-        Log.i(TAG, "RESUMED");
-    }
-
 
     public void showFriendRequest(View v, final int profileId, String name, String description, String profilePic){
         AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
@@ -318,6 +307,12 @@ public class FriendListFragment extends Fragment implements AdapterView.OnItemCl
         alert.show();
     }
 
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        setAdapters();
+    }
 
 }
 
