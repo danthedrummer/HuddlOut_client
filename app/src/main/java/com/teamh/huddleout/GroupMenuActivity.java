@@ -280,7 +280,6 @@ public class GroupMenuActivity extends AppCompatActivity implements ChatFragment
     }
 
     //Prevent back nav
-<<<<<<< HEAD
 //    @Override
 //    public void onBackPressed() {
 //    }
