@@ -125,7 +125,7 @@ public class VotingFragment extends Fragment {
         for (int i = 0; i < voteJSONObject.length(); i++) {
             try {
                 JSONObject vote = (JSONObject) voteJSONObject.get(i);
-                Log.i("Dev", vote.getString("creation_date"));
+                Log.i(TAG, vote.getString("creation_date"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
