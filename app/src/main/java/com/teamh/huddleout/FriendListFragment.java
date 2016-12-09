@@ -217,44 +217,44 @@ public class FriendListFragment extends Fragment implements AdapterView.OnItemCl
 
 
     public void setAdapters(){
-        Log.i(TAG, "Setting Adapters");
+//        Log.i(TAG, "Setting Adapters");
         final User currentUser = User.getInstance(this.getActivity().getApplicationContext());
         HuddlOutAPI.getInstance(this.getActivity().getApplicationContext()).getFriends();
         HuddlOutAPI.getInstance(this.getActivity().getApplicationContext()).getFriendRequests();
 
+        try {
+            friendList.clear();
+        }catch (IndexOutOfBoundsException e){
+            Log.i(TAG, "list clearance fail: " + e);
+        }
+
+        try {
+            friendRequestList.clear();
+        }catch (IndexOutOfBoundsException e){
+            Log.i(TAG, "list clearance fail: " + e);
+        }
+
+        friends = currentUser.getFriends();
+        friendRequests = currentUser.getFriendRequests();
+
+        for (int i = 0; i < friends.size(); i++) {
             try {
-                friendList.clear();
-            }catch (IndexOutOfBoundsException e){
-                Log.i(TAG, "list clearance fail: " + e);
+                friendList.add(friends.get(i).getString("first_name") + " " + friends.get(i).getString("last_name"));
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+        }
 
+        for (int i = 0; i < friendRequests.size(); i++) {
             try {
-                friendRequestList.clear();
-            }catch (IndexOutOfBoundsException e){
-                Log.i(TAG, "list clearance fail: " + e);
+                friendRequestList.add(friendRequests.get(i).getString("first_name") + " " + friendRequests.get(i).getString("last_name"));
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+        }
 
-            friends = currentUser.getFriends();
-            friendRequests = currentUser.getFriendRequests();
-
-            for (int i = 0; i < friends.size(); i++) {
-                try {
-                    friendList.add(friends.get(i).getString("first_name") + " " + friends.get(i).getString("last_name"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            for (int i = 0; i < friendRequests.size(); i++) {
-                try {
-                    friendRequestList.add(friendRequests.get(i).getString("first_name") + " " + friendRequests.get(i).getString("last_name"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            friendsListView.setAdapter(friendAdapter);
-            friendsRequestListView.setAdapter(friendRequestAdapter);
+        friendsListView.setAdapter(friendAdapter);
+        friendsRequestListView.setAdapter(friendRequestAdapter);
 
     }
 
@@ -315,4 +315,3 @@ public class FriendListFragment extends Fragment implements AdapterView.OnItemCl
     }
 
 }
-
