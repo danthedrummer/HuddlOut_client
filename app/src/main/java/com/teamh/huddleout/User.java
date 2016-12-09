@@ -95,19 +95,24 @@ public class User {
 
     // instantiates the arraylist of the profileIds of the user's friends
     public void setFriendsList(String friends) {
-        if (!friendsList.isEmpty()) {
+        try {
             friendsList.clear();
+        }catch (IndexOutOfBoundsException e){
+            Log.i(TAG, "setFriendsList clearance fail: " + e);
         }
 
-        try {
-            JSONArray profileJSON = new JSONArray(friends);
-            for (int i = 0; i < profileJSON.length(); i++) {
-                friendsList.add(profileJSON.getJSONObject(i));
+        if(!friends.equalsIgnoreCase("no friends")){
+            try {
+                JSONArray profileJSON = new JSONArray(friends);
+                for (int i = 0; i < profileJSON.length(); i++) {
+                    friendsList.add(profileJSON.getJSONObject(i));
+                }
+            } catch (JSONException e) {
+                Log.i(TAG, "setFriendsList failure: " + e);
+                e.printStackTrace();
             }
-        } catch (JSONException e) {
-            Log.i(TAG, "setFriendsList failure: " + e);
-            e.printStackTrace();
         }
+
     }
 
 
@@ -130,20 +135,23 @@ public class User {
 
 
     public void setFriendRequests(String requests){
-        if (!friendRequests.isEmpty()) {
+        try {
             friendRequests.clear();
+        }catch (IndexOutOfBoundsException e){
+            Log.i(TAG, "friendRequests clearance fail: " + e);
         }
 
-        try {
-            JSONArray friendRequestsJSON = new JSONArray(requests);
-            for (int i = 0; i < friendRequestsJSON.length(); i++) {
-                friendRequests.add(friendRequestsJSON.getJSONObject(i));
+        if(!requests.equalsIgnoreCase("no requests found")){
+            try {
+                JSONArray friendRequestsJSON = new JSONArray(requests);
+                for (int i = 0; i < friendRequestsJSON.length(); i++) {
+                    friendRequests.add(friendRequestsJSON.getJSONObject(i));
+                }
+            } catch (JSONException e) {
+                Log.i(TAG, "setFriendsList failure: " + e);
+                e.printStackTrace();
             }
-        } catch (JSONException e) {
-            Log.i(TAG, "setFriendsList failure: " + e);
-            e.printStackTrace();
         }
-//        Log.i(TAG, "Friend Requests: " + friendRequests.toString());
     }
 
 

@@ -1,6 +1,7 @@
 package com.teamh.huddleout;
 
 import android.app.ProgressDialog;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -98,5 +99,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         //Stop loading
         loadingProgress.hide();
+
     }
+
 }

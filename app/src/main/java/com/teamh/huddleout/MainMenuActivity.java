@@ -298,12 +298,16 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
         alert.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 User.getInstance(getApplicationContext()).resolveFriendRequest(id, "accept");
+                HuddlOutAPI.getInstance(getApplicationContext()).getFriends();
+                HuddlOutAPI.getInstance(getApplicationContext()).getFriendRequests();
             }
         });
 
         alert.setNegativeButton("Decline", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 User.getInstance(getApplicationContext()).resolveFriendRequest(id, "deny");
+                HuddlOutAPI.getInstance(getApplicationContext()).getFriends();
+                HuddlOutAPI.getInstance(getApplicationContext()).getFriendRequests();
             }
         });
 
