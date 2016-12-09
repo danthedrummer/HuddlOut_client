@@ -37,6 +37,8 @@ public class VotingFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private static final String TAG = "DevMsg";
+
     private OnFragmentInteractionListener mListener;
 
     //Group Activity instance
@@ -110,19 +112,20 @@ public class VotingFragment extends Fragment {
     }
 
     public void setVotes(String voteJSONString) {
-        Log.i("DevMSG", "Hold my drink, doing some mad shit over here!");
+        Log.i(TAG, "Hold my drink, doing some mad shit over here!");
 
         try{
             voteJSONObject = new JSONArray(voteJSONString);
-            Log.i("DevMSG", voteJSONObject.toString());
+            Log.i(TAG, voteJSONObject.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+
         for (int i = 0; i < voteJSONObject.length(); i++) {
             try {
-                JSONObject vote = (JSONObject)voteJSONObject.get(i);
-                Log.i("DevMSG", vote.getString("creation_date"));
+                JSONObject vote = (JSONObject) voteJSONObject.get(i);
+                Log.i("Dev", vote.getString("creation_date"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
