@@ -1,5 +1,6 @@
 package com.teamh.huddleout;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,8 +12,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -57,6 +62,7 @@ public class VotingFragment extends Fragment {
     private JSONArray voteJSONObject;
     private JSONObject currentVoteObject;
     private JSONArray voteOptions;
+    private boolean voteExpired;
 
     //UI elements
     private RelativeLayout voteLayout;
@@ -66,6 +72,7 @@ public class VotingFragment extends Fragment {
     //Vote Layout elements
     private TextView voteNameText;
     private TextView voteDescText;
+    private RadioGroup votingOptionsGroup;
     private RadioButton voteOption1Button;
     private RadioButton voteOption2Button;
     private RadioButton voteOption3Button;
@@ -113,6 +120,7 @@ public class VotingFragment extends Fragment {
         //Vote layout UI
         voteNameText = (TextView)fLayout.findViewById(R.id.voteName);
         voteDescText = (TextView)fLayout.findViewById(R.id.voteDescriptionBox);
+        votingOptionsGroup = (RadioGroup)fLayout.findViewById(R.id.votingOptionsGroup);
         voteOption1Button = (RadioButton)fLayout.findViewById(R.id.voteOptionButton1);
         voteOption2Button = (RadioButton)fLayout.findViewById(R.id.voteOptionButton2);
         voteOption3Button = (RadioButton)fLayout.findViewById(R.id.voteOptionButton3);
@@ -125,12 +133,17 @@ public class VotingFragment extends Fragment {
         voteButton = (Button)fLayout.findViewById(R.id.voteButton);
 
         //Check for current votes
-        swapToLayout(2);
-        groupActivity = (GroupMenuActivity)getActivity();
-        hAPI.getVotes(groupActivity.getGroupId(), this);
+        initVotes();
 
         //Inflate the layout for this fragment
         return fLayout;
+    }
+
+    //Initialises the fragment
+    private void initVotes() {
+        swapToLayout(2);
+        groupActivity = (GroupMenuActivity)getActivity();
+        hAPI.getVotes(groupActivity.getGroupId(), this);
     }
 
     //Called by the HuddlOut API to update the votes
@@ -150,14 +163,13 @@ public class VotingFragment extends Fragment {
 
             //Look for the newest vote
             SimpleDateFormat sqlDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String dateString = "you shouldnt see this";
-            long timestamp = 0;
+            long voteCreationTimestamp = 0;
             for (int i = 0; i < voteJSONObject.length(); i++) {
                 try {
                     JSONObject vote = (JSONObject) voteJSONObject.get(i);
 
                     //Format date string
-                    dateString = vote.getString("creation_date").replaceAll("(T)", " ");
+                    String dateString = vote.getString("creation_date").replaceAll("(T)", " ");
                     dateString = dateString.replaceAll("(Z)", "");
 
                     //Parse date
@@ -165,8 +177,8 @@ public class VotingFragment extends Fragment {
                         Date creationDate = sqlDate.parse(dateString);
                         Log.i(TAG, "Parsed Time: " + creationDate.getTime());
 
-                        if(timestamp < creationDate.getTime()) {
-                            timestamp = creationDate.getTime();
+                        if(voteCreationTimestamp < creationDate.getTime()) {
+                            voteCreationTimestamp = creationDate.getTime();
                             currentVoteObject = vote;
                         }
                     } catch (ParseException e) {
@@ -212,18 +224,64 @@ public class VotingFragment extends Fragment {
 
             //Check if the vote is open
             long currentTimestamp = System.currentTimeMillis();
-            Log.i(TAG, "Current Timestamp: " + currentTimestamp);
+            long expiryTimestamp;
 
-            if(timestamp > currentTimestamp) {
-                //Vote is open
-                voteStatusText.setText("The vote is currently open!\nClose Date: " + dateString);
-                voteButton.setText("Cast Vote");
-            } else {
-                //Vote is closed
-                voteStatusText.setText("The vote is currently closed!\nClose Date: " + dateString);
-                voteButton.setText("Create New Vote");
+            String expiryDateString;
+            Date expiryDate;
+            try {
+                expiryDateString = currentVoteObject.getString("expiry_date").replaceAll("(T)", " ");
+                expiryDateString = expiryDateString.replaceAll("(Z)", "");
+
+                //Parse date
+                try {
+                    expiryDate = sqlDate.parse(expiryDateString);
+                    expiryTimestamp = expiryDate.getTime();
+                    Log.i(TAG, "Parsed Time: " + expiryDate.getTime());
+
+                    if(expiryTimestamp > currentTimestamp) {
+                        //Vote is open
+                        voteStatusText.setText("The vote is currently open!\nClose Date: " + expiryDateString);
+                        voteButton.setText("Cast Vote");
+                        voteExpired = false;
+                    } else {
+                        //Vote is closed
+                        voteStatusText.setText("The vote is currently closed!\nClose Date: " + expiryDateString);
+                        voteButton.setText("Create New Vote");
+                        voteExpired = true;
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
 
+            final VotingFragment thisFragment = this;
+
+            //Setup vote action listeners
+            voteButton.setOnClickListener(
+                    new Button.OnClickListener(){
+                        public void onClick(View v){
+                            if(voteExpired) {
+                                //Create new vote
+                                Popup.show("NOT YET IMPLEMENTED", getContext());
+                            } else {
+                                //Submit vote
+                                int voteIndex = votingOptionsGroup.indexOfChild(getActivity().findViewById(votingOptionsGroup.getCheckedRadioButtonId()));
+                                voteIndex = voteIndex / 2;
+
+                                int voteId = -1;
+                                try {
+                                    voteId = voteOptions.getJSONObject(voteIndex).getInt("option_id");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                                hAPI.submitVote(voteId, thisFragment);
+                            }
+                        }
+                    }
+            );
             swapToLayout(0);
         }
     }
@@ -249,6 +307,18 @@ public class VotingFragment extends Fragment {
             default:
                 Log.i(TAG, "SWAP TO LAYOUT only works with an input range between 0 and 2");
         }
+    }
+
+    //HuddlOutAPI Callback
+    public void submitVoteCallback(String response) {
+        if(response.equals("update success")) {
+            Popup.show("Vote Updated", this.getContext());
+        } else if(response.equals("vote success")) {
+            Popup.show("Vote Submitted", this.getContext());
+        } else {
+            Popup.show("Error: " + response.toUpperCase(), this.getContext());
+        }
+        initVotes();
     }
 
     // TODO: Rename method, update argument and hook method into UI event

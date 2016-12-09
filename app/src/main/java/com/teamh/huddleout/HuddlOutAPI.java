@@ -718,7 +718,7 @@ public class HuddlOutAPI {
     }
 
     //Submit a vote (UNTESTED, WIP)
-    public void submitVote(int optionId) {
+    public void submitVote(int optionId, final VotingFragment votingFragment) {
         Log.i(TAG, "Submitting Vote: " + optionId);
 
         //Build GET request
@@ -729,7 +729,7 @@ public class HuddlOutAPI {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Popup.show(response, context);
+                        votingFragment.submitVoteCallback(response);
                     }
                 }, new Response.ErrorListener() {
             @Override
