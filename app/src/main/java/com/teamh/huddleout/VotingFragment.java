@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -52,6 +53,8 @@ public class VotingFragment extends Fragment {
     private int currentVoteIndex;
 
     //UI elements
+    private RelativeLayout voteLayout;
+    private RelativeLayout loadLayout;
     private TextView voteNameText;
     private TextView voteDescText;
     private RadioButton voteOption1Button;
@@ -88,6 +91,8 @@ public class VotingFragment extends Fragment {
         FrameLayout fLayout = (FrameLayout)inflater.inflate(R.layout.fragment_voting, container, false);
 
         //Get UI element instances
+        voteLayout = (RelativeLayout)fLayout.findViewById(R.id.voteLayout);
+        loadLayout = (RelativeLayout)fLayout.findViewById(R.id.loadLayout);
         voteNameText = (TextView)fLayout.findViewById(R.id.voteName);
         voteDescText = (TextView)fLayout.findViewById(R.id.voteDescriptionBox);
         voteOption1Button = (RadioButton)fLayout.findViewById(R.id.voteOptionButton1);
@@ -111,6 +116,7 @@ public class VotingFragment extends Fragment {
         return fLayout;
     }
 
+    //Called by the HuddlOut API to update the votes
     public void setVotes(String voteJSONString) {
         Log.i(TAG, "Hold my drink, doing some mad shit over here!");
 
@@ -138,12 +144,13 @@ public class VotingFragment extends Fragment {
         voteOption3Button.setText("YES");
         voteOption4Button.setText("YES");
 
+        //Swap to appropriate layout
+        loadLayout.setVisibility(View.GONE);
+        voteLayout.setVisibility(View.VISIBLE);
         voteNameText.setVisibility(View.VISIBLE);
         voteDescText.setVisibility(View.VISIBLE);
         voteOption1Button.setVisibility(View.VISIBLE);
         voteOption2Button.setVisibility(View.VISIBLE);
-        voteOption3Button.setVisibility(View.VISIBLE);
-        voteOption4Button.setVisibility(View.VISIBLE);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -13,71 +13,108 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:id="@+id/voteMasterLayout">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/voteName"
-                android:text="@string/voteOwner"
-                android:layout_marginTop="20dp"
-                android:layout_marginStart="20dp"
-                android:textSize="18sp"/>
-
-            <TextView
-                android:text="@string/voteDescription"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/voteName"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:id="@+id/voteDescriptionBox"
-                />
+                android:layout_height="match_parent"
+                android:id="@+id/loadLayout"
+                android:visibility="visible">
 
+                <TextView
+                    android:text="Loading vote..."
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView"
+                    android:textAlignment="center"
+                    android:textSize="18sp"
+                    android:layout_marginTop="140dp" />
 
-
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/voteDescriptionBox"
-                android:layout_marginStart="30dp"
-                android:id="@+id/votingOptionsGroup">
-
-                <RadioButton
-                    android:text="@string/voteOption1"
+                <ProgressBar
+                    style="?android:attr/progressBarStyleLarge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/voteOptionButton1"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginStart="20dp"/>
+                    android:id="@+id/loadBar"
+                    android:layout_below="@+id/textView"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="30dp" />
 
-                <RadioButton
-                    android:text="@string/voteOption2"
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/voteLayout"
+                android:visibility="gone">
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/voteOptionButton2"
+                    android:id="@+id/voteName"
+                    android:text="@string/voteOwner"
                     android:layout_marginTop="20dp"
-                    android:layout_marginStart="20dp"/>
+                    android:layout_marginStart="20dp"
+                    android:textSize="18sp"/>
 
-                <RadioButton
-                    android:text="@string/voteOption3"
+                <TextView
+                    android:text="@string/voteDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/voteName"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:id="@+id/voteDescriptionBox"
+                    />
+
+
+
+                <RadioGroup
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/voteOptionButton3"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginStart="20dp"/>
+                    android:layout_below="@+id/voteDescriptionBox"
+                    android:layout_marginStart="30dp"
+                    android:id="@+id/votingOptionsGroup">
 
-                <RadioButton
-                    android:text="@string/voteOption4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/voteOptionButton4"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginStart="20dp"/>
+                    <RadioButton
+                        android:text="@string/voteOption1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/voteOptionButton1"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginStart="20dp"/>
 
-            </RadioGroup>
+                    <RadioButton
+                        android:text="@string/voteOption2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/voteOptionButton2"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginStart="20dp"/>
+
+                    <RadioButton
+                        android:text="@string/voteOption3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/voteOptionButton3"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginStart="20dp"/>
+
+                    <RadioButton
+                        android:text="@string/voteOption4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/voteOptionButton4"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginStart="20dp"/>
+
+                </RadioGroup>
+
+            </RelativeLayout>
 
         </RelativeLayout>
+
+
     </ScrollView>
 </FrameLayout>
