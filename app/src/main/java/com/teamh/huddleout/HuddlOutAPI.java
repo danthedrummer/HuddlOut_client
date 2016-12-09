@@ -706,7 +706,6 @@ public class HuddlOutAPI {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Popup.show(response, context);
                         votingFragment.setVotes(response);
                     }
                 }, new Response.ErrorListener() {

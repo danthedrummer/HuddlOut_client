@@ -171,6 +171,17 @@
                         android:paddingLeft="30dp"
                         android:textColor="@android:color/black" />
 
+                    <TextView
+                        android:text="The vote is currently open!\nClose Date: YYYY-MM-DD HH:MM:SS"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/voteStatusText"
+                        android:layout_weight="1"
+                        android:textSize="18sp"
+                        android:textColor="@android:color/black"
+                        android:textAlignment="center"
+                        android:paddingTop="20dp" />
+
                     <Button
                         android:text="Vote"
                         android:layout_width="wrap_content"

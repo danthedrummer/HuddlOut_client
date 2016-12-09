@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
@@ -73,6 +74,8 @@ public class VotingFragment extends Fragment {
     private TextView voteOption2Text;
     private TextView voteOption3Text;
     private TextView voteOption4Text;
+    private TextView voteStatusText;
+    private Button voteButton;
 
     public VotingFragment() {
         // Required empty public constructor
@@ -118,6 +121,8 @@ public class VotingFragment extends Fragment {
         voteOption2Text = (TextView)fLayout.findViewById(R.id.voteOptionText2);
         voteOption3Text = (TextView)fLayout.findViewById(R.id.voteOptionText3);
         voteOption4Text = (TextView)fLayout.findViewById(R.id.voteOptionText4);
+        voteStatusText = (TextView)fLayout.findViewById(R.id.voteStatusText);
+        voteButton = (Button)fLayout.findViewById(R.id.voteButton);
 
         //Check for current votes
         swapToLayout(2);
@@ -145,13 +150,14 @@ public class VotingFragment extends Fragment {
 
             //Look for the newest vote
             SimpleDateFormat sqlDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String dateString = "you shouldnt see this";
             long timestamp = 0;
             for (int i = 0; i < voteJSONObject.length(); i++) {
                 try {
                     JSONObject vote = (JSONObject) voteJSONObject.get(i);
 
                     //Format date string
-                    String dateString = vote.getString("creation_date").replaceAll("(T)", " ");
+                    dateString = vote.getString("creation_date").replaceAll("(T)", " ");
                     dateString = dateString.replaceAll("(Z)", "");
 
                     //Parse date
@@ -202,6 +208,20 @@ public class VotingFragment extends Fragment {
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
+            }
+
+            //Check if the vote is open
+            long currentTimestamp = System.currentTimeMillis();
+            Log.i(TAG, "Current Timestamp: " + currentTimestamp);
+
+            if(timestamp > currentTimestamp) {
+                //Vote is open
+                voteStatusText.setText("The vote is currently open!\nClose Date: " + dateString);
+                voteButton.setText("Cast Vote");
+            } else {
+                //Vote is closed
+                voteStatusText.setText("The vote is currently closed!\nClose Date: " + dateString);
+                voteButton.setText("Create New Vote");
             }
 
             swapToLayout(0);
