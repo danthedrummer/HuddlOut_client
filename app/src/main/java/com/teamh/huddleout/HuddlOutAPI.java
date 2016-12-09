@@ -283,7 +283,7 @@ public class HuddlOutAPI {
                         //Returns "invalid params" if invalid params
                         //Returns "no groups" if user is not member of a group
                         //Returns list of ids of groups if successful
-                        if (response.equalsIgnoreCase("invalid params") || response.equalsIgnoreCase("no groups")) {
+                        if (response.equalsIgnoreCase("invalid params")) {
                             Popup.show(response, context);
                         } else {
                             User.getInstance(context).setGroupList(response);
@@ -543,7 +543,7 @@ public class HuddlOutAPI {
     }
 
     public void getFriendRequests() {
-        Log.i(TAG, "getFriendRequests");
+//        Log.i(TAG, "getFriendRequests");
         String params = url + "api/user/getFriendRequests?token=" + token;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>() {
@@ -566,7 +566,7 @@ public class HuddlOutAPI {
     }
 
     public void resolveFriendRequest(int profileId, String action) {
-        Log.i(TAG, "Resolve friend request: " + profileId + " " + action);
+//        Log.i(TAG, "Resolve friend request: " + profileId + " " + action);
         String params = url + "api/user/resolveFriendRequest?token=" + token + "&profileId=" + profileId + "&action=" + Uri.encode(action);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>() {
@@ -592,7 +592,7 @@ public class HuddlOutAPI {
     }
 
     public void getFriends() {
-        Log.i(TAG, "getFriends start");
+//        Log.i(TAG, "getFriends start");
         String params = url + "api/user/viewFriends?token=" + token;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>() {
@@ -618,7 +618,7 @@ public class HuddlOutAPI {
     }
 
     public void deleteFriend(int profileId) {
-        Log.i(TAG, "Start deletefriend with params: " + profileId + "   " + token);
+//        Log.i(TAG, "Start deletefriend with params: " + profileId + "   " + token);
         String params = url + "api/user/deleteFriend?token=" + token + "&profileId=" + profileId;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>() {
