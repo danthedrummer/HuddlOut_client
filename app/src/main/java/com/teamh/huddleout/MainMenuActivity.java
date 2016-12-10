@@ -196,7 +196,9 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
 
         //TODO: This is a debug command! Remove once group navigation is implemented!
         if (id == R.id.action_debug_groups) {
-            ActivitySwap.swapToNextActivity(MainMenuActivity.this, GroupMenuActivity.class);
+            Intent intent = new Intent(getBaseContext(), GroupMenuActivity.class);
+            intent.putExtra("GROUP_ID", 1); //Day Drinkers 4 Life
+            startActivity(intent);
             return true;
         }
 

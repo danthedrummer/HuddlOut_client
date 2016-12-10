@@ -54,8 +54,8 @@ public class LoginActivity extends Activity {
                         RequestQueue.RequestFinishedListener finishedListener = new RequestQueue.RequestFinishedListener() {
                             @Override
                             public void onRequestFinished(Request request) {
+                                loginProgress.dismiss();
                                 if(hAPI.getAuth()){
-                                    loginProgress.dismiss();
                                     ActivitySwap.swapToNextActivityNoHistory(LoginActivity.this, MainMenuActivity.class);
                                     finish();
                                 }
