@@ -15,6 +15,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -42,20 +43,27 @@ public class User {
     private Context context;
 
     ArrayList<JSONObject> groupsList;
+    ArrayList<JSONObject> groupInvites;
+
     ArrayList<JSONObject> friendsList;
     ArrayList<JSONObject> friendRequests;
 
+
+
     public User(int profileID, Context context) {
         this.profileID = profileID;
+
         hAPI = HuddlOutAPI.getInstance(context);
         this.context = context;
         friendsList = new ArrayList<JSONObject>();
         groupsList = new ArrayList<JSONObject>();
+        groupInvites = new ArrayList<JSONObject>();
         friendRequests = new ArrayList<JSONObject>();
         hAPI.getProfile(profileID);
         hAPI.getGroups();
         hAPI.getFriends();
         hAPI.getFriendRequests();
+        hAPI.checkInvites();
     }
 
     public static synchronized User getInstance(int profileId, Context context){
@@ -128,15 +136,34 @@ public class User {
             try {
                 JSONArray groupJSON = new JSONArray(groups);
                 for (int i = 0; i < groupJSON.length(); i++) {
-                    groupsList.add(groupJSON.getJSONObject(i));
+                    if(!groupJSON.getJSONObject(i).getString("group_role").equalsIgnoreCase("invited")){
+                        groupsList.add(groupJSON.getJSONObject(i));
+                    }
                 }
-//                Log.i(TAG, "in setgroups: " + groupsList.toString());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
     }
 
+    public void setGroupInvites(final String invites){
+        try{
+            groupInvites.clear();
+        }catch (IndexOutOfBoundsException e){
+            Log.i(TAG, "setGroupInvites clearance fail: " + e);
+        }
+
+        if(!invites.equalsIgnoreCase("no invites")){
+            try {
+                JSONArray inviteJSON = new JSONArray(invites);
+                for(int i = 0; i < inviteJSON.length(); i++){
+                    groupInvites.add(inviteJSON.getJSONObject(i));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     public void setFriendRequests(String requests){
         try {
@@ -152,15 +179,10 @@ public class User {
                     friendRequests.add(friendRequestsJSON.getJSONObject(i));
                 }
             } catch (JSONException e) {
-                Log.i(TAG, "setFriendsList failure: " + e);
+                Log.i(TAG, "setFriendsRequest failure: " + e);
                 e.printStackTrace();
             }
         }
-    }
-
-
-    public void resolveFriendRequest(int profileId, String action){
-        hAPI.resolveFriendRequest(profileId, action);
     }
 
 
@@ -176,9 +198,15 @@ public class User {
     }
 
 
+    public ArrayList<JSONObject> getGroupInvites(){
+        return groupInvites;
+    }
+
+
     public ArrayList<JSONObject> getFriendRequests() {
         return friendRequests;
     }
+
 
     public JSONObject getGroupInFocus(){
         return groupsList.get(groupInFocus);
@@ -188,6 +216,10 @@ public class User {
         this.groupInFocus = groupId;
     }
 
+
+    public int getProfileID() {
+        return profileID;
+    }
 
     public String getDescription() {
         return description;
@@ -209,4 +241,11 @@ public class User {
         return firstName + " " + lastName;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
 }

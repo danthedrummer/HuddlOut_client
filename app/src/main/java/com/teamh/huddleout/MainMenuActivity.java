@@ -1,8 +1,10 @@
 package com.teamh.huddleout;
 
+import android.app.ActionBar;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
@@ -23,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -67,6 +70,9 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
     private Spinner groupTypeSpinner;
     private EditText groupNameText;
 
+    private ArrayList<String> profilePicOptions;
+    private ArrayAdapter<String> profilePicSpinnerAdapter;
+    private Spinner profilePicSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +111,39 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
         groupSpinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, groupTypes);
         groupSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         groupTypeSpinner.setAdapter(groupSpinnerAdapter);
+
+        // Create spinner for drop down in edit profile menu
+        profilePicOptions = new ArrayList<String>();
+        profilePicOptions.add("airplane");
+        profilePicOptions.add("astronaut");
+        profilePicOptions.add("ball");
+        profilePicOptions.add("beach");
+        profilePicOptions.add("butterfly");
+        profilePicOptions.add("car");
+        profilePicOptions.add("cat");
+        profilePicOptions.add("chess");
+        profilePicOptions.add("dirt_bike");
+        profilePicOptions.add("dog");
+        profilePicOptions.add("drip");
+        profilePicOptions.add("duck");
+        profilePicOptions.add("fish");
+        profilePicOptions.add("frog");
+        profilePicOptions.add("guest");
+        profilePicOptions.add("guitar");
+        profilePicOptions.add("horses");
+        profilePicOptions.add("kick");
+        profilePicOptions.add("lift_off");
+        profilePicOptions.add("palm_tree");
+        profilePicOptions.add("pink_flower");
+        profilePicOptions.add("red_flowed");
+        profilePicOptions.add("skater");
+        profilePicOptions.add("snowflake");
+
+        profilePicSpinner = new Spinner(this);
+        profilePicSpinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, profilePicOptions);
+        profilePicSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        profilePicSpinner.setAdapter(profilePicSpinnerAdapter);
+
     }
 
     @Override
@@ -257,6 +296,7 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
     //Listener for the add group floating action button
     public void addGroup(View v){
         AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
+        final Handler HANDLER = new Handler();
 
         alert.setTitle("Create New Group");
 
@@ -266,53 +306,90 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
 
         alert.setPositiveButton("Create", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                Log.i(TAG, "Group Name being passed: " + groupNameText.getText());
-                Log.i(TAG, "Type of Group being passed: " + groupTypeSpinner.getSelectedItem().toString());
-                ActivitySwap.swapToNextActivityNoHistory(MainMenuActivity.this, GroupMenuActivity.class);
-
-
+                HuddlOutAPI.getInstance(getApplicationContext()).createGroup(groupNameText.getText().toString(), groupTypeSpinner.getSelectedItem().toString());
+                dialog.cancel();
             }
         });
 
         alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                // Canceled.
+                dialog.cancel();
             }
         });
+
+        alert.setCancelable(true);
 
         alert.show();
     }
 
-    public void showFriendRequest(View v, final int id, String name, String description, String profilePic){
+
+    // Listener for edit profile
+    public void editProfie(View v){
         AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
 
-        Log.i(TAG, "showFriend: " + name);
+        LinearLayout layout = new LinearLayout(getApplicationContext());
+        layout.setOrientation(LinearLayout.VERTICAL);
 
-        alert.setIcon(getApplicationContext().getResources().getIdentifier(profilePic, "drawable", "com.teamh.huddleout"));
-        alert.setTitle(name);
-        alert.setMessage(description);
+        final EditText firstNameEdit = new EditText(v.getContext());
+        firstNameEdit.setHint(User.getInstance(getApplicationContext()).getFirstName());
+        layout.addView(firstNameEdit);
 
-        final TextView input = new TextView(v.getContext());
-        alert.setView(input);
+        final EditText lastNameEdit = new EditText(v.getContext());
+        lastNameEdit.setHint(User.getInstance(getApplicationContext()).getLastName());
+        layout.addView(lastNameEdit);
 
-        alert.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+        layout.addView(profilePicSpinner);
+
+        final EditText descriptionEdit = new EditText(v.getContext());
+        descriptionEdit.setHint(User.getInstance(getApplicationContext()).getDescription());
+        layout.addView(descriptionEdit);
+
+        alert.setView(layout);
+
+        alert.setPositiveButton("Change", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                User.getInstance(getApplicationContext()).resolveFriendRequest(id, "accept");
-                HuddlOutAPI.getInstance(getApplicationContext()).getFriends();
-                HuddlOutAPI.getInstance(getApplicationContext()).getFriendRequests();
+                String firstName = "";
+                String lastName = "";
+                String profilepic = profilePicSpinner.getSelectedItem().toString();
+                String description = "";
+                int age = User.getInstance(getApplicationContext()).getAge();
+                String privacy = User.getInstance(getApplicationContext()).getPrivacy();
+
+                if(firstNameEdit.getText().toString().equalsIgnoreCase("")){
+                    firstName = User.getInstance(getApplicationContext()).getFirstName();
+                }else{
+                    firstName = firstNameEdit.getText().toString();
+                }
+
+                if(lastNameEdit.getText().toString().equalsIgnoreCase("")){
+                    lastName = User.getInstance(getApplicationContext()).getLastName();
+                }else{
+                    lastName = lastNameEdit.getText().toString();
+                }
+
+                if(descriptionEdit.getText().toString().equalsIgnoreCase("")){
+                    description = User.getInstance(getApplicationContext()).getDescription();
+                }else{
+                    description = descriptionEdit.getText().toString();
+                }
+
+                HuddlOutAPI.getInstance(getApplicationContext()).editProfile(firstName, lastName, profilepic, age, description, privacy);
+                dialog.cancel();
             }
         });
 
-        alert.setNegativeButton("Decline", new DialogInterface.OnClickListener() {
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                User.getInstance(getApplicationContext()).resolveFriendRequest(id, "deny");
-                HuddlOutAPI.getInstance(getApplicationContext()).getFriends();
-                HuddlOutAPI.getInstance(getApplicationContext()).getFriendRequests();
+                dialog.cancel();
             }
         });
+
+        alert.setCancelable(true);
 
         alert.show();
+
     }
+
 
     //Listener for the add friend floating action button
     public void addFriend(View v){
@@ -328,14 +405,17 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
         alert.setPositiveButton("Add", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 HuddlOutAPI.getInstance(getApplicationContext()).sendFriendRequest(input.getText().toString());
+                dialog.cancel();
             }
         });
 
         alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                // Canceled.
+                dialog.cancel();
             }
         });
+
+        alert.setCancelable(true);
 
         alert.show();
     }

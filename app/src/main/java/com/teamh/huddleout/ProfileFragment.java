@@ -3,6 +3,7 @@ package com.teamh.huddleout;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,8 +38,6 @@ public class ProfileFragment extends Fragment {
     TextView nameTextView;
     TextView aboutTextView;
     TextView aboutContentTextView;
-    TextView preferencesTextView;
-    TextView preferencesContentTextView;
     Button topContextButton;
 
     ImageView profilePicture;
@@ -171,4 +170,17 @@ public class ProfileFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        try{
+            final User currentUser = User.getInstance(currentContext);
+            int id = currentContext.getResources().getIdentifier(currentUser.getProfilePicture(), "drawable", "com.teamh.huddleout");
+            nameTextView.setText(currentUser.getName());
+            aboutContentTextView.setText(currentUser.getDescription());
+            profilePicture.setImageResource(id);
+        }catch(NullPointerException e) {
+            Log.i(TAG, "Null pointer reference on profile fragment: " + e);
+        }
+    }
 }

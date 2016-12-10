@@ -1,6 +1,7 @@
 package com.teamh.huddleout;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.net.Uri;
@@ -12,12 +13,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -114,30 +117,17 @@ public class GroupListFragment extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
-
-            HANDLER.postDelayed(new Runnable(){
-                @Override
-                public void run() {
-                    try {
-                        final User currentUser = User.getInstance(currentContext);
-                        if (groupList.size() == 0) {
-                            groups = currentUser.getGroupsList();
-                            for (int i = 0; i < groups.size(); i++) {
-                                try {
-                                    groupList.add(groups.get(i).getString("group_name"));
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                            Log.i(TAG, "groups:" + groupList.toString());
-                            groupListView.setAdapter(groupAdapter);
-                        }
-                    } catch (NullPointerException e) {
-                        Log.i(TAG, "Failed to user instance: " + e);
+            try{
+                setAdapters();
+            }catch (NullPointerException e){
+                Log.i(TAG, "null pointer on setAdapters: " + e);
+                HANDLER.postDelayed(new Runnable(){
+                    @Override
+                    public void run() {
+                        setAdapters();
                     }
-                }
-            }, 1500);
-
+                }, 1000);
+            }
         }
     }
 
@@ -174,13 +164,46 @@ public class GroupListFragment extends Fragment {
         groupInviteAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, groupInviteList);
 
         groupListView = (ListView)rellay.findViewById(R.id.groupListView);
+        groupListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int id, long l) {
+                User temp = User.getInstance(getContext());
+                int groupId = 0;
+                try {
+                    groupId = groups.get(id).getInt("group_id");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                temp.setGroupInFocus(groupId);
+                ((MainMenuActivity)getActivity()).openGroupMenu(groupId);
+            }
+        });
+
+
         groupInviteListView = (ListView)rellay.findViewById(R.id.groupInviteListView);
+        groupInviteListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int id, long l) {
+                try {
+                    String groupName = groupInvites.get(id).getString("group_name");
+//                    String admin = groupInvites.get(id).getString("first_name") + " " + groupInvites.get(id).getString("last_name");
+                    String activity = groupInvites.get(id).getString("activity_type");
+                    int groupId = groupInvites.get(id).getInt("group_id");
+
+                    showGroupInvite(view, groupId, groupName, activity);
+
+                } catch (JSONException e) {
+                    Log.i(TAG, "list click fail: " + e);
+                    e.printStackTrace();
+                }catch (IndexOutOfBoundsException e){
+                    Log.i(TAG, "Index out of bounds for request list: " + e);
+                    e.printStackTrace();
+                }
+            }
+        });
 
         ListUtils.setDynamicHeight(groupListView);
         ListUtils.setDynamicHeight(groupInviteListView);
-
-        groupListView.setAdapter(groupAdapter);
-        groupInviteListView.setAdapter(groupInviteAdapter);
 
         return rellay;
 
@@ -225,59 +248,94 @@ public class GroupListFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-//    @Override
-//    public void onListItemClick(ListView l, View v, int id, long position) {
-//        User currentUser = User.getInstance(this.getActivity().getApplicationContext());
-//        try {
-//            int groupId = groups.get(id).getInt("group_id");
-//            currentUser.setGroupInFocus(groupId);
-//            ((MainMenuActivity)getActivity()).openGroupMenu(groupId);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        };
-//    }
 
-
-//    public void setAdapters(){
+    public void setAdapters(){
 //        Log.i(TAG, "Setting Adapters");
-//        final User currentUser = User.getInstance(this.getActivity().getApplicationContext());
-//        HuddlOutAPI.getInstance(this.getActivity().getApplicationContext()).getFriends();
-//        HuddlOutAPI.getInstance(this.getActivity().getApplicationContext()).getFriendRequests();
-//
-//        try {
-//            friendList.clear();
-//        }catch (IndexOutOfBoundsException e){
-//            Log.i(TAG, "list clearance fail: " + e);
-//        }
-//
-//        try {
-//            friendRequestList.clear();
-//        }catch (IndexOutOfBoundsException e){
-//            Log.i(TAG, "list clearance fail: " + e);
-//        }
-//
-//        friends = currentUser.getFriends();
-//        friendRequests = currentUser.getFriendRequests();
-//
-//        for (int i = 0; i < friends.size(); i++) {
-//            try {
-//                friendList.add(friends.get(i).getString("first_name") + " " + friends.get(i).getString("last_name"));
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//
-//        for (int i = 0; i < friendRequests.size(); i++) {
-//            try {
-//                friendRequestList.add(friendRequests.get(i).getString("first_name") + " " + friendRequests.get(i).getString("last_name"));
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//
-//        friendsListView.setAdapter(friendAdapter);
-//        friendsRequestListView.setAdapter(friendRequestAdapter);
-//
-//    }
+        final User currentUser = User.getInstance(this.getActivity().getApplicationContext());
+        HuddlOutAPI.getInstance(this.getActivity().getApplicationContext()).getGroups();
+        HuddlOutAPI.getInstance(this.getActivity().getApplicationContext()).checkInvites();
+
+        try {
+            groupList.clear();
+        }catch (IndexOutOfBoundsException e){
+            Log.i(TAG, "list clearance fail: " + e);
+        }
+
+        try {
+            groupInviteList.clear();
+        }catch (IndexOutOfBoundsException e){
+            Log.i(TAG, "list clearance fail: " + e);
+        }
+
+        groups = currentUser.getGroupsList();
+        groupInvites = currentUser.getGroupInvites();
+
+        for (int i = 0; i < groups.size(); i++) {
+            try {
+                groupList.add(groups.get(i).getString("group_name"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        for (int i = 0; i < groupInvites.size(); i++) {
+            try {
+                groupInviteList.add(groupInvites.get(i).getString("group_name"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        groupListView.setAdapter(groupAdapter);
+        groupInviteListView.setAdapter(groupInviteAdapter);
+    }
+
+
+    // Show dialog for group invite
+    public void showGroupInvite(View v, final int id, String groupName, String activity){
+        android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(v.getContext());
+        final Handler HANDLER = new Handler();
+
+//        Log.i(TAG, "showGroup: " + name);
+
+        alert.setTitle(groupName);
+//        alert.setMessage("Admin:    " + admin);
+        alert.setMessage("Activity: " + activity);
+
+        final TextView input = new TextView(v.getContext());
+        alert.setView(input);
+
+        alert.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                HuddlOutAPI.getInstance(getActivity().getApplicationContext()).resolveGroupInvite(id, "accept");
+                HANDLER.postDelayed(new Runnable(){
+                    @Override
+                    public void run(){
+                        setAdapters();
+                    }
+                }, 1000);
+            }
+        });
+
+        alert.setNegativeButton("Decline", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                HuddlOutAPI.getInstance(getActivity().getApplicationContext()).resolveGroupInvite(id, "deny");
+                HANDLER.postDelayed(new Runnable(){
+                    @Override
+                    public void run(){
+                        setAdapters();
+                    }
+                }, 1000);
+            }
+        });
+
+        alert.show();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        setAdapters();
+    }
 
 }

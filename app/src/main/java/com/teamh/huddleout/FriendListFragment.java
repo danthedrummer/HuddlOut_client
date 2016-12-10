@@ -95,9 +95,21 @@ public class FriendListFragment extends Fragment implements AdapterView.OnItemCl
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
-            setAdapters();
+            final Handler HANDLER = new Handler();
+            try{
+                setAdapters();
+            }catch (NullPointerException e){
+                Log.i(TAG, "null pointer on setAdapters: " + e);
+                HANDLER.postDelayed(new Runnable(){
+                    @Override
+                    public void run() {
+                        setAdapters();
+                    }
+                }, 1000);
+            }
         }
     }
+
 
 
     //Solution for this found on http://stackoverflow.com/questions/17693578/android-how-to-display-2-listviews-in-one-activity-one-after-the-other
@@ -287,25 +299,25 @@ public class FriendListFragment extends Fragment implements AdapterView.OnItemCl
 
         alert.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                User.getInstance(getActivity().getApplicationContext()).resolveFriendRequest(profileId, "accept");
+                HuddlOutAPI.getInstance(getActivity().getApplicationContext()).resolveFriendRequest(profileId, "accept");
                 HANDLER.postDelayed(new Runnable(){
                     @Override
                     public void run(){
                         setAdapters();
                     }
-                }, 2000);
+                }, 1000);
             }
         });
 
         alert.setNegativeButton("Decline", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                User.getInstance(getActivity().getApplicationContext()).resolveFriendRequest(profileId, "deny");
+                HuddlOutAPI.getInstance(getActivity().getApplicationContext()).resolveFriendRequest(profileId, "deny");
                 HANDLER.postDelayed(new Runnable(){
                     @Override
                     public void run(){
                         setAdapters();
                     }
-                }, 2000);
+                }, 1000);
             }
         });
 
