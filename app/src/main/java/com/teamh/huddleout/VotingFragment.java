@@ -177,7 +177,7 @@ public class VotingFragment extends Fragment {
         AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
         final AlertDialog alertd = alert.create();
 
-        alert.setTitle("Create New Group");
+        alert.setTitle("Create New Vote");
 
         View dialogView = thisInflater.inflate(R.layout.vote_dialog_box, null);
 
