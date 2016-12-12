@@ -263,7 +263,7 @@ public class HuddlOutAPI {
         return reQueue;
     }
 
-    public RequestQueue getGroupMembers(int groupId) {
+    public RequestQueue getGroupMembers(int groupId, final MembersActivity membersActivity) {
         RequestQueue reQueue = new RequestQueue(cache, network);
         reQueue.start();
         String params = url + "api/group/getMembers?token=" + token + "&groupId=" + groupId;
@@ -273,6 +273,7 @@ public class HuddlOutAPI {
                     public void onResponse(String response) {
                         // returns 'not member' if user is not a member of the group
                         // returns list of ids of group member profiles if successful
+                        membersActivity.getGroupMembersCallback(response);
                     }
                 }, new Response.ErrorListener() {
             @Override
