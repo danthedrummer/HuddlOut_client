@@ -467,6 +467,33 @@ public class HuddlOutAPI {
         reQueue.add(stringRequest);
     }
 
+    // USER
+    public void getProfile(final int profileId, final ProfileActivity profileActivity) {
+//        Log.i(TAG, "getProfile start");
+        String params = url + "api/user/getProfile?token=" + token + "&profileId=" + profileId;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        //Returns "invalid params" if invalid params
+                        //Returns "not found" if user does not exist
+                        //Returns profile as JSON if registration successful
+                        if (response.equalsIgnoreCase("invalid params") || response.equalsIgnoreCase("not found")) {
+                            Popup.show(response, context);
+                        } else {
+                            profileActivity.getProfileCallback(response);
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError err) {
+                Log.i(TAG, "Failed " + err);
+                Popup.show("INTERNAL ERROR: " + err, context);
+            }
+        });
+        reQueue.add(stringRequest);
+    }
+
     public void editProfile(String firstName, String lastName, String profilePicture, int age, String description, String privacy) {
         String params = url + "api/user/edit?token=" + token + "&firstName="
                 + Uri.encode(firstName) + "&lastName=" + Uri.encode(lastName) + "&profilePicture="
