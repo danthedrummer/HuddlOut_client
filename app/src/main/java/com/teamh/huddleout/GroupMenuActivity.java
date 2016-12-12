@@ -152,7 +152,12 @@ public class GroupMenuActivity extends AppCompatActivity implements ChatFragment
         }
 
         if (id == R.id.action_members) {
-            ActivitySwap.swapToNextActivity(GroupMenuActivity.this, MembersActivity.class);
+            Intent intent = new Intent(GroupMenuActivity.this, MembersActivity.class);
+            Bundle b = new Bundle();
+            b.putInt("member_list", 1); //Your id
+            intent.putExtras(b); //Put your id to your next Intent
+            startActivity(intent);
+            finish();
             return true;
         }
 

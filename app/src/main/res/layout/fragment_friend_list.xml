@@ -15,13 +15,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
-            app:fabSize="mini"
-            app:srcCompat="@android:drawable/ic_input_add"
+            app:fabSize="normal"
+            app:srcCompat="@drawable/ic_add_black_24dp"
             android:id="@+id/addGroupButton"
             android:layout_alignBottom="@+id/friendListScrollView"
             android:layout_alignParentEnd="true"
             android:layout_margin="16dp"
-            android:onClick="addFriend"/>
+            android:onClick="addFriend"
+            android:tint="@android:color/white" />
 
         <ScrollView
             android:layout_width="fill_parent"

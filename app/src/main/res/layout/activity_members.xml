@@ -8,29 +8,52 @@
     <!-- TODO: Update blank fragment layout -->
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/loadLayout"
+        android:visibility="gone">
 
-        <LinearLayout
-            android:orientation="horizontal"
+        <TextView
+            android:text="Fetching group members..."
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></LinearLayout>
+            android:layout_height="wrap_content"
+            android:id="@+id/textView"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:layout_marginTop="140dp" />
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/loadBar"
+            android:layout_below="@+id/textView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mainLayout"
+        android:visibility="visible">
 
         <android.support.design.widget.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
-            app:fabSize="mini"
-            app:srcCompat="@android:drawable/ic_input_add"
+            app:fabSize="normal"
+            app:srcCompat="@drawable/ic_add_black_24dp"
             android:id="@+id/addMemberButton"
             android:layout_alignBottom="@+id/memberListScrollView"
             android:layout_alignParentEnd="true"
             android:layout_margin="16dp"
-            android:onClick="addFriend"/>
+            android:onClick="addFriend"
+            android:tint="@android:color/white" />
 
         <ScrollView
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:fillViewport="true"
             android:id="@+id/memberListScrollView">
 
@@ -56,30 +79,40 @@
                     android:layout_height="420dp">
                 </ListView>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:text="No User Selected"
-                    android:id="@+id/memberInfoTextView"
-                    android:layout_marginTop="10dip" />
-
-                <Button
-                    android:text="Kick Member"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/kickButton"
-                    android:enabled="false" />
-
-                <Button
-                    android:text="View Profile"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/viewButton"
-                    android:enabled="false" />
-
             </LinearLayout>
         </ScrollView>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/addMemberButton"
+            android:layout_alignParentStart="true">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="No User Selected"
+                android:id="@+id/memberInfoTextView"
+                android:layout_marginTop="10dip"
+                android:layout_marginLeft="10dp" />
+
+            <Button
+                android:text="Kick Member"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/kickButton"
+                android:enabled="false" />
+
+            <Button
+                android:text="View Profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/viewButton"
+                android:enabled="false" />
+        </LinearLayout>
+
     </RelativeLayout>
 
 </FrameLayout>
