@@ -2,7 +2,10 @@ package com.teamh.huddleout;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -92,6 +95,11 @@ public class MembersActivity extends AppCompatActivity {
         kickButton.setOnClickListener(
             new Button.OnClickListener(){
                 public void onClick(View v){
+                    try {
+                        showKickOption(v, selectedMember.getInt("profile_id"), selectedMember.getString("first_name") + " " + selectedMember.getString("last_name"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
                 }
             }
@@ -147,7 +155,8 @@ public class MembersActivity extends AppCompatActivity {
             }
 
             //Kick Member Button
-            if(selectedMember.getInt("profile_id") != thisMember.getInt("profile_id") && !selectedMember.getString("group_role").equals("ADMIN") && !selectedMember.getString("group_role").equals("KICKED")) {
+            Log.i(TAG, "ROLE: " + thisMember.getString("group_role"));
+            if(thisMember.getString("group_role").equals("ADMIN") && selectedMember.getInt("profile_id") != thisMember.getInt("profile_id") && !selectedMember.getString("group_role").equals("KICKED")) {
                 kickButton.setEnabled(true);
             }
         } catch (JSONException e) {
@@ -155,11 +164,43 @@ public class MembersActivity extends AppCompatActivity {
         }
     }
 
+    public void showKickOption(View v, final int profileId, final String username){
+        AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
+
+        alert.setTitle("Kick User?");
+        alert.setMessage("Are you sure you want to kick " + username + "?");
+
+        final TextView input = new TextView(v.getContext());
+        alert.setView(input);
+
+        final MembersActivity thisActivity = this;
+
+        alert.setPositiveButton("Kick User", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                HuddlOutAPI.getInstance(getApplicationContext()).kickGroupMember(groupId, profileId, thisActivity);
+                loadLayout.setVisibility(View.VISIBLE);
+                mainLayout.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        alert.setNegativeButton("Cancel", null);
+
+        alert.show();
+    }
+
+    public void kickCallback(String response) {
+        getGroupMembers();
+    }
+
     //INIT CODE
     private void getGroupMembers()
     {
         loadLayout.setVisibility(View.VISIBLE);
         mainLayout.setVisibility(View.INVISIBLE);
+
+        memberNameList.clear();
+        memberInfoList.clear();
+        selectedMember = null;
 
         hAPI.getGroupMembers(groupId, this);
     }

@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Member;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.util.concurrent.CountDownLatch;
@@ -389,10 +390,10 @@ public class HuddlOutAPI {
         reQueue.add(stringRequest);
     }
 
-    public RequestQueue kickGroupMember(int groupId, int profileId) {
+    public RequestQueue kickGroupMember(int groupId, int profileId, final MembersActivity membersActivity) {
         RequestQueue reQueue = new RequestQueue(cache, network);
         reQueue.start();
-        String params = url + "/api/group/kickMember?token=" + token + "&groupId=" + groupId + "&profileId=" + profileId;
+        String params = url + "api/group/kickMember?token=" + token + "&groupId=" + groupId + "&profileId=" + profileId;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>() {
                     @Override
@@ -404,6 +405,8 @@ public class HuddlOutAPI {
                         //Returns "user not found" if user is not in the group
                         //Returns "already kicked" if user was already kicked
                         //Returns "success" if kick is successful
+
+                        membersActivity.kickCallback(response);
                     }
                 }, new Response.ErrorListener() {
             @Override
