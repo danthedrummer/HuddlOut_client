@@ -95,6 +95,7 @@ public class HuddlOutAPI {
             @Override
             public void onErrorResponse(VolleyError err) {
                 Log.i(TAG, "Failed Login " + err);
+                Popup.show("INTERNAL ERROR: " + err, context);
             }
         });
         reQueue.add(stringRequest);
@@ -130,6 +131,7 @@ public class HuddlOutAPI {
             @Override
             public void onErrorResponse(VolleyError err) {
                 Log.i(TAG, "Failed Register: " + err);
+                Popup.show("INTERNAL ERROR: " + err, context);
             }
         });
 
@@ -156,6 +158,7 @@ public class HuddlOutAPI {
             @Override
             public void onErrorResponse(VolleyError err) {
                 Log.i(TAG, "Failed Authorise" + err);
+                Popup.show("INTERNAL ERROR: " + err, context);
             }
         });
         reQueue.add(stringRequest);
@@ -182,6 +185,7 @@ public class HuddlOutAPI {
             @Override
             public void onErrorResponse(VolleyError err) {
                 Log.i(TAG, "Failed Login" + err);
+                Popup.show("INTERNAL ERROR: " + err, context);
             }
         });
         reQueue.add(stringRequest);
@@ -206,6 +210,7 @@ public class HuddlOutAPI {
             @Override
             public void onErrorResponse(VolleyError err) {
                 Log.i(TAG, "Failed Group Create" + err);
+                Popup.show("INTERNAL ERROR: " + err, context);
             }
         });
         reQueue.add(stringRequest);
@@ -227,6 +232,7 @@ public class HuddlOutAPI {
             @Override
             public void onErrorResponse(VolleyError err) {
                 Log.i(TAG, "Failed Delete Group" + err);
+                Popup.show("INTERNAL ERROR: " + err, context);
             }
         });
         reQueue.add(stringRequest);
@@ -250,6 +256,7 @@ public class HuddlOutAPI {
             @Override
             public void onErrorResponse(VolleyError err) {
                 Log.i(TAG, "Failed Check Invites" + err);
+                Popup.show("INTERNAL ERROR: " + err, context);
             }
         });
         reQueue.add(stringRequest);
@@ -271,6 +278,7 @@ public class HuddlOutAPI {
             @Override
             public void onErrorResponse(VolleyError err) {
                 Log.i(TAG, "Failed Get Members" + err);
+                Popup.show("INTERNAL ERROR: " + err, context);
             }
         });
         reQueue.add(stringRequest);
@@ -297,6 +305,7 @@ public class HuddlOutAPI {
             @Override
             public void onErrorResponse(VolleyError err) {
                 Log.i(TAG, "Failed Check Invites" + err);
+                Popup.show("INTERNAL ERROR: " + err, context);
             }
         });
         reQueue.add(stringRequest);
@@ -322,6 +331,7 @@ public class HuddlOutAPI {
             @Override
             public void onErrorResponse(VolleyError err) {
                 Log.i(TAG, "Failed Invite Group Member" + err);
+                Popup.show("INTERNAL ERROR: " + err, context);
             }
         });
         reQueue.add(stringRequest);
@@ -346,6 +356,7 @@ public class HuddlOutAPI {
             @Override
             public void onErrorResponse(VolleyError err) {
                 Log.i(TAG, "Failed Check Invites" + err);
+                Popup.show("INTERNAL ERROR: " + err, context);
             }
         });
         reQueue.add(stringRequest);
@@ -371,6 +382,7 @@ public class HuddlOutAPI {
             @Override
             public void onErrorResponse(VolleyError err) {
                 Log.i(TAG, "Failed Resolve Group Invite" + err);
+                Popup.show("INTERNAL ERROR: " + err, context);
             }
         });
         reQueue.add(stringRequest);
@@ -396,6 +408,7 @@ public class HuddlOutAPI {
             @Override
             public void onErrorResponse(VolleyError err) {
                 Log.i(TAG, "Failed " + err);
+                Popup.show("INTERNAL ERROR: " + err, context);
             }
         });
         reQueue.add(stringRequest);
@@ -418,6 +431,7 @@ public class HuddlOutAPI {
             @Override
             public void onErrorResponse(VolleyError err) {
                 Log.i(TAG, "Failed " + err);
+                Popup.show("INTERNAL ERROR: " + err, context);
             }
         });
         reQueue.add(stringRequest);
@@ -446,6 +460,7 @@ public class HuddlOutAPI {
             @Override
             public void onErrorResponse(VolleyError err) {
                 Log.i(TAG, "Failed " + err);
+                Popup.show("INTERNAL ERROR: " + err, context);
             }
         });
         reQueue.add(stringRequest);
@@ -474,6 +489,7 @@ public class HuddlOutAPI {
             @Override
             public void onErrorResponse(VolleyError err) {
                 Log.i(TAG, "Failed Check Invites" + err);
+                Popup.show("INTERNAL ERROR: " + err, context);
             }
         });
         reQueue.add(stringRequest);
@@ -494,6 +510,7 @@ public class HuddlOutAPI {
             @Override
             public void onErrorResponse(VolleyError err) {
                 Log.i(TAG, "Failed Check Invites" + err);
+                Popup.show("INTERNAL ERROR: " + err, context);
             }
         });
         reQueue.add(stringRequest);
@@ -516,6 +533,7 @@ public class HuddlOutAPI {
             @Override
             public void onErrorResponse(VolleyError err) {
                 Log.i(TAG, "Failed Check Invites" + err);
+                Popup.show("INTERNAL ERROR: " + err, context);
             }
         });
         reQueue.add(stringRequest);
@@ -540,6 +558,7 @@ public class HuddlOutAPI {
             @Override
             public void onErrorResponse(VolleyError err) {
                 Log.i(TAG, "Failed Check Invites" + err);
+                Popup.show("INTERNAL ERROR: " + err, context);
             }
         });
         reQueue.add(stringRequest);
@@ -563,6 +582,7 @@ public class HuddlOutAPI {
             @Override
             public void onErrorResponse(VolleyError err) {
                 Log.i(TAG, "Failed Check Invites" + err);
+                Popup.show("INTERNAL ERROR: " + err, context);
             }
         });
         reQueue.add(stringRequest);
@@ -589,6 +609,7 @@ public class HuddlOutAPI {
             @Override
             public void onErrorResponse(VolleyError err) {
                 Log.i(TAG, "Failed Check Invites" + err);
+                Popup.show("INTERNAL ERROR: " + err, context);
             }
         });
         reQueue.add(stringRequest);
@@ -614,7 +635,7 @@ public class HuddlOutAPI {
             @Override
             public void onErrorResponse(VolleyError err) {
                 Log.i(TAG, "Failed Check Invites" + err);
-                Popup.show("Error", context);
+                Popup.show("INTERNAL ERROR: " + err, context);
             }
         });
         reQueue.add(stringRequest);
@@ -640,6 +661,7 @@ public class HuddlOutAPI {
             @Override
             public void onErrorResponse(VolleyError err) {
                 Log.i(TAG, "Failed Delete Friend: " + err);
+                Popup.show("INTERNAL ERROR: " + err, context);
             }
         });
         reQueue.add(stringRequest);
@@ -701,6 +723,7 @@ public class HuddlOutAPI {
                 @Override
                 public void onErrorResponse(VolleyError err) {
                     Log.i(TAG, "Failed Create Vote" + err);
+                    Popup.show("INTERNAL ERROR: " + err, context);
                 }
             });
             reQueue.add(stringRequest);
@@ -725,6 +748,7 @@ public class HuddlOutAPI {
             @Override
             public void onErrorResponse(VolleyError err) {
                 Log.i(TAG, "Failed Create Vote" + err);
+                Popup.show("INTERNAL ERROR: " + err, context);
             }
         });
         reQueue.add(stringRequest);
@@ -748,6 +772,7 @@ public class HuddlOutAPI {
             @Override
             public void onErrorResponse(VolleyError err) {
                 Log.i(TAG, "Failed Create Vote" + err);
+                Popup.show("INTERNAL ERROR: " + err, context);
             }
         });
         reQueue.add(stringRequest);
@@ -768,6 +793,7 @@ public class HuddlOutAPI {
             @Override
             public void onErrorResponse(VolleyError err) {
                 Log.i(TAG, "Failed Check Invites" + err);
+                Popup.show("INTERNAL ERROR: " + err, context);
             }
         });
         reQueue.add(stringRequest);
