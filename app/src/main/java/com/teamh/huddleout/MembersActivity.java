@@ -201,11 +201,7 @@ public class MembersActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int whichButton) {
                 loadLayout.setVisibility(View.VISIBLE);
                 mainLayout.setVisibility(View.INVISIBLE);
-                try {
-                    HuddlOutAPI.getInstance(getApplicationContext()).inviteGroupMember(groupId, selectedMember.getInt("profile_id"), membersActivity); //TODO: FIX THIS!!!!
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                HuddlOutAPI.getInstance(getApplicationContext()).inviteGroupMember(groupId, voteMemberNameEditText.getText().toString(), membersActivity); //TODO: FIX THIS!!!!
             }
         });
 
@@ -222,6 +218,7 @@ public class MembersActivity extends AppCompatActivity {
 
     //Callback for invite member
     public void inviteMemberCallback(String s) {
+        Popup.show(s, context);
         getGroupMembers();
     }
 
@@ -288,6 +285,14 @@ public class MembersActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+        }
+
+        try{
+            if(!thisMember.getString("group_role").equals("ADMIN")) {
+                addButton.setVisibility(View.INVISIBLE);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
 
         memberList.setAdapter(memberAdapter);

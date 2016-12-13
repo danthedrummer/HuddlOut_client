@@ -11,7 +11,7 @@
         android:id="@+id/memberNameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Member Name"
+        android:hint="Member's Username"
         android:inputType="text" />
 
 </LinearLayout>

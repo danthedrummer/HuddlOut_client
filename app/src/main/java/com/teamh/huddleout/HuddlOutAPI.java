@@ -313,10 +313,10 @@ public class HuddlOutAPI {
         reQueue.add(stringRequest);
     }
 
-    public RequestQueue inviteGroupMember(int groupId, int profileId, final MembersActivity membersActivity) {
+    public RequestQueue inviteGroupMember(int groupId, String username, final MembersActivity membersActivity) {
         RequestQueue reQueue = new RequestQueue(cache, network);
         reQueue.start();
-        String params = url + "api/group/inviteMember?token=" + token + "&groupId=" + groupId + "&profileId=" + profileId;
+        String params = url + "api/group/inviteMember?token=" + token + "&groupId=" + groupId + "&username=" + username;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>() {
                     @Override
