@@ -5,16 +5,19 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -57,6 +60,10 @@ public class MembersActivity extends AppCompatActivity {
     private TextView memberInfo;
     private Button kickButton;
     private Button viewButton;
+    private FloatingActionButton addButton;
+
+    //Dialog UI Elements
+    private EditText voteMemberNameEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +97,7 @@ public class MembersActivity extends AppCompatActivity {
         memberInfo = (TextView) findViewById(R.id.memberInfoTextView);
         kickButton = (Button) findViewById(R.id.kickButton);
         viewButton = (Button) findViewById(R.id.viewButton);
+        addButton = (FloatingActionButton) findViewById(R.id.addMemberButton);
 
         //Kick Button action listener
         kickButton.setOnClickListener(
@@ -122,6 +130,15 @@ public class MembersActivity extends AppCompatActivity {
                     }
                 }
             }
+        );
+
+        //View Button action listener
+        addButton.setOnClickListener(
+                new Button.OnClickListener(){
+                    public void onClick(View v){
+                        inviteMemberHandler(v);
+                    }
+                }
         );
 
         memberList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -162,6 +179,50 @@ public class MembersActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    //Handler for vote creation
+    private void inviteMemberHandler(View v) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
+        final AlertDialog alertd = alert.create();
+
+        alert.setTitle("Invite Member");
+
+        View dialogView = LayoutInflater.from(context).inflate(R.layout.group_add_member_dialog_box, null);
+
+        //Dialog UI
+        voteMemberNameEditText = (EditText)dialogView.findViewById(R.id.memberNameEditText);
+
+        alert.setView(dialogView);
+
+        final MembersActivity membersActivity = this;
+
+        alert.setPositiveButton("Invite", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                loadLayout.setVisibility(View.VISIBLE);
+                mainLayout.setVisibility(View.INVISIBLE);
+                try {
+                    HuddlOutAPI.getInstance(getApplicationContext()).inviteGroupMember(groupId, selectedMember.getInt("profile_id"), membersActivity); //TODO: FIX THIS!!!!
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+                dialog.cancel();
+                alertd.dismiss();
+            }
+        });
+
+        alert.show();
+    }
+
+    //Callback for invite member
+    public void inviteMemberCallback(String s) {
+        getGroupMembers();
     }
 
     public void showKickOption(View v, final int profileId, final String username){

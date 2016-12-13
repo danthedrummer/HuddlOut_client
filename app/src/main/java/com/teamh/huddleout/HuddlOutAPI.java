@@ -313,7 +313,7 @@ public class HuddlOutAPI {
         reQueue.add(stringRequest);
     }
 
-    public RequestQueue inviteGroupMember(int groupId, int profileId) {
+    public RequestQueue inviteGroupMember(int groupId, int profileId, final MembersActivity membersActivity) {
         RequestQueue reQueue = new RequestQueue(cache, network);
         reQueue.start();
         String params = url + "api/group/inviteMember?token=" + token + "&groupId=" + groupId + "&profileId=" + profileId;
@@ -328,6 +328,8 @@ public class HuddlOutAPI {
                         //Returns "invitation already exists" if invited user already contains an invite
                         //Returns "already member" if user is already part of the group
                         //Returns "success" if invitation successful
+
+                        membersActivity.inviteMemberCallback(response);
                     }
                 }, new Response.ErrorListener() {
             @Override
