@@ -124,7 +124,6 @@ public class MembersActivity extends AppCompatActivity {
                         b.putBoolean("searchOnline", true);
                         intent.putExtras(b);
                         startActivity(intent);
-                        finish();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
