@@ -327,8 +327,9 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
 
 
     // Listener for edit profile
-    public void editProfie(View v){
+    public void editProfile(View v){
         AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
+        final AlertDialog alertd = alert.create();
 
         LinearLayout layout = new LinearLayout(getApplicationContext());
         layout.setOrientation(LinearLayout.VERTICAL);
@@ -340,6 +341,11 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
         final EditText lastNameEdit = new EditText(v.getContext());
         lastNameEdit.setHint(User.getInstance(getApplicationContext()).getLastName());
         layout.addView(lastNameEdit);
+
+        profilePicSpinner = new Spinner(this);
+        profilePicSpinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, profilePicOptions);
+        profilePicSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        profilePicSpinner.setAdapter(profilePicSpinnerAdapter);
 
         layout.addView(profilePicSpinner);
 
@@ -384,6 +390,7 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
         alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 dialog.cancel();
+                alertd.dismiss();
             }
         });
 

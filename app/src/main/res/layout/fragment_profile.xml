@@ -32,7 +32,7 @@
             android:id="@+id/editBtn"
             android:layout_alignEnd="@+id/nameTextView"
             android:layout_alignStart="@+id/nameTextView"
-            android:onClick="editProfie"/>
+            android:onClick="editProfile"/>
 
         <TextView
             android:text="About Me"
