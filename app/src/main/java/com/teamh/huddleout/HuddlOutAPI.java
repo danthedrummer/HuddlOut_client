@@ -502,7 +502,7 @@ public class HuddlOutAPI {
     public void editProfile(String firstName, String lastName, String profilePicture, int age, String description, String privacy) {
         String params = url + "api/user/edit?token=" + token + "&firstName="
                 + Uri.encode(firstName) + "&lastName=" + Uri.encode(lastName) + "&profilePicture="
-                + Uri.encode(profilePicture) + "&age=" + age + "&description="
+                + Uri.encode(profilePicture) + "&age=" + age + "&desc="
                 + Uri.encode(description) + "&privacy=" + Uri.encode(privacy);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>() {

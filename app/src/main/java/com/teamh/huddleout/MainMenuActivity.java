@@ -114,6 +114,7 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
 
         // Create spinner for drop down in edit profile menu
         profilePicOptions = new ArrayList<String>();
+//        profilePicOptions.add(User.getInstance(getApplicationContext()).getProfilePicture());
         profilePicOptions.add("airplane");
         profilePicOptions.add("astronaut");
         profilePicOptions.add("ball");
@@ -427,5 +428,6 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
         intent.putExtra("GROUP_ID", groupId);
         startActivity(intent);
     }
+
 
 }

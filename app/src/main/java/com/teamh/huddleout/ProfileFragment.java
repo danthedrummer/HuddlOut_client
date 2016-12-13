@@ -3,7 +3,6 @@ package com.teamh.huddleout;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -110,7 +109,7 @@ public class ProfileFragment extends Fragment {
         nameTextView = (TextView)rellay.findViewById(R.id.nameTextView);
         aboutTextView = (TextView)rellay.findViewById(R.id.aboutTextView);
         aboutContentTextView = (TextView)rellay.findViewById(R.id.aboutContentTextView);
-        topContextButton = (Button)rellay.findViewById(R.id.removeBtn);
+        topContextButton = (Button)rellay.findViewById(R.id.editBtn);
         profilePicture = (ImageView)rellay.findViewById(R.id.profileImageView);
 
         try{

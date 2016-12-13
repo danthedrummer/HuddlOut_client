@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/profileImageView"
-        android:id="@+id/removeBtn"
+        android:id="@+id/editBtn"
         android:layout_alignEnd="@+id/nameTextView"
         android:layout_alignStart="@+id/nameTextView" />
 
@@ -57,6 +57,6 @@
         android:layout_alignStart="@+id/aboutTextView"
         android:layout_marginTop="13dp"
         android:id="@+id/aboutContentTextView"
-        android:layout_alignEnd="@+id/removeBtn" />
+        android:layout_alignEnd="@+id/editBtn" />
 
 </RelativeLayout>

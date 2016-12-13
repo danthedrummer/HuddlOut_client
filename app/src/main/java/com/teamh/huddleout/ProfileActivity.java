@@ -2,8 +2,6 @@ package com.teamh.huddleout;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.provider.ContactsContract;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,7 +12,6 @@ import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -108,7 +105,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
 
 
-            removeBtn = (Button)findViewById(R.id.removeBtn);
+            removeBtn = (Button)findViewById(R.id.editBtn);
             if(friendRelationshipType.equals("FRIEND") || friendRelationshipType.equals("BEST FRIEND")) {
                 // Remove friend button
                 removeBtn.setOnClickListener( new Button.OnClickListener(){
@@ -165,7 +162,7 @@ public class ProfileActivity extends AppCompatActivity {
 
             Log.i(TAG, "ID: " + friendProfilePictureId);
 
-            removeBtn = (Button)findViewById(R.id.removeBtn);
+            removeBtn = (Button)findViewById(R.id.editBtn);
             if(friendRelationshipType.equals("Friend") || friendRelationshipType.equals("Best Friend")) {
                 // Remove friend button
                 removeBtn.setOnClickListener( new Button.OnClickListener(){

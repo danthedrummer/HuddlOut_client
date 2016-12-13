@@ -157,7 +157,7 @@ public class GroupMenuActivity extends AppCompatActivity implements ChatFragment
             b.putInt("group_id", groupId); //Group ID
             intent.putExtras(b);
             startActivity(intent);
-            finish();
+//            finish();
             return true;
         }
 
