@@ -15,6 +15,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Member;
 import java.net.URI;
 import java.net.URLEncoder;
+import java.security.acl.Group;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -264,7 +265,7 @@ public class HuddlOutAPI {
         return reQueue;
     }
 
-    public RequestQueue getGroupMembers(int groupId, final MembersActivity membersActivity) {
+    public RequestQueue getGroupMembers(int groupId, final GroupWelcomeFragment groupWelcomeFragment) {
         RequestQueue reQueue = new RequestQueue(cache, network);
         reQueue.start();
         String params = url + "api/group/getMembers?token=" + token + "&groupId=" + groupId;
@@ -274,7 +275,7 @@ public class HuddlOutAPI {
                     public void onResponse(String response) {
                         // returns 'not member' if user is not a member of the group
                         // returns list of ids of group member profiles if successful
-                        membersActivity.getGroupMembersCallback(response);
+                        groupWelcomeFragment.getGroupMembersCallback(response);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -313,7 +314,7 @@ public class HuddlOutAPI {
         reQueue.add(stringRequest);
     }
 
-    public RequestQueue inviteGroupMember(int groupId, String username, final MembersActivity membersActivity) {
+    public RequestQueue inviteGroupMember(int groupId, String username, final GroupWelcomeFragment activity) {
         RequestQueue reQueue = new RequestQueue(cache, network);
         reQueue.start();
         String params = url + "api/group/inviteMember?token=" + token + "&groupId=" + groupId + "&username=" + username;
@@ -329,7 +330,7 @@ public class HuddlOutAPI {
                         //Returns "already member" if user is already part of the group
                         //Returns "success" if invitation successful
 
-                        membersActivity.inviteMemberCallback(response);
+                        activity.inviteMemberCallback(response);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -392,7 +393,7 @@ public class HuddlOutAPI {
         reQueue.add(stringRequest);
     }
 
-    public RequestQueue kickGroupMember(int groupId, int profileId, final MembersActivity membersActivity) {
+    public RequestQueue kickGroupMember(int groupId, int profileId, final GroupWelcomeFragment activity) {
         RequestQueue reQueue = new RequestQueue(cache, network);
         reQueue.start();
         String params = url + "api/group/kickMember?token=" + token + "&groupId=" + groupId + "&profileId=" + profileId;
@@ -408,7 +409,7 @@ public class HuddlOutAPI {
                         //Returns "already kicked" if user was already kicked
                         //Returns "success" if kick is successful
 
-                        membersActivity.kickCallback(response);
+                        activity.kickCallback(response);
                     }
                 }, new Response.ErrorListener() {
             @Override

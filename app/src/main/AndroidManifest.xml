@@ -51,7 +51,6 @@
             android:name=".GroupMenuActivity"
             android:label="@string/title_activity_group_menu"
             android:theme="@style/DeepPurpleTheme.NoActionBar" />
-        <activity android:name=".MembersActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".RulesActivity" />
         <activity android:name=".OtherProfileActivity" />

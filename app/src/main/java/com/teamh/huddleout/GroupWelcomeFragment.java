@@ -1,37 +1,38 @@
 package com.teamh.huddleout;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Handler;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.SimpleCursorAdapter;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Member;
 import java.util.ArrayList;
 
-public class MembersActivity extends AppCompatActivity {
+public class GroupWelcomeFragment extends Fragment {
 
     //TAG
     private static final String TAG = "DevMsg";
@@ -65,24 +66,43 @@ public class MembersActivity extends AppCompatActivity {
     //Dialog UI Elements
     private EditText voteMemberNameEditText;
 
+    public static GroupWelcomeFragment newInstance() {
+        GroupWelcomeFragment fragment = new GroupWelcomeFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_members);
-        this.setTitle("Group Members");
+
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        FrameLayout layout = (FrameLayout) inflater.inflate(R.layout.fragment_group_welcome, container, false);
 
         //Set context
-        context = getApplicationContext();
+        context = getActivity().getApplicationContext();
 
         //ArrayList of Members
         memberNameList = new ArrayList<>();
         memberInfoList = new ArrayList<>();
 
         //Get UI Elements
-        loadLayout = (RelativeLayout) findViewById(R.id.loadLayout);
-        mainLayout = (RelativeLayout) findViewById(R.id.mainLayout);
-        memberList = (ListView) findViewById(R.id.memberListView);
-        memberAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_2, android.R.id.text1, memberNameList) {
+        loadLayout = (RelativeLayout) layout.findViewById(R.id.loadLayout);
+        mainLayout = (RelativeLayout) layout.findViewById(R.id.mainLayout);
+        memberList = (ListView) layout.findViewById(R.id.memberListView);
+        memberAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_2, android.R.id.text1, memberNameList) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
@@ -94,41 +114,41 @@ public class MembersActivity extends AppCompatActivity {
                 return view;
             }
         };
-        memberInfo = (TextView) findViewById(R.id.memberInfoTextView);
-        kickButton = (Button) findViewById(R.id.kickButton);
-        viewButton = (Button) findViewById(R.id.viewButton);
-        addButton = (FloatingActionButton) findViewById(R.id.addMemberButton);
+        memberInfo = (TextView) layout.findViewById(R.id.memberInfoTextView);
+        kickButton = (Button) layout.findViewById(R.id.kickButton);
+        viewButton = (Button) layout.findViewById(R.id.viewButton);
+        addButton = (FloatingActionButton) layout.findViewById(R.id.addMemberButton);
 
         //Kick Button action listener
         kickButton.setOnClickListener(
-            new Button.OnClickListener(){
-                public void onClick(View v){
-                    try {
-                        showKickOption(v, selectedMember.getInt("profile_id"), selectedMember.getString("first_name") + " " + selectedMember.getString("last_name"));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                new Button.OnClickListener(){
+                    public void onClick(View v){
+                        try {
+                            showKickOption(v, selectedMember.getInt("profile_id"), selectedMember.getString("first_name") + " " + selectedMember.getString("last_name"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
+                    }
                 }
-            }
         );
 
         //View Button action listener
         viewButton.setOnClickListener(
-            new Button.OnClickListener(){
-                public void onClick(View v){
-                    try {
-                        Intent intent = new Intent(MembersActivity.this, ProfileActivity.class);
-                        Bundle b = new Bundle();
-                        b.putInt("friendId", selectedMember.getInt("profile_id")); //Group ID
-                        b.putBoolean("searchOnline", true);
-                        intent.putExtras(b);
-                        startActivity(intent);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                new Button.OnClickListener(){
+                    public void onClick(View v){
+                        try {
+                            Intent intent = new Intent(getActivity(), ProfileActivity.class);
+                            Bundle b = new Bundle();
+                            b.putInt("friendId", selectedMember.getInt("profile_id")); //Group ID
+                            b.putBoolean("searchOnline", true);
+                            intent.putExtras(b);
+                            startActivity(intent);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
-            }
         );
 
         //View Button action listener
@@ -149,9 +169,11 @@ public class MembersActivity extends AppCompatActivity {
 
         //Set Group ID
         if (groupId == -1)
-            groupId = getIntent().getExtras().getInt("group_id");
+            groupId = getActivity().getIntent().getExtras().getInt("GROUP_ID");
 
         getGroupMembers();
+
+        return layout;
     }
 
     //Selects the member to perform actions on
@@ -194,13 +216,13 @@ public class MembersActivity extends AppCompatActivity {
 
         alert.setView(dialogView);
 
-        final MembersActivity membersActivity = this;
+        final GroupWelcomeFragment thisActivity = this;
 
         alert.setPositiveButton("Invite", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 loadLayout.setVisibility(View.VISIBLE);
                 mainLayout.setVisibility(View.INVISIBLE);
-                HuddlOutAPI.getInstance(getApplicationContext()).inviteGroupMember(groupId, voteMemberNameEditText.getText().toString(), membersActivity); //TODO: FIX THIS!!!!
+                HuddlOutAPI.getInstance(getActivity().getApplicationContext()).inviteGroupMember(groupId, voteMemberNameEditText.getText().toString(), thisActivity); //TODO: FIX THIS!!!!
             }
         });
 
@@ -230,11 +252,11 @@ public class MembersActivity extends AppCompatActivity {
         final TextView input = new TextView(v.getContext());
         alert.setView(input);
 
-        final MembersActivity thisActivity = this;
+        final GroupWelcomeFragment thisActivity = this;
 
         alert.setPositiveButton("Kick User", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                HuddlOutAPI.getInstance(getApplicationContext()).kickGroupMember(groupId, profileId, thisActivity);
+                HuddlOutAPI.getInstance(getActivity().getApplicationContext()).kickGroupMember(groupId, profileId, thisActivity);
                 loadLayout.setVisibility(View.VISIBLE);
                 mainLayout.setVisibility(View.INVISIBLE);
             }
@@ -278,7 +300,7 @@ public class MembersActivity extends AppCompatActivity {
                 memberNameList.add(name);
                 memberInfoList.add(member.getString("group_role"));
 
-                if(member.getInt("profile_id") == User.getInstance(getApplicationContext()).getProfileID()) {
+                if(member.getInt("profile_id") == User.getInstance(getActivity().getApplicationContext()).getProfileID()) {
                     thisMember = member;
                 }
             } catch (JSONException e) {

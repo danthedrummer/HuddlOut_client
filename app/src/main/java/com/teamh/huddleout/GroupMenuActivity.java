@@ -1,15 +1,11 @@
 package com.teamh.huddleout;
 
-import android.*;
 import android.Manifest;
-import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -21,11 +17,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -40,25 +34,17 @@ import com.google.android.gms.location.places.PlaceDetectionApi;
 import com.google.android.gms.location.places.PlaceLikelihood;
 import com.google.android.gms.location.places.PlaceLikelihoodBuffer;
 import com.google.android.gms.location.places.Places;
-import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class GroupMenuActivity extends AppCompatActivity implements ChatFragment.OnFragmentInteractionListener, MapFragment.OnFragmentInteractionListener, VotingFragment.OnFragmentInteractionListener, PlaceSelectionListener ,GoogleApiClient.OnConnectionFailedListener {
+public class GroupMenuActivity extends AppCompatActivity implements GroupWelcomeFragment.OnFragmentInteractionListener, MapFragment.OnFragmentInteractionListener, VotingFragment.OnFragmentInteractionListener, PlaceSelectionListener ,GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleApiClient mGoogleApiClient;
     private PlaceDetectionApi mPlaceDetectionApi;
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
+
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private static final String TAG = "DevMsg";
 
@@ -151,16 +137,6 @@ public class GroupMenuActivity extends AppCompatActivity implements ChatFragment
             return true;
         }
 
-        if (id == R.id.action_members) {
-            Intent intent = new Intent(GroupMenuActivity.this, MembersActivity.class);
-            Bundle b = new Bundle();
-            b.putInt("group_id", groupId); //Group ID
-            intent.putExtras(b);
-            startActivity(intent);
-//            finish();
-            return true;
-        }
-
         if (id == R.id.action_rules) {
             ActivitySwap.swapToNextActivity(GroupMenuActivity.this, RulesActivity.class);
             return true;
@@ -229,7 +205,7 @@ public class GroupMenuActivity extends AppCompatActivity implements ChatFragment
 
             switch (position) {
                 case 0:
-                    return ChatFragment.newInstance();
+                    return GroupWelcomeFragment.newInstance();
                 case 1:
                     return MapFragment.newInstance();
                 case 2:
@@ -248,7 +224,7 @@ public class GroupMenuActivity extends AppCompatActivity implements ChatFragment
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "CHAT";
+                    return "WELCOME";
                 case 1:
                     return "MAP";
                 case 2:
