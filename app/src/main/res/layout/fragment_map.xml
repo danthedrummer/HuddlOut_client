@@ -1,11 +1,9 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.teamh.huddleout.MapFragment">
-
-    <!-- TODO: Update blank fragment layout -->
 
     <LinearLayout
         android:orientation="vertical"
@@ -19,8 +17,28 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
-            android:id="@+id/launchMapPicker"
-            android:onClick="onLaunchMapIntentClicked"/>
+            android:id="@+id/showLocations"
+            android:onClick="onShowLocationsClicked"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:id="@+id/locationTextView"
+            android:text="I'll be populated soon"/>
     </LinearLayout>
+
+</FrameLayout>
+-->
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </FrameLayout>

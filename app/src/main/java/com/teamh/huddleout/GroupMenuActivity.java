@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
@@ -20,6 +21,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -31,19 +33,23 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceDetectionApi;
-import com.google.android.gms.location.places.PlaceLikelihood;
-import com.google.android.gms.location.places.PlaceLikelihoodBuffer;
-import com.google.android.gms.location.places.Places;
-import com.google.android.gms.location.places.ui.PlacePicker;
-import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class GroupMenuActivity extends AppCompatActivity implements GroupWelcomeFragment.OnFragmentInteractionListener, MapFragment.OnFragmentInteractionListener, VotingFragment.OnFragmentInteractionListener, PlaceSelectionListener ,GoogleApiClient.OnConnectionFailedListener {
+public class GroupMenuActivity extends AppCompatActivity implements GroupWelcomeFragment.OnFragmentInteractionListener, MapFragment.OnFragmentInteractionListener, VotingFragment.OnFragmentInteractionListener, OnMapReadyCallback {
 
     private GoogleApiClient mGoogleApiClient;
     private PlaceDetectionApi mPlaceDetectionApi;
+    private GoogleMap myMap;
+    private MapView mapView;
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private static final String TAG = "DevMsg";
@@ -102,16 +108,6 @@ public class GroupMenuActivity extends AppCompatActivity implements GroupWelcome
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(requestLocation, 2);
         }
-
-        //Creates a google API client
-        mGoogleApiClient = new GoogleApiClient
-                .Builder(GroupMenuActivity.this)
-                .addApi(Places.GEO_DATA_API)
-                .addApi(Places.PLACE_DETECTION_API)
-                .enableAutoManage(this, 0, this)
-                .build();
-
-
     }
 
     public int getGroupId() {
@@ -173,22 +169,6 @@ public class GroupMenuActivity extends AppCompatActivity implements GroupWelcome
         return super.onOptionsItemSelected(item);
     }
 
-    //Handles connection failure for Google API
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-        System.out.println("Failed to connect to Google API");
-    }
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == PLACE_PICKER_REQUEST) {
-            if (resultCode == RESULT_OK) {
-                Place place = PlacePicker.getPlace(this, data);
-                String toastMsg = String.format("Place: %s", place.getName());
-                Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
@@ -238,9 +218,9 @@ public class GroupMenuActivity extends AppCompatActivity implements GroupWelcome
         //you can leave it empty
     }
 
-    public void onLaunchMapIntentClicked(View v) {
+    /*public void onShowLocationsClicked(View v) {
         //If location request was allowed, then launch the map
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        /*if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
             //callPlaceDetectionApi();
 
@@ -251,34 +231,50 @@ public class GroupMenuActivity extends AppCompatActivity implements GroupWelcome
             } catch (GooglePlayServicesRepairableException e2) {
 
             }
+        }*
+        Log.i("DevMsg", "Grabbing from XML");
+        Resources res = getResources();
+        String locationsString = "";
+        TextView locationsTextView = (TextView)findViewById(R.id.locationTextView);
+        String[] locationArray = res.getStringArray(R.array.FastFood);
+        for(int j = 0; j < 4; j++) {
+            switch (j){
+                case 0:
+                    locationArray = res.getStringArray(R.array.Bars);
+                    break;
+                case 1:
+                    locationArray = res.getStringArray(R.array.FastFood);
+                    break;
+                case 2:
+                    locationArray = res.getStringArray(R.array.Restaurants);
+                    break;
+                case 3:
+                    locationArray = res.getStringArray(R.array.Cafes);
+                    break;
+                default:
+                    locationArray = new String[0];
+                    break;
+            }
+            for (int i = 0; i < locationArray.length; i += 3) {
+                locationsString = locationsString + "Name: " + locationArray[i]
+                        + "\nLat: " + locationArray[i + 1]
+                        + "  Lon: " + locationArray[i + 2] + "\n\n";
+            }
         }
-    }
-
-    public void onPlaceSelected(Place place) {
-        System.out.println("Selected new place: " + place);
-    }
+        locationsTextView.setText(locationsString);
+    }*/
 
     @Override
-    public void onError(Status status) {
-        System.out.println("There was an error: " + status);
+    public void onMapReady(GoogleMap googleMap) {
+        this.myMap = googleMap;
+        Log.i("DevMsg", "Reached map ready in activity");
     }
 
-    private void callPlaceDetectionApi() throws SecurityException {
-        PendingResult<PlaceLikelihoodBuffer> result = Places.PlaceDetectionApi
-                .getCurrentPlace(mGoogleApiClient, null);
-        result.setResultCallback(new ResultCallback<PlaceLikelihoodBuffer>() {
-            @Override
-            public void onResult(PlaceLikelihoodBuffer likelyPlaces) {
-                for (PlaceLikelihood placeLikelihood : likelyPlaces) {
-                    Log.i(TAG, String.format("Place '%s' with " +
-                                    "likelihood: %g",
-                            placeLikelihood.getPlace().getName(),
-                            placeLikelihood.getLikelihood()));
-                }
-                likelyPlaces.release();
-            }
-        });
+    private void setUpMap(GoogleMap map) {
+        myMap = map;
+        Log.i("DevMsg", "Reached map setup");
     }
+
 }
 
     //Prevent back nav

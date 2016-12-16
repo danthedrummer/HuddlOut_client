@@ -39,4 +39,81 @@
     <string name="voteOption3">Sweeney\'s</string>
     <string name="voteOption4">O\'Reilly\'s</string>
     <string name="title_activity_maps">Map</string>
+
+    <!-- Lists all bars in a string array in format <Name>, <Latitude>, <Longitude>, ..... -->
+    <string-array name="Bars">
+        <item>The Workman\'s Club</item>
+            <item>53.34535076628776</item>
+            <item>-6.266412734985352</item>
+        <item>The Living Room</item>
+            <item>53.352351</item>
+            <item>-6.260383</item>
+        <item>Woolshed Baa &amp; Grill</item>
+            <item>53.350359</item>
+            <item>-6.267389</item>
+        <item>The Mezz</item>
+            <item>53.344758</item>
+            <item>-6.264771</item>
+        <item>Gypsy Rose Rock &amp; Blues Bar</item>
+            <item>53.346337</item>
+            <item>-6.261327</item>
+        <item>Fibber Magee\'s</item>
+            <item>53.35290320705675</item>
+            <item>-6.260412633419037</item>
+        <item>Vintage Cocktail Club</item>
+            <item>53.345063</item>
+            <item>-6.262963</item>
+    </string-array>
+
+    <!-- Lists all fast food places in a string array in format <Name>, <Latitude>, <Longitude>, ..... -->
+    <string-array name="FastFood">
+        <item>Burger King</item>
+            <item>53.35052089829563</item>
+            <item>-6.260133683681488</item>
+        <item>McDonald\'s</item>
+            <item>53.34783263599315</item>
+            <item>-6.259813159704208</item>
+        <item>Charlies 3</item>
+            <item>53.34624105358663</item>
+            <item>-6.258862316608429</item>
+    </string-array>
+
+    <!-- Lists all restaurants in a string array in format <Name>, <Latitude>, <Longitude>, ..... -->
+    <string-array name="Restaurants">
+        <item>The Winding Stair</item>
+            <item>53.346648</item>
+            <item>-6.263634</item>
+        <item>Yamamori Sushi</item>
+            <item>53.346587</item>
+            <item>-6.263824</item>
+        <item>The Mongolian Barbeque</item>
+            <item>53.344979</item>
+            <item>-6.26195</item>
+        <item>DiFontaine\'s Pizzeria</item>
+            <item>53.345184</item>
+            <item>-6.267791</item>
+        <item>Boojum</item>
+            <item>53.347375</item>
+            <item>-6.265482</item>
+    </string-array>
+
+    <!-- Lists all cafes in a string array in format <Name>, <Latitude>, <Longitude>, ..... -->
+    <string-array name="Cafes">
+        <item>Lemon Jelly Cafe</item>
+            <item>53.347195369687036</item>
+            <item>-6.265404224395752</item>
+        <item>Caffe Cagliostro</item>
+            <item>53.346723017911245</item>
+            <item>-6.265076994895935</item>
+        <item>The Stage Door Cafe</item>
+            <item>53.345233874668224</item>
+            <item>-6.265908479690552</item>
+        <item>The Granary Cafe</item>
+            <item>53.34494884992382</item>
+            <item>-6.264148950576782</item>
+        <item>Café Vivaldi</item>
+            <item>53.34540841135198</item>
+            <item>-6.262979507446289</item>
+    </string-array>
+
 </resources>
