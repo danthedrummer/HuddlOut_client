@@ -236,8 +236,8 @@ public class FriendListFragment extends Fragment implements AdapterView.OnItemCl
     public void setAdapters(){
 //        Log.i(TAG, "Setting Adapters");
         final User currentUser = User.getInstance(this.getActivity().getApplicationContext());
-        HuddlOutAPI.getInstance(this.getActivity().getApplicationContext()).getFriends();
-        HuddlOutAPI.getInstance(this.getActivity().getApplicationContext()).getFriendRequests();
+//        HuddlOutAPI.getInstance(this.getActivity().getApplicationContext()).getFriends();
+//        HuddlOutAPI.getInstance(this.getActivity().getApplicationContext()).getFriendRequests();
 
         try {
             friendList.clear();
@@ -290,6 +290,8 @@ public class FriendListFragment extends Fragment implements AdapterView.OnItemCl
         AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
         final Handler HANDLER = new Handler();
 
+        final FriendListFragment friendListFragment = this;
+
         alert.setIcon(getActivity().getApplicationContext().getResources().getIdentifier(profilePic, "drawable", "com.teamh.huddleout"));
         alert.setTitle(name);
         alert.setMessage(description);
@@ -299,25 +301,13 @@ public class FriendListFragment extends Fragment implements AdapterView.OnItemCl
 
         alert.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                HuddlOutAPI.getInstance(getActivity().getApplicationContext()).resolveFriendRequest(profileId, "accept");
-                HANDLER.postDelayed(new Runnable(){
-                    @Override
-                    public void run(){
-                        setAdapters();
-                    }
-                }, 1000);
+                HuddlOutAPI.getInstance(getActivity().getApplicationContext()).resolveFriendRequest(profileId, "accept", friendListFragment);
             }
         });
 
         alert.setNegativeButton("Decline", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                HuddlOutAPI.getInstance(getActivity().getApplicationContext()).resolveFriendRequest(profileId, "deny");
-                HANDLER.postDelayed(new Runnable(){
-                    @Override
-                    public void run(){
-                        setAdapters();
-                    }
-                }, 1000);
+                HuddlOutAPI.getInstance(getActivity().getApplicationContext()).resolveFriendRequest(profileId, "deny", friendListFragment);
             }
         });
 

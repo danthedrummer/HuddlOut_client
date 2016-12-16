@@ -301,6 +301,8 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
         AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
         final Handler HANDLER = new Handler();
 
+        final MainMenuActivity mainMenuActivity = this;
+
         alert.setTitle("Create New Group");
 
         // Set an EditText view to get user input
@@ -309,7 +311,7 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
 
         alert.setPositiveButton("Create", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                HuddlOutAPI.getInstance(getApplicationContext()).createGroup(groupNameText.getText().toString(), groupTypeSpinner.getSelectedItem().toString());
+                HuddlOutAPI.getInstance(getApplicationContext()).createGroup(groupNameText.getText().toString(), groupTypeSpinner.getSelectedItem().toString(), mainMenuActivity);
                 dialog.cancel();
             }
         });

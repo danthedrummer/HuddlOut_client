@@ -25,6 +25,7 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.acl.Group;
 import java.util.ArrayList;
 
 
@@ -296,6 +297,8 @@ public class GroupListFragment extends Fragment {
         android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(v.getContext());
         final Handler HANDLER = new Handler();
 
+        final GroupListFragment groupListFragment = this;
+
 //        Log.i(TAG, "showGroup: " + name);
 
         alert.setTitle(groupName);
@@ -307,25 +310,13 @@ public class GroupListFragment extends Fragment {
 
         alert.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                HuddlOutAPI.getInstance(getActivity().getApplicationContext()).resolveGroupInvite(id, "accept");
-                HANDLER.postDelayed(new Runnable(){
-                    @Override
-                    public void run(){
-                        setAdapters();
-                    }
-                }, 1000);
+                HuddlOutAPI.getInstance(getActivity().getApplicationContext()).resolveGroupInvite(id, "accept", groupListFragment);
             }
         });
 
         alert.setNegativeButton("Decline", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                HuddlOutAPI.getInstance(getActivity().getApplicationContext()).resolveGroupInvite(id, "deny");
-                HANDLER.postDelayed(new Runnable(){
-                    @Override
-                    public void run(){
-                        setAdapters();
-                    }
-                }, 1000);
+                HuddlOutAPI.getInstance(getActivity().getApplicationContext()).resolveGroupInvite(id, "deny", groupListFragment);
             }
         });
 
