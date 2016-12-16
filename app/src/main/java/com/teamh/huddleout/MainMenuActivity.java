@@ -64,7 +64,6 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
 
     private static final String TAG = "DevMsg";
 
-    private View addGroupView;
     private ArrayList<String> groupTypes;
     private ArrayAdapter<String> groupSpinnerAdapter;
     private Spinner groupTypeSpinner;
@@ -73,6 +72,8 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
     private ArrayList<String> profilePicOptions;
     private ArrayAdapter<String> profilePicSpinnerAdapter;
     private Spinner profilePicSpinner;
+
+    private LayoutInflater thisInflater;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,21 +97,6 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-
-        //final HuddlOutAPI hAPI = HuddlOutAPI.getInstance(this.getApplicationContext());
-
-        LayoutInflater inflater = getLayoutInflater();
-        addGroupView = inflater.inflate(R.layout.group_dialog_box, null);
-        groupNameText = (EditText)addGroupView.findViewById(R.id.groupNameEditText);
-
-        groupTypes = new ArrayList<String>();
-        groupTypes.add("Drinking");
-        groupTypes.add("Social Meet");
-
-        groupTypeSpinner = (Spinner)addGroupView.findViewById(R.id.groupActivitySpinner);
-        groupSpinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, groupTypes);
-        groupSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        groupTypeSpinner.setAdapter(groupSpinnerAdapter);
 
         // Create spinner for drop down in edit profile menu
         profilePicOptions = new ArrayList<String>();
@@ -299,17 +285,31 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
     //Listener for the add group floating action button
     public void addGroup(View v){
         AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
-        final Handler HANDLER = new Handler();
+        final AlertDialog alertd = alert.create();
+
+        final MainMenuActivity mainMenuActivity = this;
 
         alert.setTitle("Create New Group");
 
         // Set an EditText view to get user input
-        final EditText input = new EditText(v.getContext());
+        View addGroupView = getLayoutInflater().inflate(R.layout.group_dialog_box, null);
+
+        groupNameText = (EditText)addGroupView.findViewById(R.id.groupNameEditText);
+
+        groupTypes = new ArrayList<>();
+        groupTypes.add("Drinking");
+        groupTypes.add("Social Meet");
+
+        groupTypeSpinner = (Spinner)addGroupView.findViewById(R.id.groupActivitySpinner);
+        groupSpinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, groupTypes);
+        groupSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        groupTypeSpinner.setAdapter(groupSpinnerAdapter);
+
         alert.setView(addGroupView);
 
         alert.setPositiveButton("Create", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                HuddlOutAPI.getInstance(getApplicationContext()).createGroup(groupNameText.getText().toString(), groupTypeSpinner.getSelectedItem().toString());
+                HuddlOutAPI.getInstance(getApplicationContext()).createGroup(groupNameText.getText().toString(), groupTypeSpinner.getSelectedItem().toString(), mainMenuActivity);
                 dialog.cancel();
             }
         });
@@ -317,6 +317,7 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
         alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 dialog.cancel();
+                alertd.dismiss();
             }
         });
 

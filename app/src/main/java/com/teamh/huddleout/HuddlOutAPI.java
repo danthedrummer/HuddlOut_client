@@ -196,7 +196,7 @@ public class HuddlOutAPI {
 
 
     // GROUPS
-    public void createGroup(String groupName, String activity) {
+    public void createGroup(String groupName, String activity, final MainMenuActivity mainMenuActivity) {
         String params = url + "api/group/create?token=" + token + "&name=" + Uri.encode(groupName) + "&activity=" + Uri.encode(activity);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>() {
@@ -206,6 +206,7 @@ public class HuddlOutAPI {
                         // Returns groupID if registration successful
                         if(!response.equalsIgnoreCase("invalid params")){
                             getGroups();
+                            mainMenuActivity.openGroupMenu(Integer.parseInt(response));
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -367,7 +368,7 @@ public class HuddlOutAPI {
         reQueue.add(stringRequest);
     }
 
-    public void resolveGroupInvite(int groupId, String action) {
+    public void resolveGroupInvite(int groupId, String action, final GroupListFragment groupListFragment) {
         String params = url + "api/group/resolveInvite?token=" + token + "&groupId=" + groupId + "&action=" + Uri.encode(action);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
                 new Response.Listener<String>() {
@@ -379,8 +380,7 @@ public class HuddlOutAPI {
                         //Returns "success" if action completes successfully
                         Popup.show(response, context);
                         if(response.equalsIgnoreCase("success")){
-                            getGroups();
-                            checkInvites();
+                            getGroups(groupListFragment);
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -443,6 +443,61 @@ public class HuddlOutAPI {
         });
         reQueue.add(stringRequest);
         return reQueue;
+    }
+
+
+    // GROUPS
+    // used for when groupFragment is calling checkInvites of getGroups
+    public void checkInvites(final GroupListFragment groupListFragment) {
+        String params = url + "api/group/checkInvites?token=" + token;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        //Returns "invalid params" if invalid params
+                        //Returns "user not found" if the user profile cannot be found
+                        //Returns "no invites" if there are no invites
+                        //Returns a list of groups if there are invites
+                        if(!response.equalsIgnoreCase("invalid params") || !response.equalsIgnoreCase("user not found")){
+                            User.getInstance(context).setGroupInvites(response);
+                            groupListFragment.setAdapters();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError err) {
+                Log.i(TAG, "Failed Check Invites" + err);
+                Popup.show("INTERNAL ERROR: " + err, context);
+            }
+        });
+        reQueue.add(stringRequest);
+    }
+
+    public void getGroups(final GroupListFragment groupListFragment) {
+//        Log.i(TAG, "getGroups start");
+        String params = url + "api/group/getGroups?token=" + token;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        //Returns "invalid params" if invalid params
+                        //Returns "no groups" if user is not member of a group
+                        //Returns list of ids of groups if successful
+                        if (response.equalsIgnoreCase("invalid params")) {
+                            Popup.show(response, context);
+                        } else {
+                            User.getInstance(context).setGroupList(response);
+                            checkInvites(groupListFragment);
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError err) {
+                Log.i(TAG, "Failed Check Invites" + err);
+                Popup.show("INTERNAL ERROR: " + err, context);
+            }
+        });
+        reQueue.add(stringRequest);
     }
 
 
@@ -622,7 +677,7 @@ public class HuddlOutAPI {
         reQueue.add(stringRequest);
     }
 
-    public void resolveFriendRequest(int profileId, String action) {
+    public void resolveFriendRequest(int profileId, String action, final FriendListFragment friendListFragment) {
 //        Log.i(TAG, "Resolve friend request: " + profileId + " " + action);
         String params = url + "api/user/resolveFriendRequest?token=" + token + "&profileId=" + profileId + "&action=" + Uri.encode(action);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
@@ -635,8 +690,7 @@ public class HuddlOutAPI {
                         //Returns "success" if friend request action completes
                         Popup.show(response, context);
                         if(response.equalsIgnoreCase("success")){
-                            getFriends();
-                            getFriendRequests();
+                            getFriends(friendListFragment);
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -700,6 +754,61 @@ public class HuddlOutAPI {
         });
         reQueue.add(stringRequest);
     }
+
+    // FRIENDS
+    // Use when Friend List fragment is calling getFriends or friend requests
+    public void getFriends(final FriendListFragment friendListFragment) {
+//        Log.i(TAG, "getFriends start");
+        String params = url + "api/user/viewFriends?token=" + token;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        //Returns "invalid params" if invalid params
+                        //Returns "no friends" if user has no friends
+                        //Returns list of friend ids and relationshp types if user has friends
+                        if (response.equalsIgnoreCase("invalid params")) {
+                            Popup.show(response, context);
+                        } else {
+                            User.getInstance(context).setFriendsList(response);
+                            getFriendRequests(friendListFragment);
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError err) {
+                Log.i(TAG, "Failed Check Invites" + err);
+                Popup.show("INTERNAL ERROR: " + err, context);
+            }
+        });
+        reQueue.add(stringRequest);
+    }
+
+    public void getFriendRequests(final FriendListFragment friendListFragment) {
+//        Log.i(TAG, "getFriendRequests");
+        String params = url + "api/user/getFriendRequests?token=" + token;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        //Returns "invalid params" if invalid params
+                        //Returns "no requests found" if there are no friend requests
+                        //Returns list of friend requests
+                        if (!response.equalsIgnoreCase("invalid params")) {
+                            User.getInstance(context).setFriendRequests(response);
+                            friendListFragment.setAdapters();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError err) {
+                Log.i(TAG, "Failed Check Invites" + err);
+                Popup.show("INTERNAL ERROR: " + err, context);
+            }
+        });
+        reQueue.add(stringRequest);
+    }
+
 
 
     // VOTING
@@ -811,31 +920,6 @@ public class HuddlOutAPI {
         });
         reQueue.add(stringRequest);
     }
-
-    //########################## EMPTY METHOD NEEDS TO BE FILLED IN #############################
-    public RequestQueue getNotifications() {
-        RequestQueue reQueue = new RequestQueue(cache, network);
-        reQueue.start();
-        String params = url + "api/user/" + token + "&" + null;
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, params,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError err) {
-                Log.i(TAG, "Failed Check Invites" + err);
-                Popup.show("INTERNAL ERROR: " + err, context);
-            }
-        });
-        reQueue.add(stringRequest);
-        return reQueue;
-
-    }
-    //###########################################################################################
-
 
     // RETURN DATA
     public boolean getAuth() {
