@@ -234,7 +234,7 @@ public class FriendListFragment extends Fragment implements AdapterView.OnItemCl
 
 
     public void setAdapters(){
-//        Log.i(TAG, "Setting Adapters");
+        Log.i(TAG, "Setting Adapters");
         final User currentUser = User.getInstance(this.getActivity().getApplicationContext());
 //        HuddlOutAPI.getInstance(this.getActivity().getApplicationContext()).getFriends();
 //        HuddlOutAPI.getInstance(this.getActivity().getApplicationContext()).getFriendRequests();
