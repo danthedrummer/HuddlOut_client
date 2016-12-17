@@ -3,18 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.teamh.huddleout.MainMenuActivity">
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
-    <item
         android:id="@+id/action_logout"
         android:orderInCategory="1000"
         android:title="@string/action_logout"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_debug_groups"
-        android:orderInCategory="10000"
-        android:title="[DEBUG] Groups"
         app:showAsAction="never" />
 </menu>

@@ -128,16 +128,6 @@ public class GroupMenuActivity extends AppCompatActivity implements GroupWelcome
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
-            ActivitySwap.swapToNextActivity(GroupMenuActivity.this, SettingsActivity.class);
-            return true;
-        }
-
-        if (id == R.id.action_rules) {
-            ActivitySwap.swapToNextActivity(GroupMenuActivity.this, RulesActivity.class);
-            return true;
-        }
-
         if (id == R.id.action_logout) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
 

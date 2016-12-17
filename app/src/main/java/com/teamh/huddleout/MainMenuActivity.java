@@ -147,11 +147,6 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
-            ActivitySwap.swapToNextActivity(MainMenuActivity.this, SettingsActivity.class);
-            return true;
-        }
-
         if (id == R.id.action_logout) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -178,14 +173,6 @@ public class MainMenuActivity extends AppCompatActivity implements GroupListFrag
 
             AlertDialog alert = builder.create();
             alert.show();
-            return true;
-        }
-
-        //TODO: This is a debug command! Remove once group navigation is implemented!
-        if (id == R.id.action_debug_groups) {
-            Intent intent = new Intent(getBaseContext(), GroupMenuActivity.class);
-            intent.putExtra("GROUP_ID", 1); //Day Drinkers 4 Life
-            startActivity(intent);
             return true;
         }
 

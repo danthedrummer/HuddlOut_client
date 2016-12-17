@@ -46,14 +46,11 @@
             android:label="@string/title_activity_main_menu"
             android:screenOrientation="portrait"
             android:theme="@style/DeepPurpleTheme.NoActionBar" />
-        <activity android:name=".SettingsActivity" />
         <activity
             android:name=".GroupMenuActivity"
             android:label="@string/title_activity_group_menu"
             android:theme="@style/DeepPurpleTheme.NoActionBar" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".RulesActivity" />
-        <activity android:name=".OtherProfileActivity" />
         <activity android:name=".ProfileActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
