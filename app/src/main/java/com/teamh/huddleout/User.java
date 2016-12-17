@@ -213,7 +213,16 @@ public class User {
     }
 
     public void setGroupInFocus(int groupId) {
-        this.groupInFocus = groupId;
+
+        try {
+            for(int i = 0; i < groupsList.size(); i++) {
+                if(groupsList.get(i).getInt("group_id") == groupId) {
+                    this.groupInFocus = i;
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 
